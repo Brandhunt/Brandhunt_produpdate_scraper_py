@@ -35,19 +35,19 @@ import mysql.connector
 
 #   Connect to database and get the needed information!
 
-wp_db_name = os.environ['MORPH_DB_NAME']
-wp_db_user = os.environ['MORPH_DB_USER']
-wp_db_password = os.environ['MORPH_DB_PASSWORD']
-wp_db_host = os.environ['MORPH_DB_HOST']
+##wp_db_name = os.environ['MORPH_DB_NAME']
+##wp_db_user = os.environ['MORPH_DB_USER']
+##wp_db_password = os.environ['MORPH_DB_PASSWORD']
+##wp_db_host = os.environ['MORPH_DB_HOST']
 
-wp_db_charset = os.environ['MORPH_DB_CHARSET']
-wp_db_collate = ''
+##wp_db_charset = os.environ['MORPH_DB_CHARSET']
+##wp_db_collate = ''
 
-cnx = mysql.connector.connect(user=wp_db_user, 
-                              password=wp_db_password,
-                              host=wp_db_host,
-                              database=wp_db_name)
-cnx.close()
+##cnx = mysql.connector.connect(user=wp_db_user, 
+##                              password=wp_db_password,
+##                              host=wp_db_host,
+##                              database=wp_db_name)
+##cnx.close()
 
 # # Read in a page
 # html = scraperwiki.scrape("http://foo.com")
