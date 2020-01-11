@@ -32,7 +32,7 @@ jsonprods = r.json()
 
 r = requests.get(wp_connectwp_url_2, headers=headers)
 jsonwebsites = json.loads(r.content)
-print (json.dumps(pretty_json, indent=2))
+print (json.dumps(jsonwebsites, indent=2))
 
 #print('Your post is published on ' + json.loads(r.content)['link'])
 #print('Data found: ' + json.loads(r.content)['link'])
