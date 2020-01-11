@@ -21,17 +21,36 @@ import mysql.connector
 wp_username = os.environ['MORPH_WP_USERNAME']
 wp_password = os.environ['MORPH_WP_PASSWORD']
 wp_connectwp_url = os.environ['MORPH_WP_CONNECT_URL']
+wp_connectwp_url_2 = os.environ['MORPH_WP_CONNECT_URL_2']
 
 token = base64.standard_b64encode(wp_username + ':' + wp_password)
 headers = {'Authorization': 'Basic ' + token}
 
 #r = requests.post(wp_connectwp_url, headers=headers, json=post)
 r = requests.get(wp_connectwp_url, headers=headers)
+jsonprods = r.json()
+
+r = requests.get(wp_connectwp_url_2, headers=headers)
+jsonwebsites = json.loads(r.content)
+print (json.dumps(pretty_json, indent=2))
+
 #print('Your post is published on ' + json.loads(r.content)['link'])
 #print('Data found: ' + json.loads(r.content)['link'])
 #print('Data found: ' + r.json())
-pretty_json = json.loads(r.content)
-print (json.dumps(pretty_json, indent=2))
+
+#pretty_json = json.loads(r.content)
+#print (json.dumps(pretty_json, indent=2))
+
+#   Decode and handle these URLs!
+
+for product in jsonprods:
+    domain = jsonprods['domain']
+    prodid = jsonprods['productid']
+    url = jsonprods['url']
+    
+    html = scraperwiki.scrape(url)
+  
+  
 
 #   Connect to database and get the needed information!
 
