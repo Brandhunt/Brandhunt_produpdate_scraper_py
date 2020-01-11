@@ -44,9 +44,9 @@ print (json.dumps(jsonwebsites, indent=2))
 #   Decode and handle these URLs!
 
 for product in jsonprods:
-    domain = jsonprods['domain']
-    prodid = jsonprods['productid']
-    url = jsonprods['url']
+    domain = product['domain']
+    prodid = product['productid']
+    url = product['url']
     
     html = scraperwiki.scrape(url)
   
