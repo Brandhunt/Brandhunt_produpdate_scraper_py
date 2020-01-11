@@ -39,7 +39,7 @@ print (json.dumps(jsonwebsites, indent=2))
 #print('Data found: ' + r.json())
 
 #pretty_json = json.loads(r.content)
-#print (json.dumps(pretty_json, indent=2))
+#print(json.dumps(pretty_json, indent=2))
 
 #   Decode and handle these URLs!
 
@@ -49,6 +49,8 @@ for product in jsonprods:
     url = product['url']
     
     html = scraperwiki.scrape(url)
+    
+    print(prodid)
   
   
 
