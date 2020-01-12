@@ -15,6 +15,7 @@ import base64
 import mysql.connector
 import re
 import sys
+import urllib.parse
 
 from splinter import Browser
 
@@ -63,7 +64,34 @@ def converttocorrectprice(price, currencysymbol):
             price = getmoneyfromtext(price)
             
     return price
+
+# *** --- For grabbing URLs from text-based values/strings --- *** #
+def graburls(text, imageonly):
+    try:
+        imgsuffix = ''
+        if imageonly:
+            imgsuffix = '\.(gif|jpg|jpeg|png|svg|webp)'
+        else:
+            imgsuffix = '\.([a-zA-Z0-9\&\.\/\?\:@\-_=#])*'
+        
+        finalmatches = []
+        # --> For URLs without URL encoding characters:
+        matches = re.findall(r'((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\:\~@\-_=#]+' + imgsuffix + '', text)
+        for match in matches[0]:
+            finalmatches.append(match)
+        # --> For URLs - with - URL encoding characters:
+        matches = re.findall(r'((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\\%:\~@\-_=#]+' + imgsuffix + '', text)
+        for match in matches[0]:
+            finalmatches.append(match)
+            
+        return list(set(finalmatches)).values()
+    except:
+        return []
     
+# *** --- For converting relative URLs to absolute URLs --- *** #
+def reltoabs(relurl, baseurl):
+    
+      
 # --> First, check if the database should be reset:
 
 if bool(os.environ['MORPH_RESET_DB']):
@@ -111,7 +139,10 @@ for website in jsonwebsites:
                 
                 try:
                     # >>> GET THE HTML <<< #
-                    html = scraperwiki.scrape(url)
+                    try:
+                        html = scraperwiki.scrape(url)
+                    except:
+                        print("Error when scraping URL for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
 
                     # >>> GET THE HTML ROOT <<< #
                     root = lxml.html.fromstring(html)
@@ -190,7 +221,23 @@ for website in jsonwebsites:
                     
                     # >>> GET THE PRODUCT LOGO URL(S) - IF SUCH EXISTS <<< #
                     
+                    image_urls = ''
+                    image_elements = ''
                     
+                    if website[imageselector]:
+                        try:
+                            image_elements = root.cssselect(website[imageselector])
+                            if image_elements:
+                                image_dom = ','.join(image_elements)
+                                image_urls = graburls(image_dom, true)
+                                
+                                if len(image_urls) > 0:
+                                    
+                                
+                        except:
+                            print("Error when scraping images for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
+                    
+                    graburls
                     
                     # >>> GET THE PRODUCT MISC. ELEMENTS <<< #
                     
