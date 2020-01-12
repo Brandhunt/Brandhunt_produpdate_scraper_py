@@ -13,8 +13,9 @@ import os
 import requests
 import json
 import base64
-
 import mysql.connector
+
+from splinter import Browser
 
 #   Connect to Wordpress Site via REST API and get all the proper URLs to be scraped!
 
@@ -32,7 +33,8 @@ jsonprods = r.json()
 
 r = requests.get(wp_connectwp_url_2, headers=headers)
 jsonwebsites = json.loads(r.content)
-print (json.dumps(jsonwebsites, indent=2))
+
+#print (json.dumps(jsonwebsites, indent=2))
 
 #print('Your post is published on ' + json.loads(r.content)['link'])
 #print('Data found: ' + json.loads(r.content)['link'])
@@ -50,7 +52,7 @@ for product in jsonprods:
     
     html = scraperwiki.scrape(url)
     
-    print(prodid)
+    #print(prodid)
   
   
 
