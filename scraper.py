@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python
 
 #  /|\/|\/|\/|\/|\/|\/|\/|\/|\/|\/|\/|\/|\/|\/|\  
 # <   -  Brandhunt Product Update Scraper   -   >
