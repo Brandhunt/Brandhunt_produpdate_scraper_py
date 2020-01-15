@@ -18,9 +18,28 @@ import sys
 
 from splinter import Browser
 from urllib.parse import urljoin
+from slugify import slugify
 
 # --- FUNCTION SECTION --- #
 
+# *** --- Replacement for PHP's array merge functionality --- *** #
+def array_merge(array1, array2):
+	if isinstance(array1, list) and isinstance(array2, list):
+		return array1 + array2
+	elif isinstance(array1, dict) and isinstance(array2, dict):
+		return dict(list(array1.items()) + list(array2.items()))
+	elif isinstance(array1, set) and isinstance(array2, set):
+		return array1.union(array2)
+	return false
+
+# *** --- For checking if a certain product attribute exists --- *** #
+def doesprodattrexist(prodattrlist, term, taxonomy):
+    for prodattr in prodattrlist:
+        if prodattr['term_id'] = term or prodattr['name'] = term or prodattr['slug'] = term:
+            return prodattr
+        else:
+            return 0
+	
 # *** --- For getting proper value from scraped HTML elements --- *** #
 def getmoneyfromtext(price):
     val = re.sub(r'\.(?=.*\.)', '', price.replace(',', '.'))
@@ -90,7 +109,7 @@ def graburls(text, imageonly):
     
 # *** --- For converting relative URLs to absolute URLs --- *** #
 def reltoabs(relurl, baseurl):
-    
+    pass
       
 # --> First, check if the database should be reset:
 
@@ -103,25 +122,23 @@ wp_username = os.environ['MORPH_WP_USERNAME']
 wp_password = os.environ['MORPH_WP_PASSWORD']
 wp_connectwp_url = os.environ['MORPH_WP_CONNECT_URL']
 wp_connectwp_url_2 = os.environ['MORPH_WP_CONNECT_URL_2']
+wp_connectwp_url_3 = os.environ['MORPH_WP_CONNECT_URL_3']
+wp_connectwp_url_4 = os.environ['MORPH_WP_CONNECT_URL_4']
 
 token = base64.standard_b64encode(wp_username + ':' + wp_password)
 headers = {'Authorization': 'Basic ' + token}
 
-#r = requests.post(wp_connectwp_url, headers=headers, json=post)
 r = requests.get(wp_connectwp_url, headers=headers)
 jsonprods = r.json()
 
 r = requests.get(wp_connectwp_url_2, headers=headers)
 jsonwebsites = json.loads(r.content)
 
-#print (json.dumps(jsonwebsites, indent=2))
+r = requests.get(wp_connectwp_url_3, headers=headers)
+jsonprodattr = json.loads(r.content)
 
-#print('Your post is published on ' + json.loads(r.content)['link'])
-#print('Data found: ' + json.loads(r.content)['link'])
-#print('Data found: ' + r.json())
-
-#pretty_json = json.loads(r.content)
-#print(json.dumps(pretty_json, indent=2))
+r = requests.get(wp_connectwp_url_4, headers=headers)
+jsoncatsizetypemaps = json.loads(r.content)
 
 # --> Decode and handle these URLs!
 
@@ -310,8 +327,10 @@ for website in jsonwebsites:
                     sizetypemisc = ''
                     preexistingcurrency = ''
                     notfound = ''
+		            shouldremoveonnotfound = false
                     soldoutupdatemeta = ''
                     soldouthtmlupdatemeta = ''
+                    catstoaddresult = ''
 
                     # --> Get 'em!
                     
@@ -356,31 +375,55 @@ for website in jsonwebsites:
                                                 del prodlog_image_urls[imagekey]
                                         productlogourl = prodlog_image_urls[0]       
                                 # --- Should we remove the product on 404 Error? --- #
-                                ###if productmisc_array[i] == 'allow_remove_on_404':
-                                ###   if httpstatus == 404:
-                                ###       notfound = 1
-                                #pass
+                                if productmisc_array[i] == 'allow_remove_on_404':
+                                    shouldremoveonnotfound = 1
                                 # --- Use custom domain name(In case any brands doesn't exist for current product) --- #
-                                ###if productmisc_array[i] == 'domain_name':
-                                ###   brand_array = []
-                                ###   productmisc_array[(i + 1)] != '':
-                                ###      brand_termus = productmisc_array[(i + 1)].strip()
-                                ###      SLUGIFY brand_termus HERE
-                                ###      CHECK IF brand_termus ALREADY EXISTS IN REMOTE DB
-                                #pass
+                                if productmisc_array[i] == 'domain_name':
+                                    brand_array = []
+                                    if productmisc_array[(i + 1)] != '':
+                                        brand_termus = productmisc_array[(i + 1)].strip()
+                                        clean_brand = slugify(brand_termus.strip())
+                                        term = doesprodattrexist(jsonprodattr['pa_brand'], brand_termus, 'pa_brand')
+                                         #TUPPLE STRUCTURE: (Term(ID/NAME/SLUG), newtermTrue_existingtermFalse)
+                                        if term:
+                                            brand_array.append((term, false))
+                                        else:
+                                            term = array[]
+                                            term['term_id'] = -1
+                                            term['name'] = brand_termus
+                                            term['slug'] = clean_brand
+                                            term['taxonomy'] = 'pa_brand'
+                                            brand_array.append((term, true))
+                                        product_brand = brand_array
+                                        productmisc_array[(i+1)] = '.somethingelse'
                                 # --- Should the product apply a specific category automatically? --- #
-                                ###if productmisc_array[i] == 'add_category':
-                                ###   cats_to_add = ','.split(productmisc_array[(i + 1)])
-                                ###   cat_result = []
-                                ###   for cat in cats_to_add:
-                                ###      SLUGIFY cat HERE
-                                ###      CHECK IF cat ALREADY EXISTS IN REMOTE DB
-                                #pass
+                                if productmisc_array[i] == 'add_category':
+                                   cats_to_add = ','.split(productmisc_array[(i + 1)])
+                                   cat_result = []
+                                   for cat in cats_to_add:
+                                      clean_cat = slugify(cat.strip())
+                                      term = doesprodattrexist(jsonprodattr['product_cat'], cat, 'product_cat')
+                                      #TUPPLE STRUCTURE: (Term(ID/NAME/SLUG), newtermTrue_existingtermFalse, resultcats)
+                                      if term:
+                                         cat_result.append((term, false))
+                                         cat_parents = term['ancestors']
+                                         for parent_id in cat_parents:
+                                             parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
+                                             if not parent in cat_result:
+                                                  cat_result.append((parent, false))
+                                      else:
+                                          term = array[]
+                                          term['term_id'] = -1
+                                          term['name'] = cat
+                                          term['slug'] = clean_cat
+                                          term['taxonomy'] = 'product_cat'
+                                          cat_result.append((term, true))
+                                   catstoaddresult = cat_result
                                 # --- Should the product apply the male/female attribute automatically? --- #
                                 # --- !!! IMPORTANT --> IF THIS SHOULD OVERRIDE OTHER SEX ATTR. IMPORTS, !!! --- #
                                 # --- !!! THEN PUT THIS LAST IN ORDER IN PRODUCTMISC. TEXT FIELD BEFORE SCRAPING !!! --- #
                                 if productmisc_array[i] == 'is_male':
-                                   product_sex = ['Male']
+                                    product_sex = ['Male']
                                 elif productmisc_array[i] == 'is_male':
                                     product_sex = ['Female']
                                 else:
@@ -412,25 +455,110 @@ for website in jsonwebsites:
                                             saleprice = price
                                             price = newprice
                                     # --- Get sex attributes from current scrape --- #
-                                    ###if productmisc_array[i] == 'pa_sex':
-                                    ###   
-                                    #pass
+                                    if productmisc_array[i] == 'pa_sex':
+                                        if productmisc_array[(i+1)].len() > 0:
+									        sex_array = []
+                                            for sex_termus in productmisc_array[(i+1)]:
+                                                clean_sex = sex_termus.strip()
+                                                term = doesprodattrexist(jsonprodattr['pa_sex'], sex_termus, 'pa_sex')
+                                                #TUPPLE STRUCTURE: (Term(ID/NAME/SLUG), newtermTrue_existingtermFalse)
+                                                if term:
+                                                    sex_array.append((term, false))
+                                                else:
+                                                    term = array[]
+                                                    term['term_id'] = -1
+                                                    term['name'] = sex_termus
+                                                    term['slug'] = clean_sex
+                                                    term['taxonomy'] = 'pa_sex'
+                                                    sex_array.append((term, true))
+                                            product_sex = sex_array
                                     # --- Get brand attribute(s) from current scrape --- #
-                                    ###
-                                    ###
-                                    #pass
+                                    if productmisc_array[i] == 'pa_brand':
+                                        brand_array = [];
+                                        if productmisc_array[(i+1)].len() > 0:
+                                            brand_termus = productmisc_array[(i+1)][0]
+                                            clean_brand = slugify(brand_termus.strip())
+                                            term = doesprodattrexist(jsonprodattr['pa_brand'], brand_termus, 'pa_brand')
+                                                # TUPPLE STRUCTURE: (Term(ID/NAME/SLUG), newtermTrue_existingtermFalse)
+                                                if term:
+                                                    brand_array.append((term, false))
+                                                else:
+                                                    term = array[]
+                                                    term['term_id'] = -1
+                                                    term['name'] = brand_termus
+                                                    term['slug'] = clean_brand
+                                                    term['taxonomy'] = 'pa_brand'
+                                                    brand_array.append((term, true))
+                                            product_brand = brand_array
                                     # --- Get size attributes from current scrape --- #
-                                    ###
-                                    ###
-                                    #pass
+                                    if productmisc_array[i] == 'pa_size':
+                                        if productmisc_array[(i+1)].len() > 0:
+                                            size_array = [];
+                                            for size_termus in productmisc_array[(i+1)]:
+                                                output = re.search(r'\(.*Only.*\)|\(.*Out.*\)|\(.*In.*\)|\(.*Lager.*\)', size_termus, flags=re.IGNORECASE)
+                                                output2 = re.search(r'.*Bevaka.*', size_termus, flags=re.IGNORECASE)
+                                                output3 = re.search(r'.*Stock.*', size_termus, flags=re.IGNORECASE)
+                                                output4 = re.search(r'.*Size\s+\d+.*', size_termus, flags=re.IGNORECASE)
+                                                if output is not None:
+                                                    size_termus = re.sub(r'\(.*\)', '', size_termus, flags=re.IGNORECASE)
+                                                elif output2 is not None:
+                                                    size_termus = re.sub(r'\s+-\s+Bevaka.*', '', size_termus, flags=re.IGNORECASE)
+                                                elif output3 is not None:
+                                                    size_termus = re.sub(r'\s+-\s+.*Stock.*', '', size_termus, flags=re.IGNORECASE)
+                                                elif output4 is not None:
+                                                    size_termus = re.sub(r'.*Size\s+', '', size_termus, flags=re.IGNORECASE)
+                                                size_termus = size_termus.replace(' ', '')
+                                                clean_size = slugify(size_termus.strip())
+                                                term = doesprodattrexist(jsonprodattr['pa_size'], size_termus, 'pa_size')
+                                                if term:
+                                                    size_array.append((term, false))
+                                                else:
+                                                    term = array[]
+                                                    term['term_id'] = -1
+                                                    term['name'] = size_termus
+                                                    term['slug'] = clean_size
+                                                    term['taxonomy'] = 'pa_size'
+                                                    size_array.append((term, true))
+                                            product_sizes = size_array
                                     # --- Get color attributes from current scrape --- #
-                                    ###
-                                    ###
-                                    #pass
+                                    if productmisc_array[i] == 'pa_color':
+                                        if productmisc_array[(i+1)].len() > 0:
+                                            color_array = []
+                                            for color_termus in productmisc_array[(i+1)]:
+                                                clean_color = slugify(color_termus.strip())
+                                                term = doesprodattrexist(jsonprodattr['pa_color'], color_termus, 'pa_color')
+                                                if term:
+                                                    color_array.append((term, false))
+                                                else:
+                                                    term = array[]
+                                                    term['term_id'] = -1
+                                                    term['name'] = color_termus
+                                                    term['slug'] = clean_color
+                                                    term['taxonomy'] = 'pa_color'
+                                                    color_array.append((term, true))
+                                            product_colors = color_array;
                                     # --- Get categories from current scrape --- #
-                                    ###
-                                    ###
-                                    #pass
+                                    if productmisc_array[i] == 'pa_category':
+                                        if productmisc_array[(i+1)].len() > 0:
+                                            category_array = []
+                                            for cat_termus in productmisc_array[(i+1)]:
+                                                clean_cat = slugify(cat_termus.strip())
+                                                term = doesprodattrexist(jsonprodattr['product_cat'], cat_termus, 'product_cat')
+                                                if term:
+                                                    category_array.append((term, false))
+                                                    cat_parents = term['ancestors']
+                                                    for parent_id in cat_parents:
+                                                        parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
+                                                        if not parent in category_array:
+                                                            category_array.append((parent, false))
+                                                else:
+                                                    term = array[]
+                                                    term['term_id'] = -1
+                                                    term['name'] = cat_termus
+                                                    term['slug'] = clean_cat
+                                                    term['taxonomy'] = 'product_cat'
+                                                    category_array.append((term, true))
+                                            product_categories = category_array
                                     # --- Is the product no longer existing - Does the page for it not exist anymore? --- #
                                     if productmisc_array[i] == 'notfound':
                                         if productmisc_array[($i+1)].len() > 0:
@@ -449,53 +577,170 @@ for website in jsonwebsites:
                                     
                                     productmisc_array[(i+1)] = lxml.html.tostring(productmisc_array[(i+1)])
                                     # --- Get sex attributes from current scrape --- #
-                                    ###if productmisc_array[i] == 'pa_sex':
-                                    ###   
-                                    #pass
+                                    if productmisc_array[i] == 'pa_sex_html':
+                                        sexies = jsonprodattr['pa_sex']
+                                        sexies_result = array[];
+                                        for sexterm in sexies:
+                                            term_name = sexterm['name']
+                                            sex_html = productmisc_array[(i+1)]
+                                            if sex_html.upper().find(term_name.upper()):
+                                                term = doesprodattrexist(jsonprodattr['pa_sex'], sexterm['term_id'], 'pa_sex')
+                                                if term:
+                                                    sexies_result.append(term, false)
+                                        product_sex = sexies_result
                                     # --- Get size attribute(s) from current scrape --- #
-                                    ###
-                                    ###
-                                    #pass
+                                    if productmisc_array[i] == 'pa_size_html':
+                                        sizies = jsonprodattr['pa_size']
+                                        sizies_result = array[];
+                                        for sizeterm in sizies:
+                                            term_name = sizeterm['name']
+                                            size_html = productmisc_array[(i+1)]
+                                            output = re.search(r'\(.*Only.*\)|\(.*Out.*\)|\(.*In.*\)|\(.*Lager.*\)', size_html, flags=re.IGNORECASE)
+                                            output2 = re.search(r'.*Bevaka.*', size_html, flags=re.IGNORECASE)
+                                            output3 = re.search(r'.*Stock.*', size_html, flags=re.IGNORECASE)
+                                            output4 = re.search(r'.*Size\s+\d+.*', size_html, flags=re.IGNORECASE)
+                                            if output is not None:
+                                                size_html = re.sub(r'\(.*\)', '', size_html, flags=re.IGNORECASE)
+                                            elif output2 is not None:
+                                                size_html = re.sub(r'\s+-\s+Bevaka.*', '', size_html, flags=re.IGNORECASE)
+                                            elif output3 is not None:
+                                                size_html = re.sub(r'\s+-\s+.*Stock.*', '', size_html, flags=re.IGNORECASE)
+                                            elif output4 is not None:
+                                                size_html = re.sub(r'.*Size\s+', '', size_html, flags=re.IGNORECASE)
+                                            if size_html.upper().find(term_name.upper()):
+                                                term = doesprodattrexist(jsonprodattr['pa_sex'], sexterm['term_id'], 'pa_sex')
+                                                    if term:
+                                                        sexies_result.append(term, false)
+                                        if sizies_result:
+                                            if product_sizes == '':
+                                                product_sizes = sizies_result;
+                                            else:
+                                                product_sizes = array_merge(product_sizes, sizies_result)
                                     # --- Get brand attributes from current scrape --- #
-                                    ###
-                                    ###
-                                    #pass
+                                    if productmisc_array[i] == 'pa_brand_html':
+                                        brandies = jsonprodattr['pa_brand']
+                                        brandies_result = array[];
+                                        for brandterm in brandies:
+                                            term_name = brandterm['name']
+                                            brand_html = productmisc_array[(i+1)]
+                                            if brand_html.upper().find(term_name.upper()):
+                                                term = doesprodattrexist(jsonprodattr['pa_brand'], brandterm['term_id'], 'pa_brand')
+                                                if term:
+                                                    brandies_result.append(term, false)
+                                        if brandies_result:
+                                            if product_brand == '':
+                                                product_brand = brandies_result;
+                                            else:
+                                                product_brand = array_merge(product_brand, brandies_result)
                                     # --- Get categories from current scrape --- #
-                                    ###
-                                    ###
-                                    #pass
+                                    if productmisc_array[i] == 'pa_category_html':
+                                        caties = jsonprodattr['product_cat']
+                                        caties_result = array[];
+                                        for catterm in caties:
+                                            term_name = catterm['name']
+                                            cat_html = productmisc_array[(i+1)]
+                                            if cat_html.upper().find(term_name.upper()):
+                                                term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
+                                                if term:
+                                                    caties_result.append(term, false)
+                                                    cat_parents = term['ancestors']
+                                                    for parent_id in cat_parents:
+                                                        parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
+                                                        if not parent in caties_result:
+                                                            caties_result.append((parent, false))
+                                        if caties_result:
+                                            if product_categories == '':
+                                                product_categories = caties_result
+                                            else:
+                                                product_categories = array_merge(product_categories, caties_result)
                                     # --- Get color attributes from current scrape --- #
-                                    ###
-                                    ###
-                                    #pass
+                                    if productmisc_array[i] == 'pa_color_html':
+                                        colories = jsonprodattr['pa_color']
+                                        colories_result = array[];
+                                        for colorterm in colories:
+                                            term_name = colorterm['name']
+                                            color_html = productmisc_array[(i+1)]
+                                            if color_html.upper().find(term_name.upper()):
+                                                term = doesprodattrexist(jsonprodattr['pa_color'], colorterm['term_id'], 'pa_color')
+                                                if term:
+                                                    colories_result.append(term, false)
+                                        if colories_result:
+                                            if product_colors == '':
+                                                product_colors = colories_result
+                                            else:
+                                                product_colors = array_merge(product_colors, colories_result)
                                     # --- Has the product sold out yet? --- #
-                                    selector_one_string_two = prodmisc_backup.split(',')
-									if selector_one_string_two.len() > 1:
-                                        productmisc_array[(i+1)] = lxml.html.tostring(selector_one_string_two[0].strip().decode('string_escape'))
-										if productmisc_array[($i+1)].find(selector_one_string_two[1]):
-											soldouthtmlupdatemeta = true
-											price = '0.0 BUCKS'
-											price = price.replace(r'[^0-9,.]', '')
-                                            price = getmoneyfromtext(price)
-										else:
-											soldouthtmlupdatemeta = false
+                                    if productmisc_array[i] == 'sold_out_html':
+                                        selector_one_string_two = prodmisc_backup.split(',')
+                                        if selector_one_string_two.len() > 1:
+                                            productmisc_array[(i+1)] = lxml.html.tostring(selector_one_string_two[0].strip().decode('string_escape'))
+                                            if productmisc_array[($i+1)].find(selector_one_string_two[1]):
+                                                soldouthtmlupdatemeta = true
+                                                price = '0.0 BUCKS'
+                                                price = price.replace(r'[^0-9,.]', '')
+                                                price = getmoneyfromtext(price)
+                                            else:
+                                                soldouthtmlupdatemeta = false
                                     # --- Should we skip the first size alternative on information import? --- #
-                                    ###
-                                    ###
-                                    #pass
-                                    
+                                    if productmisc_array[i] == 'skip_first_size':
+                                        if product_sizes != '':
+                                            removed_size = product_sizes.pop(0)
+                                                    
                             # --> Fix categories for the product! <-- #
-                            ###
-                            ###
-                            #pass
+                            # *** --- NOTE: THIS IS DONE AT REMOTE WEBSITE! --- *** #
+                            
                             # --> Apply sizetype attributes where needed! <-- #
-                            ###
-                            ###
-                            #pass
+                            product_sizetypemiscname = sizetypemisc
+                            if product_categories != '':
+                                array_catsizetypemaps = jsoncatsizetypemaps
+                                array_sizetypes = []
+                                for catsizetypemap in array_catsizetypemaps:
+                                    finalcatsizetypes = catsizetypemap['finalcatsizetype'].split(',')
+                                    catstosizetypes = catsizetypemap['catstosizetype'].split(',')
+                                    product_category_names = []
+                                    matching_cats = []
+                                    foreach cat in product_categories:
+                                        category_to_cast_id = cat['term_id']
+                                        term = doesprodattrexist(jsonprodattr['product_cat'], category_to_cast_id, 'product_cat')
+                                            if term:
+                                                product_category_names.append(term['name'])
+                                    foreach catstosizetype in catstosizetypes:
+                                        matching_cats = array_merge(matching_cats, filter(lambda x: re.findall(u'(\b.*' + catstosizetype.strip + '\b)', x, flags=re.IGNORECASE), product_category_names))
+                                    if matching_cats:
+                                        size_type_terms = jsonprodattr['pa_sizetype']
+                                        count = 0
+                                        for size_type_term in size_type_terms:
+                                            size_type_terms[count] = size_type_term['name']
+                                            count++
+                                        filtered_terms = []
+                                        for finalcatsizetype in finalcatsizetypes:
+                                            filtered_terms = array_merge(filtered_terms, filter(lambda x: re.findall(u'(\b.*' + finalcatsizetype.strip + '\b)', x, flags=re.IGNORECASE), size_type_terms))
+                                        for filt_term in filtered_terms:
+                                            term = doesprodattrexist(jsonprodattr['pa_sizetype'], filt_term, 'pa_sizetype')
+                                            if term:
+                                                array_sizetypes.append((term, false))     
+                                product_sizetypes = array_sizetypes
+                                if not product_sizetypes and product_sizes and not product_sizetypemiscname:
+                                    product_sizetypemiscname = 'Other'
+                            else:
+                                if product_sizes and not wc_product_sizetypemiscname:
+                                    product_sizetypemiscname = 'Other'
+                            if product_sizetypemiscname:
+                                product_sizetypemiscs = []
+                                term = doesprodattrexist(jsonprodattr['pa_sizetypemisc'], product_sizetypemiscname, 'pa_sizetypemisc')
+                                if term:
+                                    product_sizetypemiscs.append((term, false))
+                                else:
+                                    term = array[]
+                                    term['term_id'] = -1
+                                    term['name'] = product_sizetypemiscname.strip()
+                                    term['slug'] = product_sizetypemiscname.strip().lower()
+                                    term['taxonomy'] = 'pa_sizetypemisc'
+                                    product_sizetypemiscs.append((term, true))
+                                    
                             # --> Fix/correct binds between existing product sizes and sizetypes(Including misc. sizetypes)! <-- #
-                            ###
-                            ###
-                            #pass
+                            # *** --- NOTE: THIS IS DONE AT REMOTE WEBSITE! --- *** #
+                            
                             # --> Apply color, size, sex and brand to the product! <-- #
                             ###
                             ###
