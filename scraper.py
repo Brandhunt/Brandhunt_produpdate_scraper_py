@@ -331,6 +331,11 @@ for website in jsonwebsites:
                     soldoutupdatemeta = ''
                     soldouthtmlupdatemeta = ''
                     catstoaddresult = ''
+                    
+                    insert_sizetosizetype = ''
+                    remove_sizetosizetype = ''
+                    insert_sizetosizetypemisc = ''
+                    remove_sizetosizetypemisc = ''
 
                     # --> Get 'em!
                     
@@ -586,7 +591,7 @@ for website in jsonwebsites:
                                             if sex_html.upper().find(term_name.upper()):
                                                 term = doesprodattrexist(jsonprodattr['pa_sex'], sexterm['term_id'], 'pa_sex')
                                                 if term:
-                                                    sexies_result.append(term, false)
+                                                    sexies_result.append((term, false))
                                         product_sex = sexies_result
                                     # --- Get size attribute(s) from current scrape --- #
                                     if productmisc_array[i] == 'pa_size_html':
@@ -610,7 +615,7 @@ for website in jsonwebsites:
                                             if size_html.upper().find(term_name.upper()):
                                                 term = doesprodattrexist(jsonprodattr['pa_sex'], sexterm['term_id'], 'pa_sex')
                                                     if term:
-                                                        sexies_result.append(term, false)
+                                                        sexies_result.append((term, false))
                                         if sizies_result:
                                             if product_sizes == '':
                                                 product_sizes = sizies_result;
@@ -626,7 +631,7 @@ for website in jsonwebsites:
                                             if brand_html.upper().find(term_name.upper()):
                                                 term = doesprodattrexist(jsonprodattr['pa_brand'], brandterm['term_id'], 'pa_brand')
                                                 if term:
-                                                    brandies_result.append(term, false)
+                                                    brandies_result.append((term, false))
                                         if brandies_result:
                                             if product_brand == '':
                                                 product_brand = brandies_result;
@@ -642,7 +647,7 @@ for website in jsonwebsites:
                                             if cat_html.upper().find(term_name.upper()):
                                                 term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                 if term:
-                                                    caties_result.append(term, false)
+                                                    caties_result.append((term, false))
                                                     cat_parents = term['ancestors']
                                                     for parent_id in cat_parents:
                                                         parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
@@ -663,7 +668,7 @@ for website in jsonwebsites:
                                             if color_html.upper().find(term_name.upper()):
                                                 term = doesprodattrexist(jsonprodattr['pa_color'], colorterm['term_id'], 'pa_color')
                                                 if term:
-                                                    colories_result.append(term, false)
+                                                    colories_result.append((term, false))
                                         if colories_result:
                                             if product_colors == '':
                                                 product_colors = colories_result
@@ -687,7 +692,16 @@ for website in jsonwebsites:
                                             removed_size = product_sizes.pop(0)
                                                     
                             # --> Fix categories for the product! <-- #
-                            # *** --- NOTE: THIS IS DONE AT REMOTE WEBSITE! --- *** #
+                            if product_categories:
+                                existing_categories = product['category_ids']
+                                if existing_categories:
+                                    count = 0
+                                    for cat in existing_categories:
+                                        term = doesprodattrexist(jsonprodattr['product_cat'], cat, 'product_cat')
+                                        existing_categories[count] = ((term, false))
+                                        count++
+                                    product_categories = product_categories + existing_categories   
+                                #SAVE CAT. IDS AND PRODUCT HERE IN REMOTE SITE
                             
                             # --> Apply sizetype attributes where needed! <-- #
                             product_sizetypemiscname = sizetypemisc
@@ -739,18 +753,141 @@ for website in jsonwebsites:
                                     product_sizetypemiscs.append((term, true))
                                     
                             # --> Fix/correct binds between existing product sizes and sizetypes(Including misc. sizetypes)! <-- #
-                            # *** --- NOTE: THIS IS DONE AT REMOTE WEBSITE! --- *** #
+                            if product_sizetypes and product_sizes:
+                                sizeid_col = product['sizetosizetypemaps']['size']
+                                sizetypeid_col = product['sizetosizetypemaps']['sizetype']
+                                count = 0
+                                for sizeid in sizeid_col:
+                                    sizeid_col[count] = doesprodattrexist(jsonprodattr['pa_size'], sizeid, 'pa_size')
+                                    count++
+                                count = 0
+                                for sizetypeid in sizetypeid_col:
+                                    sizetypeid_col[count] = doesprodattrexist(jsonprodattr['pa_sizetype'], sizetypeid, 'pa_sizetype')
+                                    count++
+                                #SAVE VALUES FOR INSERT
+                                compare_sizeid = list(set(product_sizes) - set(sizeid_col))
+                                compare_sizetypeid = list(set(product_sizetypes) - set(sizetypeid_col))
+                                if compare_sizetypeid and compare_sizeid:
+                                    for sizetypeid_insert in compare_sizetypeid:
+                                        count = 0
+                                        for sizeid_insert in compare_sizeid:
+                                            insert_sizetosizetype[count] = (sizeid_insert, sizetypeid_insert, product['productid'])
+                                            count++
+                                #SAVE VALUES FOR REMOVAL
+                                compare_sizeid = list(set(sizeid_col) - set(product_sizes))
+                                compare_sizetypeid = list(set(sizetypeid_col) - set(product_sizetypes))
+                                if compare_sizetypeid and compare_sizeid:
+                                    for sizetypeid_remove in compare_sizetypeid:
+                                        count = 0
+                                        for sizeid_remove in compare_sizeid:
+                                            remove_sizetosizetype[count] = (sizeid_remove, sizetypeid_remove, product['productid'])
+                                            count++   
+                                            
+                            if product_sizetypemiscs and product_sizes:
+                                sizeid_col = product['sizetosizetypemaps']['size_misc']
+                                compare_sizetypemiscid = product['sizetosizetypemaps']['sizetype_misc'] 
+                                count = 0
+                                for sizeid in sizeid_col:
+                                    sizeid_col[count] = doesprodattrexist(jsonprodattr['pa_size'], sizeid, 'pa_size')
+                                    count++
+                                count = 0
+                                for sizetypemiscid in compare_sizetypemiscid:
+                                    compare_sizetypemiscid[count] = doesprodattrexist(jsonprodattr['pa_sizetypemisc'], sizetypemiscid, 'pa_sizetypemisc')
+                                    count++
+                                #SAVE VALUES FOR INSERT
+                                compare_sizeid = list(set(product_sizes) - set(sizeid_col))
+                                compare_sizetypemiscid = list(set(product_sizetypemiscs) - set(compare_sizetypemiscid)) 
+                                if compare_sizetypemiscid and compare_sizeid:
+                                    for sizetypemiscid_insert in compare_sizetypemiscid:
+                                        count = 0
+                                        for sizeid_insert in compare_sizeid:
+                                            insert_sizetosizetypemisc[count] = (sizeid_insert, sizetypemiscid_insert, product['productid'])
+                                            count++
+                                #SAVE VALUES FOR REMOVAL
+                                compare_sizeid = list(set(sizeid_col) - set(product_sizes))
+                                compare_sizetypemiscid = list(set(compare_sizetypemiscid) - set(product_sizetypemiscs))
+                                if compare_sizetypemiscid and compare_sizeid:
+                                    for sizetypemiscid_remove in compare_sizetypemiscid:
+                                        count = 0
+                                        for sizeid_remove in compare_sizeid:
+                                            remove_sizetosizetypemisc[count] = (sizeid_remove, sizetypemiscid_remove, product['productid'])
+                                            count++
                             
-                            # --> Apply color, size, sex and brand to the product! <-- #
-                            ###
-                            ###
-                            #pass
-                            
+                            # --> Apply color, size, sex and brand to the product! (Filter the attributes before save)
+                            # --> (Filter the attributes before database save)
+                            attributes = []
+                            attribute_pos = 1 
+                            if product_brand:
+                                brand_values = jsonprodattr['pa_brand']
+                                if brand_values:
+                                    existing_brands = re.split(',\s*', brand_values)
+                                    count = 0
+                                    for brand in existing_brands:
+                                        existing_brands[count] = (brand, false)
+                                        count++
+                                    product_brand = product_brand + existing_brands
+                                attributes.append(['name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attribute_pos++
+                            if product_colors:
+                                color_values = jsonprodattr['pa_color']
+                                if color_values:
+                                    existing_colors = re.split(',\s*', color_values)
+                                    count = 0
+                                    for color in existing_colors:
+                                        existing_colors[count] = (color, false)
+                                        count++
+                                    product_colors = product_colors + existing_colors
+                                attributes.append(['name':'Color', 'options':product_colors, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attribute_pos++
+                            if product_sex:
+                                sex_values = jsonprodattr['pa_sex']
+                                if sex_values:
+                                    existing_sex = re.split(',\s*', sex_values)
+                                    count = 0
+                                    for sex in existing_sex:
+                                        existing_sex[count] = (sex, false)
+                                        count++
+                                    product_sex = product_sex + existing_sex
+                                attributes.append(['name':'Sex', 'options':product_sex, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attribute_pos++
+                            if product_sizes:
+                                size_values = jsonprodattr['pa_size']
+                                if size_values:
+                                    existing_sizes = re.split(',\s*', size_values)
+                                    count = 0
+                                    for size in existing_sizes:
+                                        existing_sizes[count] = (size, false)
+                                        count++
+                                    product_sizes = product_sizes + existing_sizes
+                                attributes.append(['name':'Size', 'options':product_sizes, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attribute_pos++
+                            if product_sizetypes:
+                                sizetype_values = jsonprodattr['pa_sizetype']
+                                if sizetype_values:
+                                    existing_sizetypes = re.split(',\s*', sizetype_values)
+                                    count = 0
+                                    for sizetype in existing_sizetypes:
+                                        existing_sizetypes[count] = (sizetype, false)
+                                        count++
+                                    product_sizetypes = product_sizetypes + existing_sizetypes
+                                attributes.append(['name':'Sizetype', 'options':product_sizetypes, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attribute_pos++
+                            if product_sizetypemiscs:
+                                sizetypemisc_values = jsonprodattr['pa_sizetypemisc']
+                                if sizetypemisc_values:
+                                    existing_sizetypemiscs = re.split(',\s*', sizetypemisc_values)
+                                    count = 0
+                                    for sizetypemisc in existing_sizetypemiscs:
+                                        existing_sizetypemiscs[count] = (sizetypemisc, false)
+                                        count++
+                                    product_sizetypemiscs = product_sizetypemiscs + existing_sizetypemiscs
+                                attributes.append(['name':'Sizetypemisc', 'options':product_sizetypemiscs, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attribute_pos++
+                            #SAVE 'ATTRIBUTES' ARRAY TO LOCAL DATABASE!
                             # --- Make sure to empty all the already-checked bits and join the productmisc. bits back together! --- #
                             ###
                             ###
-                            #pass           
-                            
+                            #pass
                         except:
                             print("Error when scraping misc. product information for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
 
