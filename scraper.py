@@ -574,7 +574,7 @@ for website in jsonwebsites:
                                         if productmisc_array[($i+1)].len() > 0:
                                             soldoutupdatemeta = true
                                             price = '0.0 BUCKS'
-											price = price.replace(r'[^0-9,.]', '')
+					    price = price.replace(r'[^0-9,.]', '')
                                             price = getmoneyfromtext(price)
                                         else:
                                             soldoutupdatemeta = false
@@ -1042,8 +1042,21 @@ for website in jsonwebsites:
                                                   'productid': product['productid'],
                                                   'price': price,
                                                   'salesprice': salesprice,
-                                                  )
-                    
+						  'domainmisc': domainmisc_array,
+						  'prodlogurls': prodlog_image_urls,
+						  'prodlogurl': productlogourl,
+						  'finalimgurls': images,
+						  'validimgurls': image_urls_valid,
+						  'imgurls': image_urls,
+						  'notfound': shouldremoveonnotfound,
+						  'soldoutfix': soldoutupdatemeta,
+						  'soldouthtmlfix': soldouthtmlupdatemeta,
+						  'catstoaddresult': catstoaddresult
+						  'attributes': attributes_to_store
+						  'sizetypemapsqls': [insert_sizetosizetype,
+								     remove_sizetosizetype,
+								     insert_sizetosizetypemisc,
+								     remove_sizetosizetypemisc])
                 except:
                     print("Error: " + sys.exc_info()[0] + " occured!")
                     #STORE PRODUCT IN DATABASE AS SHOULD_DELETE IF HTTP404 ERROR EXISTS
@@ -1073,25 +1086,7 @@ for website in jsonwebsites:
                 continue
             
             # --- Handle importing prices from product --- #
-            
-            
-            
-##cnx = mysql.connector.connect(user=wp_db_user, 
-##                              password=wp_db_password,
-##                              host=wp_db_host,
-##                              database=wp_db_name)
-##cnx.close()
 
-# # Read in a page
-# html = scraperwiki.scrape("http://foo.com")
-#
-# # Find something on the page using css selectors
-# root = lxml.html.fromstring(html)
-# root.cssselect("div[align='left']")
-#
-# # Write out to the sqlite database using scraperwiki library
-# scraperwiki.sqlite.save(unique_keys=['name'], data={"name": "susan", "occupation": "software developer"})
-#
 # # An arbitrary query against the database
 # scraperwiki.sql.select("* from data where 'name'='peter'")
 
