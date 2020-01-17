@@ -158,14 +158,14 @@ jsoncatmaps = json.loads(r.content)
 while jsonprods:
     #print('TESTPRINT - AFTER START')
     for website in jsonwebsites:
-        print('TESTPRINT - AFTER START 2')
+        #print('TESTPRINT - AFTER START 2')
         if website['ignorethisone'] == '1':
             continue   
-        print('TESTPRINT - AFTER START 3')
+        #print('TESTPRINT - AFTER START 3')
         for product in jsonprods:
-            print('TESTPRINT - AFTER START 4')
+            #print('TESTPRINT - AFTER START 4')
             if website['domain'] == product['domain']:
-                print('TESTPRINT - AFTER START 5')
+                #print('TESTPRINT - AFTER START 5')
                 # --- First, get the HTML for each domain part --- #
                 if website['scrapetype'] == 'standard_morph_io':
                     try:
@@ -174,7 +174,7 @@ while jsonprods:
                         try:
                             html = scraperwiki.scrape(url)
                         except:
-                            print("Error when scraping URL for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
+                            print("Error when scraping URL for product ID " + product['productid'] + ": " + str(sys.exc_info()[0]) + " occured!")
                         # >>> GET THE HTML ROOT <<< #
                         root = lxml.html.fromstring(html)
                         print("Currently scraping product with ID " + str(product['productid']))
