@@ -830,7 +830,7 @@ for website in jsonwebsites:
                                         existing_brands[count] = (brand, false)
                                         count+=1
                                     product_brand = product_brand + existing_brands
-                                attributes.append(['name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attributes.append({'name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1})
                                 attribute_pos+=1
                             if product_colors:
                                 color_values = product['attributes']['color']
@@ -841,7 +841,7 @@ for website in jsonwebsites:
                                         existing_colors[count] = (color, false)
                                         count+=1
                                     product_colors = product_colors + existing_colors
-                                attributes.append(['name':'Color', 'options':product_colors, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attributes.append({'name':'Color', 'options':product_colors, 'position':attribute_pos, 'visible':1, 'variation':1})
                                 attribute_pos+=1
                             if product_sex:
                                 sex_values = product['attributes']['sex']
@@ -852,7 +852,7 @@ for website in jsonwebsites:
                                         existing_sex[count] = (sex, false)
                                         count+=1
                                     product_sex = product_sex + existing_sex
-                                attributes.append(['name':'Sex', 'options':product_sex, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attributes.append({'name':'Sex', 'options':product_sex, 'position':attribute_pos, 'visible':1, 'variation':1})
                                 attribute_pos+=1
                             if product_sizes:
                                 size_values = product['attributes']['size']
@@ -863,7 +863,7 @@ for website in jsonwebsites:
                                         existing_sizes[count] = (size, false)
                                         count+=1
                                     product_sizes = product_sizes + existing_sizes
-                                attributes.append(['name':'Size', 'options':product_sizes, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attributes.append({'name':'Size', 'options':product_sizes, 'position':attribute_pos, 'visible':1, 'variation':1})
                                 attribute_pos+=1
                             if product_sizetypes:
                                 sizetype_values = product['attributes']['sizetype']
@@ -874,7 +874,7 @@ for website in jsonwebsites:
                                         existing_sizetypes[count] = (sizetype, false)
                                         count+=1
                                     product_sizetypes = product_sizetypes + existing_sizetypes
-                                attributes.append(['name':'Sizetype', 'options':product_sizetypes, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attributes.append({'name':'Sizetype', 'options':product_sizetypes, 'position':attribute_pos, 'visible':1, 'variation':1})
                                 attribute_pos+=1
                             if product_sizetypemiscs:
                                 sizetypemisc_values = product['attributes']['sizetypemisc']
@@ -885,7 +885,7 @@ for website in jsonwebsites:
                                         existing_sizetypemiscs[count] = (sizetypemisc, false)
                                         count+=1
                                     product_sizetypemiscs = product_sizetypemiscs + existing_sizetypemiscs
-                                attributes.append(['name':'Sizetypemisc', 'options':product_sizetypemiscs, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attributes.append({'name':'Sizetypemisc', 'options':product_sizetypemiscs, 'position':attribute_pos, 'visible':1, 'variation':1})
                                 attribute_pos+=1
                             attributes_to_store = attributes
                             # --- Make sure to empty all the already-checked bits and join the productmisc. bits back together! --- #
@@ -921,7 +921,7 @@ for website in jsonwebsites:
                                         existing_brands[count] = (brand, false)
                                         count+=1'''
                                     termies_result[0] = array_merge(termies_result[0], existing_brands)
-                                attributes.append(['name':'Brand', 'options':termies_result[0], 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attributes.append({'name':'Brand', 'options':termies_result[0], 'position':attribute_pos, 'visible':1, 'variation':1})
                                 attribute_pos+=1
                             else:
                                 brand_values = product_brand
@@ -932,7 +932,7 @@ for website in jsonwebsites:
                                         existing_brands[count] = (brand, false)
                                         count+=1'''
                                     product_brand = existing_brands
-                                    attributes.append(['name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                    attributes.append({'name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                             if termies_result[1]:
                                 color_values = product_colors
@@ -943,7 +943,7 @@ for website in jsonwebsites:
                                         existing_colors[count] = (color, false)
                                         count+=1'''
                                     termies_result[1] = array_merge(termies_result[1], existing_colors)
-                                attributes.append(['name':'Color', 'options':termies_result[1], 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attributes.append({'name':'Color', 'options':termies_result[1], 'position':attribute_pos, 'visible':1, 'variation':1})
                                 attribute_pos+=1
                             else:
                                 color_values = product_colors
@@ -954,7 +954,7 @@ for website in jsonwebsites:
                                         existing_colors[count] = (color, false)
                                         count+=1'''
                                     product_colors = existing_colors
-                                    attributes.append(['name':'Brand', 'options':product_colors, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                    attributes.append({'name':'Color', 'options':product_colors, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                             if termies_result[2]:
                                 sex_values = product_sex
@@ -965,7 +965,7 @@ for website in jsonwebsites:
                                         existing_sex[count] = (sex, false)
                                         count+=1'''
                                     termies_result[2] = array_merge(termies_result[2], existing_sex)
-                                attributes.append(['name':'Sex', 'options':termies_result[2], 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attributes.append({'name':'Sex', 'options':termies_result[2], 'position':attribute_pos, 'visible':1, 'variation':1})
                                 attribute_pos+=1
                             else:
                                 sex_values = product_sex
@@ -976,25 +976,25 @@ for website in jsonwebsites:
                                         existing_sex[count] = (sex, false)
                                         count+=1'''
                                     product_sex = existing_sex
-                                    attributes.append(['name':'Sex', 'options':product_sex, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                    attributes.append({'name':'Sex', 'options':product_sex, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                             size_values = product_sizes
                             if size_values:
                                 existing_sizes = re.split(',\s*', size_values)
                                 product_sizes = existing_sizes
-                                attributes.append(['name':'Size', 'options':product_sizes, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attributes.append({'name':'Size', 'options':product_sizes, 'position':attribute_pos, 'visible':1, 'variation':1})
                                 attribute_pos+=1
                             sizetype_values = product_sizetypes
                             if sizetype_values:
                                 existing_sizetypes = re.split(',\s*', sizetype_values)
                                 product_sizetypes = existing_sizetypes
-                                attributes.append(['name':'Size', 'options':product_sizetypes, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attributes.append({'name':'Sizetype', 'options':product_sizetypes, 'position':attribute_pos, 'visible':1, 'variation':1})
                                 attribute_pos+=1
                             sizetypemisc_values = product_sizetypemiscs
                             if sizetypemisc_values:
                                 existing_sizetypemiscs = re.split(',\s*', sizetypemisc_values)
                                 product_sizetypemiscs = existing_sizetypemiscs
-                                attributes.append(['name':'Size', 'options':product_sizetypemiscs, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attributes.append({'name':'Sizetypemisc', 'options':product_sizetypemiscs, 'position':attribute_pos, 'visible':1, 'variation':1})
                                 attribute_pos+=1
                             attributes_to_store = attributes
                             category_terms = jsonprodattr['product_cat']
