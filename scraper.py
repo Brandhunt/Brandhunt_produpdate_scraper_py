@@ -328,7 +328,7 @@ for website in jsonwebsites:
                     sizetypemisc = ''
                     preexistingcurrency = ''
                     notfound = ''
-		            shouldremoveonnotfound = false
+                    shouldremoveonnotfound = false
                     soldoutupdatemeta = ''
                     soldouthtmlupdatemeta = ''
                     catstoaddresult = ''
