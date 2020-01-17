@@ -160,18 +160,28 @@ jsoncatmaps = json.loads(r.content)
 
 #arraus = []
 
-print('BEFORE START')
+print('TESTPRINT - BEFORE START')
 
 while jsonprods:
-
+ 
+    print('TESTPRINT - AFTER START')
+    
     for website in jsonwebsites:
+        
+        print('TESTPRINT - AFTER START 2')
 
         if bool(website['ignorethisone']) == True:
             continue
+            
+        print('TESTPRINT - AFTER START 3')
 
         for product in jsonprods:
+            
+            print('TESTPRINT - AFTER START 4')
 
             if website['domain'] == product['domain']:
+                
+                print('TESTPRINT - AFTER START 5')
 
                 # --- First, get the HTML for each domain part --- #
 
