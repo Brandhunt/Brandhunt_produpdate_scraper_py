@@ -720,8 +720,8 @@ for website in jsonwebsites:
                                     for cat in product_categories:
                                         category_to_cast_id = cat['term_id']
                                         term = doesprodattrexist(jsonprodattr['product_cat'], category_to_cast_id, 'product_cat')
-                                            if term:
-                                                product_category_names.append(term['name'])
+                                        if term:
+                                            product_category_names.append(term['name'])
                                     for catstosizetype in catstosizetypes:
                                         matching_cats = array_merge(matching_cats, filter(lambda x: re.findall(u'(\b.*' + catstosizetype.strip + '\b)', x, flags=re.IGNORECASE), product_category_names))
                                     if matching_cats:
