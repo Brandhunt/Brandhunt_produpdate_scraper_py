@@ -56,15 +56,16 @@ def getmoneyfromtext(price):
 # *** --- For converting scraped price to correct value according to wanted currency --- *** #
 def converttocorrectprice(price, currencysymbol):
     r = requests.get('https://api.exchangeratesapi.io/latest?base=' + currencysymbol + '', headers=headers)
-    jsonrates = r.json()
+    json = r.json()
+    jsonrates = json['rates']
     foundinrates = False
     for ratekey, ratevalue in jsonrates.items():
         if website['priceselector'].find('' + ratekey + ''):
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)
-            print(price)
-            print(ratevalue)
-            price = float(price) / float(ratevalue)
+            #print(price)
+            #print(ratevalue)
+            price = price / ratevalue
             price = getmoneyfromtext(price)
             foundinrates = True
             break
