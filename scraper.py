@@ -183,7 +183,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                         # >>> GET THE HTML ROOT <<< #
                         root = lxml.html.fromstring(html)
 
-                        print("Currently scraping product with ID " + product[product_id])
+                        print("Currently scraping product with ID " + str(product['productid']))
 
                         # >>> GET THE PRICE <<< #
                         price_elements = ''
