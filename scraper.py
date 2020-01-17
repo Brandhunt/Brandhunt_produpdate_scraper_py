@@ -616,8 +616,8 @@ for website in jsonwebsites:
                                                 size_html = re.sub(r'.*Size\s+', '', size_html, flags=re.IGNORECASE)
                                             if size_html.upper().find(term_name.upper()):
                                                 term = doesprodattrexist(jsonprodattr['pa_sex'], sexterm['term_id'], 'pa_sex')
-                                                    if term:
-                                                        sexies_result.append((term, false))
+                                                if term:
+                                                    sexies_result.append((term, false))
                                         if sizies_result:
                                             if product_sizes == '':
                                                 product_sizes = sizies_result
