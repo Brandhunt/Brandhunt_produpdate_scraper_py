@@ -157,7 +157,7 @@ arraus = []
 offset = 0
 limit = 25
 
-while requests.get(wp_connectwp_url + offset + '/' + limit + '/', headers=headers): 
+while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', headers=headers): 
 
     for website in jsonwebsites:
 
