@@ -481,7 +481,7 @@ for website in jsonwebsites:
                                             product_sex = sex_array
                                     # --- Get brand attribute(s) from current scrape --- #
                                     if productmisc_array[i] == 'pa_brand':
-                                        brand_array = [];
+                                        brand_array = []
                                         if productmisc_array[(i+1)].len() > 0:
                                             brand_termus = productmisc_array[(i+1)][0]
                                             clean_brand = slugify(brand_termus.strip())
@@ -500,7 +500,7 @@ for website in jsonwebsites:
                                     # --- Get size attributes from current scrape --- #
                                     if productmisc_array[i] == 'pa_size':
                                         if productmisc_array[(i+1)].len() > 0:
-                                            size_array = [];
+                                            size_array = []
                                             for size_termus in productmisc_array[(i+1)]:
                                                 output = re.search(r'\(.*Only.*\)|\(.*Out.*\)|\(.*In.*\)|\(.*Lager.*\)', size_termus, flags=re.IGNORECASE)
                                                 output2 = re.search(r'.*Bevaka.*', size_termus, flags=re.IGNORECASE)
@@ -543,7 +543,7 @@ for website in jsonwebsites:
                                                     term['slug'] = clean_color
                                                     term['taxonomy'] = 'pa_color'
                                                     color_array.append((term, true))
-                                            product_colors = color_array;
+                                            product_colors = color_array
                                     # --- Get categories from current scrape --- #
                                     if productmisc_array[i] == 'pa_category':
                                         if productmisc_array[(i+1)].len() > 0:
@@ -586,7 +586,7 @@ for website in jsonwebsites:
                                     # --- Get sex attributes from current scrape --- #
                                     if productmisc_array[i] == 'pa_sex_html':
                                         sexies = jsonprodattr['pa_sex']
-                                        sexies_result = array[];
+                                        sexies_result = array[]
                                         for sexterm in sexies:
                                             term_name = sexterm['name']
                                             sex_html = productmisc_array[(i+1)]
@@ -598,7 +598,7 @@ for website in jsonwebsites:
                                     # --- Get size attribute(s) from current scrape --- #
                                     if productmisc_array[i] == 'pa_size_html':
                                         sizies = jsonprodattr['pa_size']
-                                        sizies_result = array[];
+                                        sizies_result = array[]
                                         for sizeterm in sizies:
                                             term_name = sizeterm['name']
                                             size_html = productmisc_array[(i+1)]
@@ -620,13 +620,13 @@ for website in jsonwebsites:
                                                         sexies_result.append((term, false))
                                         if sizies_result:
                                             if product_sizes == '':
-                                                product_sizes = sizies_result;
+                                                product_sizes = sizies_result
                                             else:
                                                 product_sizes = array_merge(product_sizes, sizies_result)
                                     # --- Get brand attributes from current scrape --- #
                                     if productmisc_array[i] == 'pa_brand_html':
                                         brandies = jsonprodattr['pa_brand']
-                                        brandies_result = array[];
+                                        brandies_result = array[]
                                         for brandterm in brandies:
                                             term_name = brandterm['name']
                                             brand_html = productmisc_array[(i+1)]
@@ -636,13 +636,13 @@ for website in jsonwebsites:
                                                     brandies_result.append((term, false))
                                         if brandies_result:
                                             if product_brand == '':
-                                                product_brand = brandies_result;
+                                                product_brand = brandies_result
                                             else:
                                                 product_brand = array_merge(product_brand, brandies_result)
                                     # --- Get categories from current scrape --- #
                                     if productmisc_array[i] == 'pa_category_html':
                                         caties = jsonprodattr['product_cat']
-                                        caties_result = array[];
+                                        caties_result = array[]
                                         for catterm in caties:
                                             term_name = catterm['name']
                                             cat_html = productmisc_array[(i+1)]
@@ -663,7 +663,7 @@ for website in jsonwebsites:
                                     # --- Get color attributes from current scrape --- #
                                     if productmisc_array[i] == 'pa_color_html':
                                         colories = jsonprodattr['pa_color']
-                                        colories_result = array[];
+                                        colories_result = []
                                         for colorterm in colories:
                                             term_name = colorterm['name']
                                             color_html = productmisc_array[(i+1)]
@@ -747,7 +747,7 @@ for website in jsonwebsites:
                                 if term:
                                     product_sizetypemiscs.append((term, false))
                                 else:
-                                    term = array[]
+                                    term = []
                                     term['term_id'] = -1
                                     term['name'] = product_sizetypemiscname.strip()
                                     term['slug'] = product_sizetypemiscname.strip().lower()
@@ -918,7 +918,7 @@ for website in jsonwebsites:
                                     for brand in existing_brands:
                                         existing_brands[count] = (brand, false)
                                         count++'''
-                                    termies_result[0] = array_merge(termies_result[0], existing_brands);
+                                    termies_result[0] = array_merge(termies_result[0], existing_brands)
                                 attributes.append(['name':'Brand', 'options':termies_result[0], 'position':attribute_pos, 'visible':1, 'variation':1])
                                 attribute_pos++
                             else:
@@ -940,7 +940,7 @@ for website in jsonwebsites:
                                     for color in existing_colors:
                                         existing_colors[count] = (color, false)
                                         count++'''
-                                    termies_result[1] = array_merge(termies_result[1], existing_colors);
+                                    termies_result[1] = array_merge(termies_result[1], existing_colors)
                                 attributes.append(['name':'Color', 'options':termies_result[1], 'position':attribute_pos, 'visible':1, 'variation':1])
                                 attribute_pos++
                             else:
@@ -962,7 +962,7 @@ for website in jsonwebsites:
                                     for sex in existing_sex:
                                         existing_sex[count] = (sex, false)
                                         count++'''
-                                    termies_result[2] = array_merge(termies_result[2], existing_sex);
+                                    termies_result[2] = array_merge(termies_result[2], existing_sex)
                                 attributes.append(['name':'Sex', 'options':termies_result[2], 'position':attribute_pos, 'visible':1, 'variation':1])
                                 attribute_pos++
                             else:
