@@ -1040,7 +1040,7 @@ for website in jsonwebsites:
                     
                     # >>> STORE PRODUCT VALUES IN MORPH.IO DATABASE <<< #
                     scraperwiki.sqlite.save(unique_keys=['productid'],\
-                                            data={'domain': "product['domain'],\
+                                            data={'domain': product['domain'],\
                                                   'url': product['url'],\
                                                   'productid': product['productid'],\
                                                   'price': price,\
