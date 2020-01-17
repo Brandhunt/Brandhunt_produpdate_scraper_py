@@ -1054,12 +1054,12 @@ for website in jsonwebsites:
                           'notfound': shouldremoveonnotfound,\
                           'soldoutfix': soldoutupdatemeta,\
                           'soldouthtmlfix': soldouthtmlupdatemeta,\
-                          'catstoaddresult': catstoaddresult\
-                          'attributes': attributes_to_store\
+                          'catstoaddresult': catstoaddresult,\
+                          'attributes': attributes_to_store,\
                           'sizetypemapsqls': [insert_sizetosizetype,\
                                      remove_sizetosizetype,\
                                      insert_sizetosizetypemisc,\
-                                     remove_sizetosizetypemisc])
+                                     remove_sizetosizetypemisc]})
                 except:
                     print("Error: " + sys.exc_info()[0] + " occured!")
                     #STORE PRODUCT IN DATABASE AS SHOULD_DELETE IF HTTP404 ERROR EXISTS
