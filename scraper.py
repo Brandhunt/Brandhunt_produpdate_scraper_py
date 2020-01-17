@@ -172,7 +172,7 @@ while jsonprods:
                         # >>> GET THE HTML <<< #
                         html = ''
                         try:
-                            html = scraperwiki.scrape(url)
+                            html = scraperwiki.scrape(product['url'])
                         except:
                             print("Error when scraping URL for product ID " + product['productid'] + ": " + str(sys.exc_info()[0]) + " occured!")
                         # >>> GET THE HTML ROOT <<< #
