@@ -120,7 +120,7 @@ def reltoabs(relurl, baseurl):
 # --> First, check if the database should be reset:
 
 if bool(os.environ['MORPH_RESET_DB']):
-    scraperwiki.sql.execute('TRUNCATE data')
+    scraperwiki.sql.execute('DELETE FROM data')
 
 # --> Connect to Wordpress Site via REST API and get all the proper URLs to be scraped!
 
