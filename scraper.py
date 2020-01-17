@@ -172,6 +172,8 @@ for website in jsonwebsites:
 
                     # >>> GET THE HTML ROOT <<< #
                     root = lxml.html.fromstring(html)
+                    
+                    print("Currently scraping product with ID " + product[product_id])
 
                     # >>> GET THE PRICE <<< #
                     price_elements = ''
