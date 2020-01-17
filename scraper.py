@@ -568,11 +568,11 @@ for website in jsonwebsites:
                                             product_categories = category_array
                                     # --- Is the product no longer existing - Does the page for it not exist anymore? --- #
                                     if productmisc_array[i] == 'notfound':
-                                        if productmisc_array[($i+1)].len() > 0:
+                                        if productmisc_array[(i+1)].len() > 0:
                                             notfound = true
                                     # --- Has the product sold out yet? --- #
                                     if productmisc_array[i] == 'sold_out':
-                                        if productmisc_array[($i+1)].len() > 0:
+                                        if productmisc_array[(i+1)].len() > 0:
                                             soldoutupdatemeta = true
                                             price = '0.0 BUCKS'
                         price = price.replace(r'[^0-9,.]', '')
@@ -681,7 +681,7 @@ for website in jsonwebsites:
                                         selector_one_string_two = prodmisc_backup.split(',')
                                         if selector_one_string_two.len() > 1:
                                             productmisc_array[(i+1)] = lxml.html.tostring(selector_one_string_two[0].strip().decode('string_escape'))
-                                            if productmisc_array[($i+1)].find(selector_one_string_two[1]):
+                                            if productmisc_array[(i+1)].find(selector_one_string_two[1]):
                                                 soldouthtmlupdatemeta = true
                                                 price = '0.0 BUCKS'
                                                 price = price.replace(r'[^0-9,.]', '')
