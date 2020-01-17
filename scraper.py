@@ -36,7 +36,7 @@ def array_merge(array1, array2):
         return dict(list(array1.items()) + list(array2.items()))
     elif isinstance(array1, set) and isinstance(array2, set):
         return array1.union(array2)
-    return false
+    return False
 
 # *** --- For checking if a certain product attribute exists --- *** #
 def doesprodattrexist(prodattrlist, term, taxonomy):
@@ -57,7 +57,7 @@ def converttocorrectprice(price, currencysymbol):
     
     r = requests.get('https://api.exchangeratesapi.io/latest?base=' + currencysymbol + '', headers=headers)
     jsonrates = r.json()
-    foundinrates = false
+    foundinrates = False
     
     for ratekey, ratevalue in jsonrates.items():
         if website[priceselector].find('' + ratekey + ''):
@@ -65,7 +65,7 @@ def converttocorrectprice(price, currencysymbol):
             price = getmoneyfromtext(price)
             price = price / ratevalue
             price = getmoneyfromtext(price)
-            foundinrates = true
+            foundinrates = True
             break
     
     if not foundinrates:
@@ -161,7 +161,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
 
     for website in jsonwebsites:
 
-        if bool(website['ignorethisone']) == true:
+        if bool(website['ignorethisone']) == True:
             continue
 
         for product in jsonprods:
@@ -268,7 +268,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                 prodlog_image_elements = root.cssselect(website[productlogoselector])
                                 if prodlog_image_elements:
                                     image_dom = ','.join(prodlog_image_elements)
-                                    prodlog_image_urls = graburls(image_dom, true)
+                                    prodlog_image_urls = graburls(image_dom, True)
 
                                     if len(prodlog_image_urls) > 0:
                                         for imagekey, imageval in prodlog_image_urls.items():
@@ -303,7 +303,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                 image_elements = root.cssselect(website[imageselector])
                                 if image_elements:
                                     image_dom = ','.join(image_elements)
-                                    image_urls = graburls(image_dom, true)
+                                    image_urls = graburls(image_dom, True)
 
                                 if len(image_urls) > 0:
                                     for imagekey, imageval in image_urls.items():
@@ -340,7 +340,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                         sizetypemisc = ''
                         preexistingcurrency = ''
                         notfound = ''
-                        shouldremoveonnotfound = false
+                        shouldremoveonnotfound = False
                         soldoutupdatemeta = ''
                         soldouthtmlupdatemeta = ''
                         catstoaddresult = ''
@@ -405,14 +405,14 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                             term = doesprodattrexist(jsonprodattr['pa_brand'], brand_termus, 'pa_brand')
                                              #TUPPLE STRUCTURE: (Term(ID/NAME/SLUG), newtermTrue_existingtermFalse)
                                             if term:
-                                                brand_array.append((term, false))
+                                                brand_array.append((term, False))
                                             else:
                                                 term = []
                                                 term['term_id'] = -1
                                                 term['name'] = brand_termus
                                                 term['slug'] = clean_brand
                                                 term['taxonomy'] = 'pa_brand'
-                                                brand_array.append((term, true))
+                                                brand_array.append((term, True))
                                             product_brand = brand_array
                                             productmisc_array[(i+1)] = '.somethingelse'
                                     # --- Should the product apply a specific category automatically? --- #
@@ -424,19 +424,19 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                           term = doesprodattrexist(jsonprodattr['product_cat'], cat, 'product_cat')
                                           #TUPPLE STRUCTURE: (Term(ID/NAME/SLUG), newtermTrue_existingtermFalse, resultcats)
                                           if term:
-                                             cat_result.append((term, false))
+                                             cat_result.append((term, False))
                                              cat_parents = term['ancestors']
                                              for parent_id in cat_parents:
                                                  parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
                                                  if not parent in cat_result:
-                                                      cat_result.append((parent, false))
+                                                      cat_result.append((parent, False))
                                           else:
                                               term = []
                                               term['term_id'] = -1
                                               term['name'] = cat
                                               term['slug'] = clean_cat
                                               term['taxonomy'] = 'product_cat'
-                                              cat_result.append((term, true))
+                                              cat_result.append((term, True))
                                        catstoaddresult = cat_result
                                     # --- Should the product apply the male/female attribute automatically? --- #
                                     # --- !!! IMPORTANT --> IF THIS SHOULD OVERRIDE OTHER SEX ATTR. IMPORTS, !!! --- #
@@ -482,14 +482,14 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                                     term = doesprodattrexist(jsonprodattr['pa_sex'], sex_termus, 'pa_sex')
                                                     #TUPPLE STRUCTURE: (Term(ID/NAME/SLUG), newtermTrue_existingtermFalse)
                                                     if term:
-                                                        sex_array.append((term, false))
+                                                        sex_array.append((term, False))
                                                     else:
                                                         term = []
                                                         term['term_id'] = -1
                                                         term['name'] = sex_termus
                                                         term['slug'] = clean_sex
                                                         term['taxonomy'] = 'pa_sex'
-                                                        sex_array.append((term, true))
+                                                        sex_array.append((term, True))
                                                 product_sex = sex_array
                                         # --- Get brand attribute(s) from current scrape --- #
                                         if productmisc_array[i] == 'pa_brand':
@@ -500,14 +500,14 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                                 term = doesprodattrexist(jsonprodattr['pa_brand'], brand_termus, 'pa_brand')
                                                 # TUPPLE STRUCTURE: (Term(ID/NAME/SLUG), newtermTrue_existingtermFalse)
                                                 if term:
-                                                    brand_array.append((term, false))
+                                                    brand_array.append((term, False))
                                                 else:
                                                     term = []
                                                     term['term_id'] = -1
                                                     term['name'] = brand_termus
                                                     term['slug'] = clean_brand
                                                     term['taxonomy'] = 'pa_brand'
-                                                    brand_array.append((term, true))
+                                                    brand_array.append((term, True))
                                                 product_brand = brand_array
                                         # --- Get size attributes from current scrape --- #
                                         if productmisc_array[i] == 'pa_size':
@@ -530,14 +530,14 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                                     clean_size = slugify(size_termus.strip())
                                                     term = doesprodattrexist(jsonprodattr['pa_size'], size_termus, 'pa_size')
                                                     if term:
-                                                        size_array.append((term, false))
+                                                        size_array.append((term, False))
                                                     else:
                                                         term = []
                                                         term['term_id'] = -1
                                                         term['name'] = size_termus
                                                         term['slug'] = clean_size
                                                         term['taxonomy'] = 'pa_size'
-                                                        size_array.append((term, true))
+                                                        size_array.append((term, True))
                                                 product_sizes = size_array
                                         # --- Get color attributes from current scrape --- #
                                         if productmisc_array[i] == 'pa_color':
@@ -547,14 +547,14 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                                     clean_color = slugify(color_termus.strip())
                                                     term = doesprodattrexist(jsonprodattr['pa_color'], color_termus, 'pa_color')
                                                     if term:
-                                                        color_array.append((term, false))
+                                                        color_array.append((term, False))
                                                     else:
                                                         term = []
                                                         term['term_id'] = -1
                                                         term['name'] = color_termus
                                                         term['slug'] = clean_color
                                                         term['taxonomy'] = 'pa_color'
-                                                        color_array.append((term, true))
+                                                        color_array.append((term, True))
                                                 product_colors = color_array
                                         # --- Get categories from current scrape --- #
                                         if productmisc_array[i] == 'pa_category':
@@ -564,33 +564,33 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                                     clean_cat = slugify(cat_termus.strip())
                                                     term = doesprodattrexist(jsonprodattr['product_cat'], cat_termus, 'product_cat')
                                                     if term:
-                                                        category_array.append((term, false))
+                                                        category_array.append((term, False))
                                                         cat_parents = term['ancestors']
                                                         for parent_id in cat_parents:
                                                             parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
                                                             if not parent in category_array:
-                                                                category_array.append((parent, false))
+                                                                category_array.append((parent, False))
                                                     else:
                                                         term = []
                                                         term['term_id'] = -1
                                                         term['name'] = cat_termus
                                                         term['slug'] = clean_cat
                                                         term['taxonomy'] = 'product_cat'
-                                                        category_array.append((term, true))
+                                                        category_array.append((term, True))
                                                 product_categories = category_array
                                         # --- Is the product no longer existing - Does the page for it not exist anymore? --- #
                                         if productmisc_array[i] == 'notfound':
                                             if productmisc_array[(i+1)].len() > 0:
-                                                notfound = true
+                                                notfound = True
                                         # --- Has the product sold out yet? --- #
                                         if productmisc_array[i] == 'sold_out':
                                             if productmisc_array[(i+1)].len() > 0:
-                                                soldoutupdatemeta = true
+                                                soldoutupdatemeta = True
                                                 price = '0.0 BUCKS'
                                                 price = price.replace(r'[^0-9,.]', '')
                                                 price = getmoneyfromtext(price)
                                             else:
-                                                soldoutupdatemeta = false
+                                                soldoutupdatemeta = False
 
                                         # --> Check the HTML if neccessary! Any already existing product attributes found there?
 
@@ -605,7 +605,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                                 if sex_html.upper().find(term_name.upper()):
                                                     term = doesprodattrexist(jsonprodattr['pa_sex'], sexterm['term_id'], 'pa_sex')
                                                     if term:
-                                                        sexies_result.append((term, false))
+                                                        sexies_result.append((term, False))
                                             product_sex = sexies_result
                                         # --- Get size attribute(s) from current scrape --- #
                                         if productmisc_array[i] == 'pa_size_html':
@@ -629,7 +629,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                                 if size_html.upper().find(term_name.upper()):
                                                     term = doesprodattrexist(jsonprodattr['pa_sex'], sexterm['term_id'], 'pa_sex')
                                                     if term:
-                                                        sexies_result.append((term, false))
+                                                        sexies_result.append((term, False))
                                             if sizies_result:
                                                 if product_sizes == '':
                                                     product_sizes = sizies_result
@@ -645,7 +645,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                                 if brand_html.upper().find(term_name.upper()):
                                                     term = doesprodattrexist(jsonprodattr['pa_brand'], brandterm['term_id'], 'pa_brand')
                                                     if term:
-                                                        brandies_result.append((term, false))
+                                                        brandies_result.append((term, False))
                                             if brandies_result:
                                                 if product_brand == '':
                                                     product_brand = brandies_result
@@ -661,12 +661,12 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                                 if cat_html.upper().find(term_name.upper()):
                                                     term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                     if term:
-                                                        caties_result.append((term, false))
+                                                        caties_result.append((term, False))
                                                         cat_parents = term['ancestors']
                                                         for parent_id in cat_parents:
                                                             parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
                                                             if not parent in caties_result:
-                                                                caties_result.append((parent, false))
+                                                                caties_result.append((parent, False))
                                             if caties_result:
                                                 if product_categories == '':
                                                     product_categories = caties_result
@@ -682,7 +682,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                                 if color_html.upper().find(term_name.upper()):
                                                     term = doesprodattrexist(jsonprodattr['pa_color'], colorterm['term_id'], 'pa_color')
                                                     if term:
-                                                        colories_result.append((term, false))
+                                                        colories_result.append((term, False))
                                             if colories_result:
                                                 if product_colors == '':
                                                     product_colors = colories_result
@@ -694,12 +694,12 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                             if selector_one_string_two.len() > 1:
                                                 productmisc_array[(i+1)] = lxml.html.tostring(selector_one_string_two[0].strip().decode('string_escape'))
                                                 if productmisc_array[(i+1)].find(selector_one_string_two[1]):
-                                                    soldouthtmlupdatemeta = true
+                                                    soldouthtmlupdatemeta = True
                                                     price = '0.0 BUCKS'
                                                     price = price.replace(r'[^0-9,.]', '')
                                                     price = getmoneyfromtext(price)
                                                 else:
-                                                    soldouthtmlupdatemeta = false
+                                                    soldouthtmlupdatemeta = False
                                         # --- Should we skip the first size alternative on information import? --- #
                                         if productmisc_array[i] == 'skip_first_size':
                                             if product_sizes != '':
@@ -712,7 +712,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                         count = 0
                                         for cat in existing_categories:
                                             term = doesprodattrexist(jsonprodattr['product_cat'], cat, 'product_cat')
-                                            existing_categories[count] = ((term, false))
+                                            existing_categories[count] = ((term, False))
                                             count+=1
                                         product_categories = product_categories + existing_categories   
                                     #SAVE CAT. IDS AND PRODUCT HERE IN REMOTE SITE
@@ -746,7 +746,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                             for filt_term in filtered_terms:
                                                 term = doesprodattrexist(jsonprodattr['pa_sizetype'], filt_term, 'pa_sizetype')
                                                 if term:
-                                                    array_sizetypes.append((term, false))     
+                                                    array_sizetypes.append((term, False))     
                                     product_sizetypes = array_sizetypes
                                     if not product_sizetypes and product_sizes and not product_sizetypemiscname:
                                         product_sizetypemiscname = 'Other'
@@ -757,14 +757,14 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                     product_sizetypemiscs = []
                                     term = doesprodattrexist(jsonprodattr['pa_sizetypemisc'], product_sizetypemiscname, 'pa_sizetypemisc')
                                     if term:
-                                        product_sizetypemiscs.append((term, false))
+                                        product_sizetypemiscs.append((term, False))
                                     else:
                                         term = []
                                         term['term_id'] = -1
                                         term['name'] = product_sizetypemiscname.strip()
                                         term['slug'] = product_sizetypemiscname.strip().lower()
                                         term['taxonomy'] = 'pa_sizetypemisc'
-                                        product_sizetypemiscs.append((term, true))
+                                        product_sizetypemiscs.append((term, True))
 
                                 # --> Fix/correct binds between existing product sizes and sizetypes(Including misc. sizetypes)! <-- #
                                 if product_sizetypes and product_sizes:
@@ -837,7 +837,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                         existing_brands = re.split(',\s*', brand_values)
                                         count = 0
                                         for brand in existing_brands:
-                                            existing_brands[count] = (brand, false)
+                                            existing_brands[count] = (brand, False)
                                             count+=1
                                         product_brand = product_brand + existing_brands
                                     attributes.append({'name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1})
@@ -848,7 +848,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                         existing_colors = re.split(',\s*', color_values)
                                         count = 0
                                         for color in existing_colors:
-                                            existing_colors[count] = (color, false)
+                                            existing_colors[count] = (color, False)
                                             count+=1
                                         product_colors = product_colors + existing_colors
                                     attributes.append({'name':'Color', 'options':product_colors, 'position':attribute_pos, 'visible':1, 'variation':1})
@@ -859,7 +859,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                         existing_sex = re.split(',\s*', sex_values)
                                         count = 0
                                         for sex in existing_sex:
-                                            existing_sex[count] = (sex, false)
+                                            existing_sex[count] = (sex, False)
                                             count+=1
                                         product_sex = product_sex + existing_sex
                                     attributes.append({'name':'Sex', 'options':product_sex, 'position':attribute_pos, 'visible':1, 'variation':1})
@@ -870,7 +870,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                         existing_sizes = re.split(',\s*', size_values)
                                         count = 0
                                         for size in existing_sizes:
-                                            existing_sizes[count] = (size, false)
+                                            existing_sizes[count] = (size, False)
                                             count+=1
                                         product_sizes = product_sizes + existing_sizes
                                     attributes.append({'name':'Size', 'options':product_sizes, 'position':attribute_pos, 'visible':1, 'variation':1})
@@ -881,7 +881,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                         existing_sizetypes = re.split(',\s*', sizetype_values)
                                         count = 0
                                         for sizetype in existing_sizetypes:
-                                            existing_sizetypes[count] = (sizetype, false)
+                                            existing_sizetypes[count] = (sizetype, False)
                                             count+=1
                                         product_sizetypes = product_sizetypes + existing_sizetypes
                                     attributes.append({'name':'Sizetype', 'options':product_sizetypes, 'position':attribute_pos, 'visible':1, 'variation':1})
@@ -892,7 +892,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                         existing_sizetypemiscs = re.split(',\s*', sizetypemisc_values)
                                         count = 0
                                         for sizetypemisc in existing_sizetypemiscs:
-                                            existing_sizetypemiscs[count] = (sizetypemisc, false)
+                                            existing_sizetypemiscs[count] = (sizetypemisc, False)
                                             count+=1
                                         product_sizetypemiscs = product_sizetypemiscs + existing_sizetypemiscs
                                     attributes.append({'name':'Sizetypemisc', 'options':product_sizetypemiscs, 'position':attribute_pos, 'visible':1, 'variation':1})
@@ -907,7 +907,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
 
                         # >>> CHECK FOR PRODUCT PROPERITES IN TITLE(IF ENABLED) <<< #
 
-                        if bool(website[lookforprodpropintitle]) == true:
+                        if bool(website[lookforprodpropintitle]) == True:
                             try:
                                 termies = []
                                 termies[0] = jsonprodattr['pa_brand']
@@ -928,7 +928,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                         existing_brands = re.split(',\s*', brand_values)
                                         '''count = 0
                                         for brand in existing_brands:
-                                            existing_brands[count] = (brand, false)
+                                            existing_brands[count] = (brand, False)
                                             count+=1'''
                                         termies_result[0] = array_merge(termies_result[0], existing_brands)
                                     attributes.append({'name':'Brand', 'options':termies_result[0], 'position':attribute_pos, 'visible':1, 'variation':1})
@@ -939,7 +939,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                         existing_brands = re.split(',\s*', brand_values)
                                         '''count = 0
                                         for brand in existing_brands:
-                                            existing_brands[count] = (brand, false)
+                                            existing_brands[count] = (brand, False)
                                             count+=1'''
                                         product_brand = existing_brands
                                         attributes.append({'name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1})
@@ -950,7 +950,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                         existing_colors = re.split(',\s*', color_values)
                                         '''count = 0
                                         for color in existing_colors:
-                                            existing_colors[count] = (color, false)
+                                            existing_colors[count] = (color, False)
                                             count+=1'''
                                         termies_result[1] = array_merge(termies_result[1], existing_colors)
                                     attributes.append({'name':'Color', 'options':termies_result[1], 'position':attribute_pos, 'visible':1, 'variation':1})
@@ -961,7 +961,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                         existing_colors = re.split(',\s*', color_values)
                                         '''count = 0
                                         for color in existing_colors:
-                                            existing_colors[count] = (color, false)
+                                            existing_colors[count] = (color, False)
                                             count+=1'''
                                         product_colors = existing_colors
                                         attributes.append({'name':'Color', 'options':product_colors, 'position':attribute_pos, 'visible':1, 'variation':1})
@@ -972,7 +972,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                         existing_sex = re.split(',\s*', sex_values)
                                         '''count = 0
                                         for sex in existing_sex:
-                                            existing_sex[count] = (sex, false)
+                                            existing_sex[count] = (sex, False)
                                             count+=1'''
                                         termies_result[2] = array_merge(termies_result[2], existing_sex)
                                     attributes.append({'name':'Sex', 'options':termies_result[2], 'position':attribute_pos, 'visible':1, 'variation':1})
@@ -983,7 +983,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                         existing_sex = re.split(',\s*', sex_values)
                                         '''count = 0
                                         for sex in existing_sex:
-                                            existing_sex[count] = (sex, false)
+                                            existing_sex[count] = (sex, False)
                                             count+=1'''
                                         product_sex = existing_sex
                                         attributes.append({'name':'Sex', 'options':product_sex, 'position':attribute_pos, 'visible':1, 'variation':1})
@@ -1020,21 +1020,21 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                                                 if product_name.upper().find(infliction.upper()):
                                                     term = doesprodattrexist(jsonprodattr['product_cat'], term['term_id'], 'product_cat')
                                                     if term:
-                                                        category_result.append((term, false))
+                                                        category_result.append((term, False))
                                                     cat_parents = term['ancestors']
                                                     for parent_id in cat_parents:
                                                         parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
                                                         if not parent in category_result:
-                                                            category_result.append((parent, false))
+                                                            category_result.append((parent, False))
                                     if product_name.upper().find(term_name.upper()):
                                         term = doesprodattrexist(jsonprodattr['product_cat'], term['term_id'], 'product_cat')
                                         if term:
-                                            category_result.append((term, false))
+                                            category_result.append((term, False))
                                         cat_parents = term['ancestors']
                                         for parent_id in cat_parents:
                                             parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
                                             if not parent in category_result:
-                                                category_result.append((parent, false))
+                                                category_result.append((parent, False))
                                     if category_result:
                                         existing_categories = product['category_ids']
                                         if existing_categories:
