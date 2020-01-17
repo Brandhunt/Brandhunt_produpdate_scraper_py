@@ -137,7 +137,8 @@ token = base64.standard_b64encode(wp_username + ':' + wp_password)
 headers = {'Authorization': 'Basic ' + token}
 
 #r = requests.get(wp_connectwp_url, headers=headers)
-#jsonprods = r.json()
+r = requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', headers=headers)
+jsonprods = r.json()
 
 r = requests.get(wp_connectwp_url_2, headers=headers)
 jsonwebsites = json.loads(r.content)
@@ -157,7 +158,9 @@ arraus = []
 offset = 0
 limit = 25
 
-while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', headers=headers): 
+print('BEFORE START')
+
+while jsonprods: 
 
     for website in jsonwebsites:
 
@@ -1099,7 +1102,9 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
                     continue
 
     offset = offset + limit
-
+    r = requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', headers=headers)
+    jsonprods = r.json()
+    
                 # --- Handle importing prices from product --- #
 
     # # An arbitrary query against the database
