@@ -25,13 +25,13 @@ from slugify import slugify
 
 # *** --- Replacement for PHP's array merge functionality --- *** #
 def array_merge(array1, array2):
-	if isinstance(array1, list) and isinstance(array2, list):
-		return array1 + array2
-	elif isinstance(array1, dict) and isinstance(array2, dict):
-		return dict(list(array1.items()) + list(array2.items()))
-	elif isinstance(array1, set) and isinstance(array2, set):
-		return array1.union(array2)
-	return false
+    if isinstance(array1, list) and isinstance(array2, list):
+        return array1 + array2
+    elif isinstance(array1, dict) and isinstance(array2, dict):
+        return dict(list(array1.items()) + list(array2.items()))
+    elif isinstance(array1, set) and isinstance(array2, set):
+        return array1.union(array2)
+    return false
 
 # *** --- For checking if a certain product attribute exists --- *** #
 def doesprodattrexist(prodattrlist, term, taxonomy):
@@ -40,7 +40,7 @@ def doesprodattrexist(prodattrlist, term, taxonomy):
             return prodattr
         else:
             return 0
-	
+    
 # *** --- For getting proper value from scraped HTML elements --- *** #
 def getmoneyfromtext(price):
     val = re.sub(r'\.(?=.*\.)', '', price.replace(',', '.'))
@@ -575,7 +575,7 @@ for website in jsonwebsites:
                                         if productmisc_array[($i+1)].len() > 0:
                                             soldoutupdatemeta = true
                                             price = '0.0 BUCKS'
-					    price = price.replace(r'[^0-9,.]', '')
+                        price = price.replace(r'[^0-9,.]', '')
                                             price = getmoneyfromtext(price)
                                         else:
                                             soldoutupdatemeta = false
@@ -909,7 +909,7 @@ for website in jsonwebsites:
                                     if product_name.upper().find(term_name.upper()):
                                         termies_result[i].append(doesprodattrexist(jsonprodattr[term['taxonomy']], term['term_id'], term['taxonomy']), false)
                             attributes = []
-						    attribute_pos = 1
+                            attribute_pos = 1
                             if termies_result[0]:
                                 brand_values = product_brand
                                 if brand_values:
@@ -1043,21 +1043,21 @@ for website in jsonwebsites:
                                                   'productid': product['productid'],
                                                   'price': price,
                                                   'salesprice': salesprice,
-						  'domainmisc': domainmisc_array,
-						  'prodlogurls': prodlog_image_urls,
-						  'prodlogurl': productlogourl,
-						  'finalimgurls': images,
-						  'validimgurls': image_urls_valid,
-						  'imgurls': image_urls,
-						  'notfound': shouldremoveonnotfound,
-						  'soldoutfix': soldoutupdatemeta,
-						  'soldouthtmlfix': soldouthtmlupdatemeta,
-						  'catstoaddresult': catstoaddresult
-						  'attributes': attributes_to_store
-						  'sizetypemapsqls': [insert_sizetosizetype,
-								     remove_sizetosizetype,
-								     insert_sizetosizetypemisc,
-								     remove_sizetosizetypemisc])
+                          'domainmisc': domainmisc_array,
+                          'prodlogurls': prodlog_image_urls,
+                          'prodlogurl': productlogourl,
+                          'finalimgurls': images,
+                          'validimgurls': image_urls_valid,
+                          'imgurls': image_urls,
+                          'notfound': shouldremoveonnotfound,
+                          'soldoutfix': soldoutupdatemeta,
+                          'soldouthtmlfix': soldouthtmlupdatemeta,
+                          'catstoaddresult': catstoaddresult
+                          'attributes': attributes_to_store
+                          'sizetypemapsqls': [insert_sizetosizetype,
+                                     remove_sizetosizetype,
+                                     insert_sizetosizetypemisc,
+                                     remove_sizetosizetypemisc])
                 except:
                     print("Error: " + sys.exc_info()[0] + " occured!")
                     #STORE PRODUCT IN DATABASE AS SHOULD_DELETE IF HTTP404 ERROR EXISTS
