@@ -141,7 +141,8 @@ limit = 25
 
 #r = requests.get(wp_connectwp_url, headers=headers)
 r = requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', headers=headers)
-jsonprods = r.json()
+#jsonprods = r.json()
+jsonprods = json.loads(r.content)
 
 r = requests.get(wp_connectwp_url_2, headers=headers)
 jsonwebsites = json.loads(r.content)
@@ -157,11 +158,11 @@ jsoncatmaps = json.loads(r.content)
 
 # --> Decode and handle these URLs!
 
-arraus = []
+#arraus = []
 
 print('BEFORE START')
 
-while jsonprods: 
+while jsonprods:
 
     for website in jsonwebsites:
 
