@@ -54,11 +54,9 @@ def getmoneyfromtext(price):
     
 # *** --- For converting scraped price to correct value according to wanted currency --- *** #
 def converttocorrectprice(price, currencysymbol):
-    
     r = requests.get('https://api.exchangeratesapi.io/latest?base=' + currencysymbol + '', headers=headers)
     jsonrates = r.json()
     foundinrates = False
-    
     for ratekey, ratevalue in jsonrates.items():
         if website[priceselector].find('' + ratekey + ''):
             price = price.replace(r'[^0-9,.]', '')
@@ -67,7 +65,6 @@ def converttocorrectprice(price, currencysymbol):
             price = getmoneyfromtext(price)
             foundinrates = True
             break
-    
     if not foundinrates:
         if website[priceselector].find('$'):
             price = price.replace(r'[^0-9,.]', '')
@@ -86,8 +83,7 @@ def converttocorrectprice(price, currencysymbol):
             price = getmoneyfromtext(price)
         else:
             price = price.replace(r'[^0-9,.]', '')
-            price = getmoneyfromtext(price)
-            
+            price = getmoneyfromtext(price)       
     return price
 
 # *** --- For grabbing URLs from text-based values/strings --- *** #
@@ -98,7 +94,6 @@ def graburls(text, imageonly):
             imgsuffix = '\.(gif|jpg|jpeg|png|svg|webp)'
         else:
             imgsuffix = '\.([a-zA-Z0-9\&\.\/\?\:@\-_=#])*'
-        
         finalmatches = []
         # --> For URLs without URL encoding characters:
         matches = re.findall(r'((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\:\~@\-_=#]+' + imgsuffix + '', text)
@@ -107,8 +102,7 @@ def graburls(text, imageonly):
         # --> For URLs - with - URL encoding characters:
         matches = re.findall(r'((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\\%:\~@\-_=#]+' + imgsuffix + '', text)
         for match in matches[0]:
-            finalmatches.append(match)
-            
+            finalmatches.append(match) 
         return list(set(finalmatches)).values()
     except:
         return []
@@ -161,32 +155,19 @@ jsoncatmaps = json.loads(r.content)
 #arraus = []
 
 print('TESTPRINT - BEFORE START')
-
 while jsonprods:
- 
     print('TESTPRINT - AFTER START')
-    
     for website in jsonwebsites:
-        
         print('TESTPRINT - AFTER START 2')
-
         if bool(website['ignorethisone']) == True:
-            continue
-            
+            continue   
         print('TESTPRINT - AFTER START 3')
-
         for product in jsonprods:
-            
             print('TESTPRINT - AFTER START 4')
-
             if website['domain'] == product['domain']:
-                
                 print('TESTPRINT - AFTER START 5')
-
                 # --- First, get the HTML for each domain part --- #
-
                 if website['scrapetype'] == 'standard_morph_io':
-
                     try:
                         # >>> GET THE HTML <<< #
                         html = ''
@@ -194,12 +175,9 @@ while jsonprods:
                             html = scraperwiki.scrape(url)
                         except:
                             print("Error when scraping URL for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
-
                         # >>> GET THE HTML ROOT <<< #
                         root = lxml.html.fromstring(html)
-
                         print("Currently scraping product with ID " + str(product['productid']))
-
                         # >>> GET THE PRICE <<< #
                         price_elements = ''
                         price = ''
@@ -207,7 +185,6 @@ while jsonprods:
                             if website[priceselector].find('[multiple],'):
                                 website[priceselector].replace('[multiple],', '')
                                 price_elements = root.cssselect(website[priceselector])
-
                                 for el in price_elements:
                                     if not el:
                                         continue
@@ -215,7 +192,6 @@ while jsonprods:
                             else:
                                 price_elements = root.cssselect(website[priceselector])
                                 price = price_elements[0].text
-
                             if website[pricedelimitertoignore]:
                                 if website[pricedelimitertoignore].strip().find(' '):
                                     sepdelimiters = website[pricedelimitertoignore].strip().split(' ')
@@ -223,7 +199,6 @@ while jsonprods:
                                         price = re.sub(r'\\' + delim.strip() + '', '', price)
                                 else:
                                     price = re.sub(r'\\' + website[pricedelimitertoignore].strip() + '', '', price)    
-
                             if website[currencysymbol]:
                                 price = converttocorrectprice(price, website[currencysymbol])
                             else:
@@ -231,17 +206,13 @@ while jsonprods:
                                 price = getmoneyfromtext(price)
                         except:
                             print("Error when scraping price for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
-
                         # >>> GET THE SALES PRICE <<< #
-
                         salesprice_elements = ''
                         salesprice = ''
-
                         if website[salespriceselector]:
                             try:
                                 salesprice_elements = root.cssselect(website[salespriceselector])
                                 salesprice = salesprice_elements[0].text
-
                                 if website[pricedelimitertoignore]:
                                     if website[pricedelimitertoignore].strip().find(' '):
                                         sepdelimiters = website[pricedelimitertoignore].strip().split(' ')
@@ -257,11 +228,8 @@ while jsonprods:
                                     salesprice = getmoneyfromtext(salesprice)
                             except:
                                 print("Error when scraping sales price for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
-
                         # >>> GET THE DOMAIN MISC. ELEMENTS <<< #
-
                         domainmisc_array = ''
-
                         if website[domainmisc]:
                             try:
                                 domainmisc_array = re.split('{|}', website[domainmisc])
@@ -269,22 +237,18 @@ while jsonprods:
                                     domainmisc_array[(i + 1)] = root.cssselect(domainmisc_array[(i + 1)])
                             except:
                                 print("Error when scraping misc. domain information for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
-
                         # >>> GET THE PRODUCT LOGO URL(S) - IF SUCH EXISTS <<< #
-
                         #prodlog_image_urls = ''
                         #prodlog_image_elements = ''
                         prodlog_image_urls = ''
                         productlogourl = ''
                         #productlogo = ''
-
                         if website[productlogoselector]:
                             try:
                                 prodlog_image_elements = root.cssselect(website[productlogoselector])
                                 if prodlog_image_elements:
                                     image_dom = ','.join(prodlog_image_elements)
                                     prodlog_image_urls = graburls(image_dom, True)
-
                                     if len(prodlog_image_urls) > 0:
                                         for imagekey, imageval in prodlog_image_urls.items():
                                             newimageval = urljoin(product['url'], imageval)
@@ -297,21 +261,16 @@ while jsonprods:
                                             if imageval[0:2] == '//':
                                                 imageval = 'https:' + imageval
                                                 prodlog_image_urls[imagekey] = imageval
-
                                     productlogourl = prodlog_image_urls[0]
                                 else:
                                     print("No product logo URLs could be found for product ID " + product['productid'] + "!")
-
                             except:
                                 print("Error when scraping product logo images for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
-
                         # >>> GET THE IMAGE URL(S) <<< #
-
                         image_urls = ''
                         image_elements = ''
                         image_urls_valid = ''
                         images = ''
-
                         if website[imageselector] and len(website[imageselector]):
                             try:
                                 #image_urls = ''
@@ -319,7 +278,6 @@ while jsonprods:
                                 if image_elements:
                                     image_dom = ','.join(image_elements)
                                     image_urls = graburls(image_dom, True)
-
                                 if len(image_urls) > 0:
                                     for imagekey, imageval in image_urls.items():
                                         newimageval = urljoin(product['url'], imageval)
@@ -335,13 +293,9 @@ while jsonprods:
                                     image_urls_valid = image_urls.values()
                             except:
                                 print("Error when scraping images for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
-
                         # >>> GET THE PRODUCT MISC. ELEMENTS <<< #
-
                         productmisc_array = re.split('{|}', website[productmisc])
-
                         # --> Define containers for product attributes
-
                         product_brand = ''
                         product_colors = ''
                         product_sex = ''
@@ -349,9 +303,7 @@ while jsonprods:
                         product_sizetypes = ''
                         product_sizetypemiscs = ''
                         product_categories = ''
-
                         # --> Define values that will be saved to database once done:
-
                         sizetypemisc = ''
                         preexistingcurrency = ''
                         notfound = ''
@@ -360,14 +312,11 @@ while jsonprods:
                         soldouthtmlupdatemeta = ''
                         catstoaddresult = ''
                         attributes_to_store = ''
-
                         insert_sizetosizetype = ''
                         remove_sizetosizetype = ''
                         insert_sizetosizetypemisc = ''
                         remove_sizetosizetypemisc = ''
-
                         # --> Get 'em!
-
                         if website[productmisc]:
                             try:
                                 for i in range(0, productmisc_array.len(), 2):
@@ -462,9 +411,7 @@ while jsonprods:
                                         product_sex = ['Female']
                                     else:
                                         product_sex = ['Male', 'Female']
-
                                     # --> Attempt scraping of product misc. elements:
-
                                     prodmisc_backup = productmisc_array[(i+1)].strip().decode('string_escape')
                                     #prodmisc_elements = root.cssselect(productmisc_array[(i+1)])
                                     productmisc_array[(i+1)] = root.cssselect(productmisc_array[(i+1)])
@@ -606,9 +553,7 @@ while jsonprods:
                                                 price = getmoneyfromtext(price)
                                             else:
                                                 soldoutupdatemeta = False
-
                                         # --> Check the HTML if neccessary! Any already existing product attributes found there?
-
                                         productmisc_array[(i+1)] = lxml.html.tostring(productmisc_array[(i+1)])
                                         # --- Get sex attributes from current scrape --- #
                                         if productmisc_array[i] == 'pa_sex_html':
@@ -719,7 +664,6 @@ while jsonprods:
                                         if productmisc_array[i] == 'skip_first_size':
                                             if product_sizes != '':
                                                 removed_size = product_sizes.pop(0)
-
                                 # --> Fix categories for the product! <-- #
                                 if product_categories:
                                     existing_categories = product['category_ids']
@@ -731,7 +675,6 @@ while jsonprods:
                                             count+=1
                                         product_categories = product_categories + existing_categories   
                                     #SAVE CAT. IDS AND PRODUCT HERE IN REMOTE SITE
-
                                 # --> Apply sizetype attributes where needed! <-- #
                                 product_sizetypemiscname = sizetypemisc
                                 if product_categories != '':
@@ -780,7 +723,6 @@ while jsonprods:
                                         term['slug'] = product_sizetypemiscname.strip().lower()
                                         term['taxonomy'] = 'pa_sizetypemisc'
                                         product_sizetypemiscs.append((term, True))
-
                                 # --> Fix/correct binds between existing product sizes and sizetypes(Including misc. sizetypes)! <-- #
                                 if product_sizetypes and product_sizes:
                                     sizeid_col = product['sizetosizetypemaps']['size']
@@ -810,8 +752,7 @@ while jsonprods:
                                             count = 0
                                             for sizeid_remove in compare_sizeid:
                                                 remove_sizetosizetype[count] = (sizeid_remove, sizetypeid_remove, product['productid'])
-                                                count+=1   
-
+                                                count+=1
                                 if product_sizetypemiscs and product_sizes:
                                     sizeid_col = product['sizetosizetypemaps']['size_misc']
                                     compare_sizetypemiscid = product['sizetosizetypemaps']['sizetype_misc'] 
@@ -841,7 +782,6 @@ while jsonprods:
                                             for sizeid_remove in compare_sizeid:
                                                 remove_sizetosizetypemisc[count] = (sizeid_remove, sizetypemiscid_remove, product['productid'])
                                                 count+=1
-
                                 # --> Apply color, size, sex and brand to the product! (Filter the attributes before save)
                                 # --> (Filter the attributes before database save)
                                 attributes = []
@@ -919,9 +859,7 @@ while jsonprods:
                                 #pass
                             except:
                                 print("Error when scraping misc. product information for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
-
                         # >>> CHECK FOR PRODUCT PROPERITES IN TITLE(IF ENABLED) <<< #
-
                         if bool(website[lookforprodpropintitle]) == True:
                             try:
                                 termies = []
@@ -1055,14 +993,11 @@ while jsonprods:
                                         if existing_categories:
                                             category_result = array_merge(category_result, existing_categories)
                                     catstoaddresult = cat_result
-
                             except:
-                                print("Error when looking after prod. properties in title for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")                    
-
+                                print("Error when looking after prod. properties in title for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
                         # >>> MAKE PRICES NUMERIC <<< #
                         price = getmoneyfromtext(price)
                         salesprice = getmoneyfromtext(salesprice)
-
                         # >>> STORE PRODUCT VALUES IN MORPH.IO DATABASE <<< #
                         scraperwiki.sqlite.save(unique_keys=['productid'],\
                                                 data={'domain': product['domain'],\
@@ -1089,20 +1024,15 @@ while jsonprods:
                         print("Error: " + sys.exc_info()[0] + " occured!")
                         #STORE PRODUCT IN DATABASE AS SHOULD_DELETE IF HTTP404 ERROR EXISTS
                         continue
-
                 elif website['scrapetype'] == 'phantomjs_morph_io':
-
                     try:
                         with Browser("phantomjs") as browser:
-
                             browser.driver.set_window_size(1920, 1080)
                             browser.visit(product['url'])
-
                             # submit the search form...
                             ##browser.fill("q", "parliament")
                             ##button = browser.find_by_css("button[type='submit']")
                             ##button.click()
-
                             # Scrape the data you like...
                             ##links = browser.find_by_css(".search-results .list-group-item")
                             ##for link in links:
@@ -1112,12 +1042,11 @@ while jsonprods:
                         continue
                 else:
                     continue
-
     offset = offset + limit
     r = requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', headers=headers)
     jsonprods = r.json()
     
-                # --- Handle importing prices from product --- #
+    # --- Handle importing prices from product --- #
 
     # # An arbitrary query against the database
     # scraperwiki.sql.select("* from data where 'name'='peter'")
