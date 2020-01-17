@@ -154,12 +154,12 @@ jsoncatmaps = json.loads(r.content)
 
 #arraus = []
 
-print('TESTPRINT - BEFORE START')
+#print('TESTPRINT - BEFORE START')
 while jsonprods:
-    print('TESTPRINT - AFTER START')
+    #print('TESTPRINT - AFTER START')
     for website in jsonwebsites:
         print('TESTPRINT - AFTER START 2')
-        if bool(website['ignorethisone']) == True:
+        if website['ignorethisone'] == '1':
             continue   
         print('TESTPRINT - AFTER START 3')
         for product in jsonprods:
