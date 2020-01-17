@@ -486,16 +486,16 @@ for website in jsonwebsites:
                                             brand_termus = productmisc_array[(i+1)][0]
                                             clean_brand = slugify(brand_termus.strip())
                                             term = doesprodattrexist(jsonprodattr['pa_brand'], brand_termus, 'pa_brand')
-                                                # TUPPLE STRUCTURE: (Term(ID/NAME/SLUG), newtermTrue_existingtermFalse)
-                                                if term:
-                                                    brand_array.append((term, false))
-                                                else:
-                                                    term = []
-                                                    term['term_id'] = -1
-                                                    term['name'] = brand_termus
-                                                    term['slug'] = clean_brand
-                                                    term['taxonomy'] = 'pa_brand'
-                                                    brand_array.append((term, true))
+                                            # TUPPLE STRUCTURE: (Term(ID/NAME/SLUG), newtermTrue_existingtermFalse)
+                                            if term:
+                                                brand_array.append((term, false))
+                                            else:
+                                                term = []
+                                                term['term_id'] = -1
+                                                term['name'] = brand_termus
+                                                term['slug'] = clean_brand
+                                                term['taxonomy'] = 'pa_brand'
+                                                brand_array.append((term, true))
                                             product_brand = brand_array
                                     # --- Get size attributes from current scrape --- #
                                     if productmisc_array[i] == 'pa_size':
