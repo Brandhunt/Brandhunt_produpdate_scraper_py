@@ -35,7 +35,7 @@ def array_merge(array1, array2):
 # *** --- For checking if a certain product attribute exists --- *** #
 def doesprodattrexist(prodattrlist, term, taxonomy):
     for prodattr in prodattrlist:
-        if prodattr['term_id'] = term or prodattr['name'] == term or prodattr['slug'] == term:
+        if prodattr['term_id'] == term or prodattr['name'] == term or prodattr['slug'] == term:
             return prodattr
         else:
             return 0
