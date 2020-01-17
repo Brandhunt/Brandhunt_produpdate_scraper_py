@@ -201,7 +201,7 @@ while jsonprods:
                             if website['currencysymbol']:
                                 print('PRICE:' + price)
                                 print('PRICE ELEMENTS:')
-                                print(*price_elements, sep='\n')
+                                for p in myList: print p
                                 price = converttocorrectprice(price, website['currencysymbol'])
                             else:
                                 price = price.replace(r'[^0-9,.]', '')
