@@ -65,6 +65,7 @@ def converttocorrectprice(price, currencysymbol):
             price = getmoneyfromtext(price)
             #print(price)
             #print(ratevalue)
+            print(price)
             price = float(price) / ratevalue
             price = getmoneyfromtext(price)
             foundinrates = True
