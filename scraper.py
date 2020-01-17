@@ -1039,26 +1039,26 @@ for website in jsonwebsites:
                     salesprice = getmoneyfromtext(salesprice)
                     
                     # >>> STORE PRODUCT VALUES IN MORPH.IO DATABASE <<< #
-                    scraperwiki.sqlite.save(unique_keys=['productid'],
-                                            data={'domain': "product['domain'],
-                                                  'url': product['url'],
-                                                  'productid': product['productid'],
-                                                  'price': price,
-                                                  'salesprice': salesprice,
-                          'domainmisc': domainmisc_array,
-                          'prodlogurls': prodlog_image_urls,
-                          'prodlogurl': productlogourl,
-                          'finalimgurls': images,
-                          'validimgurls': image_urls_valid,
-                          'imgurls': image_urls,
-                          'notfound': shouldremoveonnotfound,
-                          'soldoutfix': soldoutupdatemeta,
-                          'soldouthtmlfix': soldouthtmlupdatemeta,
-                          'catstoaddresult': catstoaddresult
-                          'attributes': attributes_to_store
-                          'sizetypemapsqls': [insert_sizetosizetype,
-                                     remove_sizetosizetype,
-                                     insert_sizetosizetypemisc,
+                    scraperwiki.sqlite.save(unique_keys=['productid'],\
+                                            data={'domain': "product['domain'],\
+                                                  'url': product['url'],\
+                                                  'productid': product['productid'],\
+                                                  'price': price,\
+                                                  'salesprice': salesprice,\
+                          'domainmisc': domainmisc_array,\
+                          'prodlogurls': prodlog_image_urls,\
+                          'prodlogurl': productlogourl,\
+                          'finalimgurls': images,\
+                          'validimgurls': image_urls_valid,\
+                          'imgurls': image_urls,\
+                          'notfound': shouldremoveonnotfound,\
+                          'soldoutfix': soldoutupdatemeta,\
+                          'soldouthtmlfix': soldouthtmlupdatemeta,\
+                          'catstoaddresult': catstoaddresult\
+                          'attributes': attributes_to_store\
+                          'sizetypemapsqls': [insert_sizetosizetype,\
+                                     remove_sizetosizetype,\
+                                     insert_sizetosizetypemisc,\
                                      remove_sizetosizetypemisc])
                 except:
                     print("Error: " + sys.exc_info()[0] + " occured!")
