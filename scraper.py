@@ -575,7 +575,7 @@ for website in jsonwebsites:
                                         if productmisc_array[(i+1)].len() > 0:
                                             soldoutupdatemeta = true
                                             price = '0.0 BUCKS'
-                        price = price.replace(r'[^0-9,.]', '')
+                                            price = price.replace(r'[^0-9,.]', '')
                                             price = getmoneyfromtext(price)
                                         else:
                                             soldoutupdatemeta = false
