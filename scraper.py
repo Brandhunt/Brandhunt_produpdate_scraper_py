@@ -1018,13 +1018,13 @@ for website in jsonwebsites:
                                                         category_result.append((parent, false))
                                 if product_name.upper().find(term_name.upper()):
                                     term = doesprodattrexist(jsonprodattr['product_cat'], term['term_id'], 'product_cat')
-                                        if term:
-                                            category_result.append((term, false))
-                                        cat_parents = term['ancestors']
-                                        for parent_id in cat_parents:
-                                            parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
-                                            if not parent in category_result:
-                                                category_result.append((parent, false))
+                                    if term:
+                                        category_result.append((term, false))
+                                    cat_parents = term['ancestors']
+                                    for parent_id in cat_parents:
+                                        parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
+                                        if not parent in category_result:
+                                            category_result.append((parent, false))
                                 if category_result:
                                     existing_categories = product['category_ids']
                                     if existing_categories:
