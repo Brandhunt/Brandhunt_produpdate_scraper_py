@@ -59,7 +59,7 @@ def converttocorrectprice(price, currencysymbol):
     jsonrates = r.json()
     foundinrates = False
     for ratekey, ratevalue in jsonrates.items():
-        if website[priceselector].find('' + ratekey + ''):
+        if website['priceselector'].find('' + ratekey + ''):
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)
             price = price / ratevalue
@@ -67,17 +67,17 @@ def converttocorrectprice(price, currencysymbol):
             foundinrates = True
             break
     if not foundinrates:
-        if website[priceselector].find('$'):
+        if website['priceselector'].find('$'):
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)
             price = price / jsonrates['USD']
             price = getmoneyfromtext(price)
-        elif website[priceselector].find('£'):
+        elif website['priceselector'].find('£'):
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)
             price = price / jsonrates['GBP']
             price = getmoneyfromtext(price)
-        elif website[priceselector].find('€'):
+        elif website['priceselector'].find('€'):
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)
             price = price / jsonrates['EUR']
@@ -178,25 +178,25 @@ while jsonprods:
                         price_elements = ''
                         price = ''
                         try:
-                            if website[priceselector].find('[multiple],'):
-                                website[priceselector].replace('[multiple],', '')
-                                price_elements = root.cssselect(website[priceselector])
+                            if website['priceselector'].find('[multiple],'):
+                                website['priceselector'].replace('[multiple],', '')
+                                price_elements = root.cssselect(website['priceselector'])
                                 for el in price_elements:
                                     if not el:
                                         continue
                                     price = price + el.text + ' '
                             else:
-                                price_elements = root.cssselect(website[priceselector])
+                                price_elements = root.cssselect(website['priceselector'])
                                 price = price_elements[0].text
-                            if website[pricedelimitertoignore]:
-                                if website[pricedelimitertoignore].strip().find(' '):
-                                    sepdelimiters = website[pricedelimitertoignore].strip().split(' ')
+                            if website['pricedelimitertoignore']:
+                                if website['pricedelimitertoignore'].strip().find(' '):
+                                    sepdelimiters = website['pricedelimitertoignore'].strip().split(' ')
                                     for delim in sepdelimiters:
                                         price = re.sub(r'\\' + delim.strip() + '', '', price)
                                 else:
-                                    price = re.sub(r'\\' + website[pricedelimitertoignore].strip() + '', '', price)    
-                            if website[currencysymbol]:
-                                price = converttocorrectprice(price, website[currencysymbol])
+                                    price = re.sub(r'\\' + website['pricedelimitertoignore'].strip() + '', '', price)    
+                            if website['currencysymbol']:
+                                price = converttocorrectprice(price, website['currencysymbol'])
                             else:
                                 price = price.replace(r'[^0-9,.]', '')
                                 price = getmoneyfromtext(price)
@@ -206,20 +206,20 @@ while jsonprods:
                         # >>> GET THE SALES PRICE <<< #
                         salesprice_elements = ''
                         salesprice = ''
-                        if website[salespriceselector]:
+                        if website['salespriceselector']:
                             try:
-                                salesprice_elements = root.cssselect(website[salespriceselector])
+                                salesprice_elements = root.cssselect(website['salespriceselector'])
                                 salesprice = salesprice_elements[0].text
-                                if website[pricedelimitertoignore]:
-                                    if website[pricedelimitertoignore].strip().find(' '):
-                                        sepdelimiters = website[pricedelimitertoignore].strip().split(' ')
+                                if website['pricedelimitertoignore']:
+                                    if website['pricedelimitertoignore'].strip().find(' '):
+                                        sepdelimiters = website['pricedelimitertoignore'].strip().split(' ')
                                         for delim in sepdelimiters:
                                             salesprice = re.sub(r'\\' + delim.strip() + '', '', salesprice)
                                     else:
-                                        salesprice = re.sub(r'\\' + website[pricedelimitertoignore].strip() + '', '', salesprice)    
+                                        salesprice = re.sub(r'\\' + website['pricedelimitertoignore'].strip() + '', '', salesprice)    
 
-                                if website[currencysymbol]:
-                                    salesprice = converttocorrectprice(salesprice, website[currencysymbol])
+                                if website['currencysymbol']:
+                                    salesprice = converttocorrectprice(salesprice, website['currencysymbol'])
                                 else:
                                     salesprice = salesprice.replace(r'[^0-9,.]', '')
                                     salesprice = getmoneyfromtext(salesprice)
@@ -228,9 +228,9 @@ while jsonprods:
                                 print(traceback.format_exc())
                         # >>> GET THE DOMAIN MISC. ELEMENTS <<< #
                         domainmisc_array = ''
-                        if website[domainmisc]:
+                        if website['domainmisc']:
                             try:
-                                domainmisc_array = re.split('{|}', website[domainmisc])
+                                domainmisc_array = re.split('{|}', website['domainmisc'])
                                 for i in range(0, domainmisc_array.len(), 2):
                                     domainmisc_array[(i + 1)] = root.cssselect(domainmisc_array[(i + 1)])
                             except:
@@ -242,9 +242,9 @@ while jsonprods:
                         prodlog_image_urls = ''
                         productlogourl = ''
                         #productlogo = ''
-                        if website[productlogoselector]:
+                        if website['productlogoselector']:
                             try:
-                                prodlog_image_elements = root.cssselect(website[productlogoselector])
+                                prodlog_image_elements = root.cssselect(website['productlogoselector'])
                                 if prodlog_image_elements:
                                     image_dom = ','.join(prodlog_image_elements)
                                     prodlog_image_urls = graburls(image_dom, True)
@@ -271,10 +271,10 @@ while jsonprods:
                         image_elements = ''
                         image_urls_valid = ''
                         images = ''
-                        if website[imageselector] and len(website[imageselector]):
+                        if website['imageselector'] and len(website['imageselector']):
                             try:
                                 #image_urls = ''
-                                image_elements = root.cssselect(website[imageselector])
+                                image_elements = root.cssselect(website['imageselector'])
                                 if image_elements:
                                     image_dom = ','.join(image_elements)
                                     image_urls = graburls(image_dom, True)
@@ -295,7 +295,7 @@ while jsonprods:
                                 #print("Error when scraping images for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
                                 print(traceback.format_exc())
                         # >>> GET THE PRODUCT MISC. ELEMENTS <<< #
-                        productmisc_array = re.split('{|}', website[productmisc])
+                        productmisc_array = re.split('{|}', website['productmisc'])
                         # --> Define containers for product attributes
                         product_brand = ''
                         product_colors = ''
@@ -318,7 +318,7 @@ while jsonprods:
                         insert_sizetosizetypemisc = ''
                         remove_sizetosizetypemisc = ''
                         # --> Get 'em!
-                        if website[productmisc]:
+                        if website['productmisc']:
                             try:
                                 for i in range(0, productmisc_array.len(), 2):
                                     # --- Are the sizes belonging to the current product of a a specific misc. size type? --- #
@@ -329,9 +329,9 @@ while jsonprods:
                                         preexistingcurrency = productmisc_array[(i + 1)]
                                         newprice = ''
                                         newprice = price + productmisc_array[(i + 1)].strip()
-                                        if website[currencysymbol]:
+                                        if website['currencysymbol']:
                                             newprice.upper()
-                                            newprice = converttocorrectprice(newprice, website[currencysymbol])
+                                            newprice = converttocorrectprice(newprice, website['currencysymbol'])
                                         else:
                                             newprice = newprice.replace(r'[^0-9,.]', '')
                                             newprice = getmoneyfromtext(newprice)
@@ -339,9 +339,9 @@ while jsonprods:
                                         if salesprice != '':
                                             newprice = ''
                                             newprice = price + productmisc_array[(i + 1)].strip()
-                                            if website[currencysymbol]:
+                                            if website['currencysymbol']:
                                                 newprice.upper()
-                                                newprice = converttocorrectprice(newprice, website[currencysymbol])
+                                                newprice = converttocorrectprice(newprice, website['currencysymbol'])
                                             else:
                                                 newprice = newprice.replace(r'[^0-9,.]', '')
                                                 newprice = getmoneyfromtext(newprice)
@@ -421,16 +421,16 @@ while jsonprods:
                                         if productmisc_array[i] == 'before_sale_price':
                                             if productmisc_array[(i+1)].len() > 0:
                                                 newprice = productmisc_array[(i+1)][0]
-                                                if website[currencysymbol]:
+                                                if website['currencysymbol']:
                                                     newprice.upper()
-                                                    if website[pricedelimitertoignore]:
-                                                        if website[pricedelimitertoignore].strip().find(' '):
-                                                            sepdelimiters = website[pricedelimitertoignore].strip().split(' ')
+                                                    if website['pricedelimitertoignore']:
+                                                        if website['pricedelimitertoignore'].strip().find(' '):
+                                                            sepdelimiters = website['pricedelimitertoignore'].strip().split(' ')
                                                             for delim in sepdelimiters:
                                                                 newprice = re.sub(r'\\' + delim.strip() + '', '', newprice)
                                                         else:
-                                                            newprice = re.sub(r'\\' + website[pricedelimitertoignore].strip() + '', '', newprice) 
-                                                    newprice = converttocorrectprice(newprice, website[currencysymbol])
+                                                            newprice = re.sub(r'\\' + website['pricedelimitertoignore'].strip() + '', '', newprice) 
+                                                    newprice = converttocorrectprice(newprice, website['currencysymbol'])
                                                 else:
                                                     newprice = newprice.replace(r'[^0-9,.]', '')
                                                     newprice = getmoneyfromtext(newprice)   
@@ -862,7 +862,7 @@ while jsonprods:
                                 #print("Error when scraping misc. product information for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
                                 print(traceback.format_exc())
                         # >>> CHECK FOR PRODUCT PROPERITES IN TITLE(IF ENABLED) <<< #
-                        if bool(website[lookforprodpropintitle]) == True:
+                        if website['lookforprodpropintitle'] == '1':
                             try:
                                 termies = []
                                 termies[0] = jsonprodattr['pa_brand']
