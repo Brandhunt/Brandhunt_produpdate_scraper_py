@@ -16,6 +16,7 @@ import base64
 import mysql.connector
 import re
 import sys
+import traceback
 
 from splinter import Browser
 
@@ -154,18 +155,12 @@ jsoncatmaps = json.loads(r.content)
 
 #arraus = []
 
-#print('TESTPRINT - BEFORE START')
 while jsonprods:
-    #print('TESTPRINT - AFTER START')
     for website in jsonwebsites:
-        #print('TESTPRINT - AFTER START 2')
         if website['ignorethisone'] == '1':
             continue   
-        #print('TESTPRINT - AFTER START 3')
         for product in jsonprods:
-            #print('TESTPRINT - AFTER START 4')
             if website['domain'] == product['domain']:
-                print('TESTPRINT - AFTER START 5')
                 # --- First, get the HTML for each domain part --- #
                 if website['scrapetype'] == 'standard_morph_io':
                     try:
@@ -174,7 +169,8 @@ while jsonprods:
                         try:
                             html = scraperwiki.scrape(product['url'])
                         except:
-                            print("Error when scraping URL for product ID " + product['productid'] + ": " + str(sys.exc_info()[0]) + " occured!")
+                            #print("Error when scraping URL for product ID " + product['productid'] + ": " + str(sys.exc_info()[0]) + " occured!")
+                            print(traceback.format_exc())
                         # >>> GET THE HTML ROOT <<< #
                         root = lxml.html.fromstring(html)
                         print("Currently scraping product with ID " + str(product['productid']))
@@ -205,7 +201,8 @@ while jsonprods:
                                 price = price.replace(r'[^0-9,.]', '')
                                 price = getmoneyfromtext(price)
                         except:
-                            print("Error when scraping price for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
+                            #print("Error when scraping price for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
+                            print(traceback.format_exc())
                         # >>> GET THE SALES PRICE <<< #
                         salesprice_elements = ''
                         salesprice = ''
@@ -227,7 +224,8 @@ while jsonprods:
                                     salesprice = salesprice.replace(r'[^0-9,.]', '')
                                     salesprice = getmoneyfromtext(salesprice)
                             except:
-                                print("Error when scraping sales price for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
+                                #print("Error when scraping sales price for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
+                                print(traceback.format_exc())
                         # >>> GET THE DOMAIN MISC. ELEMENTS <<< #
                         domainmisc_array = ''
                         if website[domainmisc]:
@@ -236,7 +234,8 @@ while jsonprods:
                                 for i in range(0, domainmisc_array.len(), 2):
                                     domainmisc_array[(i + 1)] = root.cssselect(domainmisc_array[(i + 1)])
                             except:
-                                print("Error when scraping misc. domain information for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
+                                #print("Error when scraping misc. domain information for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
+                                print(traceback.format_exc())
                         # >>> GET THE PRODUCT LOGO URL(S) - IF SUCH EXISTS <<< #
                         #prodlog_image_urls = ''
                         #prodlog_image_elements = ''
@@ -265,7 +264,8 @@ while jsonprods:
                                 else:
                                     print("No product logo URLs could be found for product ID " + product['productid'] + "!")
                             except:
-                                print("Error when scraping product logo images for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
+                                #print("Error when scraping product logo images for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
+                                print(traceback.format_exc())
                         # >>> GET THE IMAGE URL(S) <<< #
                         image_urls = ''
                         image_elements = ''
@@ -292,7 +292,8 @@ while jsonprods:
                                             image_urls[imagekey] = imageval
                                     image_urls_valid = image_urls.values()
                             except:
-                                print("Error when scraping images for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
+                                #print("Error when scraping images for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
+                                print(traceback.format_exc())
                         # >>> GET THE PRODUCT MISC. ELEMENTS <<< #
                         productmisc_array = re.split('{|}', website[productmisc])
                         # --> Define containers for product attributes
@@ -858,7 +859,8 @@ while jsonprods:
                                 ###
                                 #pass
                             except:
-                                print("Error when scraping misc. product information for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
+                                #print("Error when scraping misc. product information for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
+                                print(traceback.format_exc())
                         # >>> CHECK FOR PRODUCT PROPERITES IN TITLE(IF ENABLED) <<< #
                         if bool(website[lookforprodpropintitle]) == True:
                             try:
@@ -994,7 +996,8 @@ while jsonprods:
                                             category_result = array_merge(category_result, existing_categories)
                                     catstoaddresult = cat_result
                             except:
-                                print("Error when looking after prod. properties in title for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
+                                #print("Error when looking after prod. properties in title for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
+                                print(traceback.format_exc())
                         # >>> MAKE PRICES NUMERIC <<< #
                         price = getmoneyfromtext(price)
                         salesprice = getmoneyfromtext(salesprice)
@@ -1021,7 +1024,8 @@ while jsonprods:
                                          insert_sizetosizetypemisc,\
                                          remove_sizetosizetypemisc]})
                     except:
-                        print("Error: " + str(sys.exc_info()[0]) + " occured!")
+                        #print("Error: " + str(sys.exc_info()[0]) + " occured!")
+                        print(traceback.format_exc())
                         #STORE PRODUCT IN DATABASE AS SHOULD_DELETE IF HTTP404 ERROR EXISTS
                         continue
                 elif website['scrapetype'] == 'phantomjs_morph_io':
@@ -1038,7 +1042,8 @@ while jsonprods:
                             ##for link in links:
                             ##    print link['href']
                     except:
-                        print("Error: " + sys.exc_info()[0] + " occured!")
+                        #print("Error: " + sys.exc_info()[0] + " occured!")
+                        print(traceback.format_exc())
                         continue
                 else:
                     continue
