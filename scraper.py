@@ -124,6 +124,7 @@ wp_connectwp_url = os.environ['MORPH_WP_CONNECT_URL']
 wp_connectwp_url_2 = os.environ['MORPH_WP_CONNECT_URL_2']
 wp_connectwp_url_3 = os.environ['MORPH_WP_CONNECT_URL_3']
 wp_connectwp_url_4 = os.environ['MORPH_WP_CONNECT_URL_4']
+wp_connectwp_url_5 = os.environ['MORPH_WP_CONNECT_URL_5']
 
 token = base64.standard_b64encode(wp_username + ':' + wp_password)
 headers = {'Authorization': 'Basic ' + token}
@@ -139,6 +140,9 @@ jsonprodattr = json.loads(r.content)
 
 r = requests.get(wp_connectwp_url_4, headers=headers)
 jsoncatsizetypemaps = json.loads(r.content)
+
+r = requests.get(wp_connectwp_url_5, headers=headers)
+jsoncatmaps = json.loads(r.content)
 
 # --> Decode and handle these URLs!
 
@@ -160,7 +164,6 @@ for website in jsonwebsites:
                 try:
                     # >>> GET THE HTML <<< #
                     html = ''
-                    
                     try:
                         html = scraperwiki.scrape(url)
                     except:
@@ -170,10 +173,8 @@ for website in jsonwebsites:
                     root = lxml.html.fromstring(html)
 
                     # >>> GET THE PRICE <<< #
-
                     price_elements = ''
                     price = ''
-                    
                     try:
                         if website[priceselector].find('[multiple],'):
                             website[priceselector].replace('[multiple],', '')
@@ -313,14 +314,13 @@ for website in jsonwebsites:
                     
                     # --> Define containers for product attributes
                     
-                    product_sizes = ''
                     product_brand = ''
-                    product_categories = ''
                     product_colors = ''
                     product_sex = ''
-
+                    product_sizes = ''
                     product_sizetypes = ''
                     product_sizetypemiscs = ''
+                    product_categories = ''
                     
                     # --> Define values that will be saved to database once done:
                     
@@ -331,6 +331,7 @@ for website in jsonwebsites:
                     soldoutupdatemeta = ''
                     soldouthtmlupdatemeta = ''
                     catstoaddresult = ''
+                    attributes_to_store = ''
                     
                     insert_sizetosizetype = ''
                     remove_sizetosizetype = ''
@@ -818,7 +819,7 @@ for website in jsonwebsites:
                             attributes = []
                             attribute_pos = 1 
                             if product_brand:
-                                brand_values = jsonprodattr['pa_brand']
+                                brand_values = product['attributes']['brand']
                                 if brand_values:
                                     existing_brands = re.split(',\s*', brand_values)
                                     count = 0
@@ -829,7 +830,7 @@ for website in jsonwebsites:
                                 attributes.append(['name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1])
                                 attribute_pos++
                             if product_colors:
-                                color_values = jsonprodattr['pa_color']
+                                color_values = product['attributes']['color']
                                 if color_values:
                                     existing_colors = re.split(',\s*', color_values)
                                     count = 0
@@ -840,7 +841,7 @@ for website in jsonwebsites:
                                 attributes.append(['name':'Color', 'options':product_colors, 'position':attribute_pos, 'visible':1, 'variation':1])
                                 attribute_pos++
                             if product_sex:
-                                sex_values = jsonprodattr['pa_sex']
+                                sex_values = product['attributes']['sex']
                                 if sex_values:
                                     existing_sex = re.split(',\s*', sex_values)
                                     count = 0
@@ -851,7 +852,7 @@ for website in jsonwebsites:
                                 attributes.append(['name':'Sex', 'options':product_sex, 'position':attribute_pos, 'visible':1, 'variation':1])
                                 attribute_pos++
                             if product_sizes:
-                                size_values = jsonprodattr['pa_size']
+                                size_values = product['attributes']['size']
                                 if size_values:
                                     existing_sizes = re.split(',\s*', size_values)
                                     count = 0
@@ -862,7 +863,7 @@ for website in jsonwebsites:
                                 attributes.append(['name':'Size', 'options':product_sizes, 'position':attribute_pos, 'visible':1, 'variation':1])
                                 attribute_pos++
                             if product_sizetypes:
-                                sizetype_values = jsonprodattr['pa_sizetype']
+                                sizetype_values = product['attributes']['sizetype']
                                 if sizetype_values:
                                     existing_sizetypes = re.split(',\s*', sizetype_values)
                                     count = 0
@@ -873,7 +874,7 @@ for website in jsonwebsites:
                                 attributes.append(['name':'Sizetype', 'options':product_sizetypes, 'position':attribute_pos, 'visible':1, 'variation':1])
                                 attribute_pos++
                             if product_sizetypemiscs:
-                                sizetypemisc_values = jsonprodattr['pa_sizetypemisc']
+                                sizetypemisc_values = product['attributes']['sizetypemisc']
                                 if sizetypemisc_values:
                                     existing_sizetypemiscs = re.split(',\s*', sizetypemisc_values)
                                     count = 0
@@ -883,7 +884,7 @@ for website in jsonwebsites:
                                     product_sizetypemiscs = product_sizetypemiscs + existing_sizetypemiscs
                                 attributes.append(['name':'Sizetypemisc', 'options':product_sizetypemiscs, 'position':attribute_pos, 'visible':1, 'variation':1])
                                 attribute_pos++
-                            #SAVE 'ATTRIBUTES' ARRAY TO LOCAL DATABASE!
+                            attributes_to_store = attributes
                             # --- Make sure to empty all the already-checked bits and join the productmisc. bits back together! --- #
                             ###
                             ###
@@ -895,20 +896,153 @@ for website in jsonwebsites:
                     
                     if bool(website[lookforprodpropintitle]) == true:
                         try:
-                            trythislater = 1
-                            ###
-                            ###
-                            #pass
+                            termies = []
+                            termies[0] = jsonprodattr['pa_brand']
+                            termies[1] = jsonprodattr['pa_color']
+                            termies[2] = jsonprodattr['pa_sex']
+                            termies_result = [[], [], []]
+                            for i in range(3):
+                                for term in termies[i]:
+                                    term_name = term['name']
+                                    product_name = product['name']
+                                    if product_name.upper().find(term_name.upper()):
+                                        termies_result[i].append(doesprodattrexist(jsonprodattr[term['taxonomy']], term['term_id'], term['taxonomy']), false)
+                            attributes = []
+						    attribute_pos = 1
+                            if termies_result[0]:
+                                brand_values = product_brand
+                                if brand_values:
+                                    existing_brands = re.split(',\s*', brand_values)
+                                    '''count = 0
+                                    for brand in existing_brands:
+                                        existing_brands[count] = (brand, false)
+                                        count++'''
+                                    termies_result[0] = array_merge(termies_result[0], existing_brands);
+                                attributes.append(['name':'Brand', 'options':termies_result[0], 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attribute_pos++
+                            else:
+                                brand_values = product_brand
+                                if brand_values:
+                                    existing_brands = re.split(',\s*', brand_values)
+                                    '''count = 0
+                                    for brand in existing_brands:
+                                        existing_brands[count] = (brand, false)
+                                        count++'''
+                                    product_brand = existing_brands
+                                    attributes.append(['name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                    attribute_pos++
+                            if termies_result[1]:
+                                color_values = product_colors
+                                if color_values:
+                                    existing_colors = re.split(',\s*', color_values)
+                                    '''count = 0
+                                    for color in existing_colors:
+                                        existing_colors[count] = (color, false)
+                                        count++'''
+                                    termies_result[1] = array_merge(termies_result[1], existing_colors);
+                                attributes.append(['name':'Color', 'options':termies_result[1], 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attribute_pos++
+                            else:
+                                color_values = product_colors
+                                if color_values:
+                                    existing_colors = re.split(',\s*', color_values)
+                                    '''count = 0
+                                    for color in existing_colors:
+                                        existing_colors[count] = (color, false)
+                                        count++'''
+                                    product_colors = existing_colors
+                                    attributes.append(['name':'Brand', 'options':product_colors, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                    attribute_pos++
+                            if termies_result[2]:
+                                sex_values = product_sex
+                                if sex_values:
+                                    existing_sex = re.split(',\s*', sex_values)
+                                    '''count = 0
+                                    for sex in existing_sex:
+                                        existing_sex[count] = (sex, false)
+                                        count++'''
+                                    termies_result[2] = array_merge(termies_result[2], existing_sex);
+                                attributes.append(['name':'Sex', 'options':termies_result[2], 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attribute_pos++
+                            else:
+                                sex_values = product_sex
+                                if sex_values:
+                                    existing_sex = re.split(',\s*', sex_values)
+                                    '''count = 0
+                                    for sex in existing_sex:
+                                        existing_sex[count] = (sex, false)
+                                        count++'''
+                                    product_sex = existing_sex
+                                    attributes.append(['name':'Sex', 'options':product_sex, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                    attribute_pos++
+                            size_values = product_sizes
+                            if size_values:
+                                existing_sizes = re.split(',\s*', size_values)
+                                product_sizes = existing_sizes
+                                attributes.append(['name':'Size', 'options':product_sizes, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attribute_pos++
+                            sizetype_values = product_sizetypes
+                            if sizetype_values:
+                                existing_sizetypes = re.split(',\s*', sizetype_values)
+                                product_sizetypes = existing_sizetypes
+                                attributes.append(['name':'Size', 'options':product_sizetypes, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attribute_pos++
+                            sizetypemisc_values = product_sizetypemiscs
+                            if sizetypemisc_values:
+                                existing_sizetypemiscs = re.split(',\s*', sizetypemisc_values)
+                                product_sizetypemiscs = existing_sizetypemiscs
+                                attributes.append(['name':'Size', 'options':product_sizetypemiscs, 'position':attribute_pos, 'visible':1, 'variation':1])
+                                attribute_pos++
+                            attributes_to_store = attributes
+                            category_terms = jsonprodattr['product_cat']
+                            category_result = []
+                            for term in category_terms:
+                                term_name = term['name']
+                                product_name = product['name']
+                                array_categorymaps = jsoncatmaps
+                                if array_categorymaps:
+                                    if hasattr(array_categorymaps, term_name):
+                                        infliction_array = jsoncatmaps[term_name]['catinflections'].split(',')
+                                        for infliction in infliction_array:
+                                            if product_name.upper().find(infliction.upper()):
+                                                term = doesprodattrexist(jsonprodattr['product_cat'], term['term_id'], 'product_cat')
+                                                if term:
+                                                    category_result.append((term, false))
+                                                 cat_parents = term['ancestors']
+                                                 for parent_id in cat_parents:
+                                                     parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
+                                                     if not parent in category_result:
+                                                          category_result.append((parent, false))
+                                if product_name.upper().find(term_name.upper()):
+                                    term = doesprodattrexist(jsonprodattr['product_cat'], term['term_id'], 'product_cat')
+                                        if term:
+                                            category_result.append((term, false))
+                                         cat_parents = term['ancestors']
+                                         for parent_id in cat_parents:
+                                             parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
+                                             if not parent in category_result:
+                                                  category_result.append((parent, false))
+                                if category_result:
+                                    existing_categories = product['category_ids']
+                                    if existing_categories:
+                                        category_result = array_merge(category_result, existing_categories)
+                                catstoaddresult = cat_result
+                                
                         except:
-                            print("Error when looking after prod. properties in title for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
+                            print("Error when looking after prod. properties in title for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")                    
                     
                     # >>> MAKE PRICES NUMERIC <<< #
-                    price =
-                    salesprice =
+                    price = getmoneyfromtext(price)
+                    salesprice = getmoneyfromtext(salesprice)
                     
                     # >>> STORE PRODUCT VALUES IN MORPH.IO DATABASE <<< #
-                    
-                    #HEPP
+                    scraperwiki.sqlite.save(unique_keys=['productid'],
+                                            data={'domain': "product['domain'],
+                                                  'url': product['url'],
+                                                  'productid': product['productid'],
+                                                  'price': price,
+                                                  'salesprice': salesprice,
+                                                  )
                     
                 except:
                     print("Error: " + sys.exc_info()[0] + " occured!")
@@ -942,29 +1076,6 @@ for website in jsonwebsites:
             
             
             
-    
-
-
-
-##for product in jsonprods:
-##    domain = product['domain']
-##    prodid = product['productid']
-##    url = product['url']
-##    
-##    html = scraperwiki.scrape(url)
-##    
-##    #print(prodid)
-
-#   Connect to database and get the needed information!
-
-##wp_db_name = os.environ['MORPH_DB_NAME']
-##wp_db_user = os.environ['MORPH_DB_USER']
-##wp_db_password = os.environ['MORPH_DB_PASSWORD']
-##wp_db_host = os.environ['MORPH_DB_HOST']
-
-##wp_db_charset = os.environ['MORPH_DB_CHARSET']
-##wp_db_collate = ''
-
 ##cnx = mysql.connector.connect(user=wp_db_user, 
 ##                              password=wp_db_password,
 ##                              host=wp_db_host,
