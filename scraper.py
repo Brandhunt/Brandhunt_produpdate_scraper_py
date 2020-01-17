@@ -165,7 +165,7 @@ while jsonprods:
         for product in jsonprods:
             #print('TESTPRINT - AFTER START 4')
             if website['domain'] == product['domain']:
-                #print('TESTPRINT - AFTER START 5')
+                print('TESTPRINT - AFTER START 5')
                 # --- First, get the HTML for each domain part --- #
                 if website['scrapetype'] == 'standard_morph_io':
                     try:
