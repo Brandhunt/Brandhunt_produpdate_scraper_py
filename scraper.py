@@ -464,7 +464,7 @@ for website in jsonwebsites:
                                     # --- Get sex attributes from current scrape --- #
                                     if productmisc_array[i] == 'pa_sex':
                                         if productmisc_array[(i+1)].len() > 0:
-                                        sex_array = []
+                                            sex_array = []
                                             for sex_termus in productmisc_array[(i+1)]:
                                                 clean_sex = sex_termus.strip()
                                                 term = doesprodattrexist(jsonprodattr['pa_sex'], sex_termus, 'pa_sex')
