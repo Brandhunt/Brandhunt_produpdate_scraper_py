@@ -63,9 +63,8 @@ def converttocorrectprice(price, currencysymbol):
         if website['priceselector'].find('' + ratekey + ''):
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)
-            #print(price)
-            #print(ratevalue)
             #print('PRICE: ' + price)
+            #print('RATEVALUE: ' + str(ratevalue))
             price = float(price) / ratevalue
             price = getmoneyfromtext(price)
             foundinrates = True
@@ -201,7 +200,8 @@ while jsonprods:
                                     price = re.sub(r'\\' + website['pricedelimitertoignore'].strip() + '', '', price)    
                             if website['currencysymbol']:
                                 print('PRICE:' + price)
-                                print('PRICE ELEMENTS:' + price_elements)
+                                print('PRICE ELEMENTS:')
+                                print(*price_elements, sep='\n')
                                 price = converttocorrectprice(price, website['currencysymbol'])
                             else:
                                 price = price.replace(r'[^0-9,.]', '')
