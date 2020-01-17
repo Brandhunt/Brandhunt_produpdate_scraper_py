@@ -1021,7 +1021,7 @@ while jsonprods:
                                          insert_sizetosizetypemisc,\
                                          remove_sizetosizetypemisc]})
                     except:
-                        print("Error: " + sys.exc_info()[0] + " occured!")
+                        print("Error: " + str(sys.exc_info()[0]) + " occured!")
                         #STORE PRODUCT IN DATABASE AS SHOULD_DELETE IF HTTP404 ERROR EXISTS
                         continue
                 elif website['scrapetype'] == 'phantomjs_morph_io':
