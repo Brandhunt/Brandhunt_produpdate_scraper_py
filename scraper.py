@@ -395,7 +395,7 @@ for website in jsonwebsites:
                                         if term:
                                             brand_array.append((term, false))
                                         else:
-                                            term = array[]
+                                            term = []
                                             term['term_id'] = -1
                                             term['name'] = brand_termus
                                             term['slug'] = clean_brand
@@ -419,7 +419,7 @@ for website in jsonwebsites:
                                              if not parent in cat_result:
                                                   cat_result.append((parent, false))
                                       else:
-                                          term = array[]
+                                          term = []
                                           term['term_id'] = -1
                                           term['name'] = cat
                                           term['slug'] = clean_cat
@@ -472,7 +472,7 @@ for website in jsonwebsites:
                                                 if term:
                                                     sex_array.append((term, false))
                                                 else:
-                                                    term = array[]
+                                                    term = []
                                                     term['term_id'] = -1
                                                     term['name'] = sex_termus
                                                     term['slug'] = clean_sex
@@ -490,7 +490,7 @@ for website in jsonwebsites:
                                                 if term:
                                                     brand_array.append((term, false))
                                                 else:
-                                                    term = array[]
+                                                    term = []
                                                     term['term_id'] = -1
                                                     term['name'] = brand_termus
                                                     term['slug'] = clean_brand
@@ -520,7 +520,7 @@ for website in jsonwebsites:
                                                 if term:
                                                     size_array.append((term, false))
                                                 else:
-                                                    term = array[]
+                                                    term = []
                                                     term['term_id'] = -1
                                                     term['name'] = size_termus
                                                     term['slug'] = clean_size
@@ -537,7 +537,7 @@ for website in jsonwebsites:
                                                 if term:
                                                     color_array.append((term, false))
                                                 else:
-                                                    term = array[]
+                                                    term = []
                                                     term['term_id'] = -1
                                                     term['name'] = color_termus
                                                     term['slug'] = clean_color
@@ -559,7 +559,7 @@ for website in jsonwebsites:
                                                         if not parent in category_array:
                                                             category_array.append((parent, false))
                                                 else:
-                                                    term = array[]
+                                                    term = []
                                                     term['term_id'] = -1
                                                     term['name'] = cat_termus
                                                     term['slug'] = clean_cat
@@ -586,7 +586,7 @@ for website in jsonwebsites:
                                     # --- Get sex attributes from current scrape --- #
                                     if productmisc_array[i] == 'pa_sex_html':
                                         sexies = jsonprodattr['pa_sex']
-                                        sexies_result = array[]
+                                        sexies_result = []
                                         for sexterm in sexies:
                                             term_name = sexterm['name']
                                             sex_html = productmisc_array[(i+1)]
@@ -598,7 +598,7 @@ for website in jsonwebsites:
                                     # --- Get size attribute(s) from current scrape --- #
                                     if productmisc_array[i] == 'pa_size_html':
                                         sizies = jsonprodattr['pa_size']
-                                        sizies_result = array[]
+                                        sizies_result = []
                                         for sizeterm in sizies:
                                             term_name = sizeterm['name']
                                             size_html = productmisc_array[(i+1)]
@@ -626,7 +626,7 @@ for website in jsonwebsites:
                                     # --- Get brand attributes from current scrape --- #
                                     if productmisc_array[i] == 'pa_brand_html':
                                         brandies = jsonprodattr['pa_brand']
-                                        brandies_result = array[]
+                                        brandies_result = []
                                         for brandterm in brandies:
                                             term_name = brandterm['name']
                                             brand_html = productmisc_array[(i+1)]
@@ -642,7 +642,7 @@ for website in jsonwebsites:
                                     # --- Get categories from current scrape --- #
                                     if productmisc_array[i] == 'pa_category_html':
                                         caties = jsonprodattr['product_cat']
-                                        caties_result = array[]
+                                        caties_result = []
                                         for catterm in caties:
                                             term_name = catterm['name']
                                             cat_html = productmisc_array[(i+1)]
