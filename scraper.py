@@ -161,7 +161,7 @@ while requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', head
 
     for website in jsonwebsites:
 
-        if bool(website[ignorethisone]) == true:
+        if bool(website['ignorethisone']) == true:
             continue
 
         for product in jsonprods:
