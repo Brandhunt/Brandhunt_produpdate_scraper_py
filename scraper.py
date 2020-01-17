@@ -136,6 +136,9 @@ wp_connectwp_url_5 = os.environ['MORPH_WP_CONNECT_URL_5']
 token = base64.standard_b64encode(wp_username + ':' + wp_password)
 headers = {'Authorization': 'Basic ' + token}
 
+offset = 0
+limit = 25
+
 #r = requests.get(wp_connectwp_url, headers=headers)
 r = requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', headers=headers)
 jsonprods = r.json()
@@ -155,8 +158,6 @@ jsoncatmaps = json.loads(r.content)
 # --> Decode and handle these URLs!
 
 arraus = []
-offset = 0
-limit = 25
 
 print('BEFORE START')
 
