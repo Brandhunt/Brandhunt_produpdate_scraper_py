@@ -62,7 +62,9 @@ def converttocorrectprice(price, currencysymbol):
         if website['priceselector'].find('' + ratekey + ''):
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)
-            price = price / ratevalue
+            print(price)
+            print(ratevalue)
+            price = float(price) / float(ratevalue)
             price = getmoneyfromtext(price)
             foundinrates = True
             break
