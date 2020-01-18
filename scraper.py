@@ -359,8 +359,8 @@ while jsonprods:
                         if website['productmisc']:
                             try:
                                 for i in range(2, len(productmisc_array), 2):
-                                    print(productmisc_array[(i-1)])
-                                    print(productmisc_array[i])
+                                    #print(productmisc_array[(i-1)])
+                                    #print(productmisc_array[i])
                                     # --- Are the sizes belonging to the current product of a a specific misc. size type? --- #
                                     if productmisc_array[(i-1)] == 'sizetypemisc':
                                         sizetypemisc = productmisc_array[i]
@@ -717,7 +717,7 @@ while jsonprods:
                                             if term:
                                                 product_category_names.append(term['name'])
                                         for catstosizetype in catstosizetypes:
-                                            matching_cats = array_merge(matching_cats, filter(lambda x: re.findall(u'(\b.*' + catstosizetype.strip + '\b)', x, flags=re.IGNORECASE), product_category_names))
+                                            matching_cats = array_merge(matching_cats, filter(lambda x: re.findall(u'(\b.*' + catstosizetype.strip() + '\b)', x, flags=re.IGNORECASE), product_category_names))
                                         if matching_cats:
                                             size_type_terms = jsonprodattr['pa_sizetype']
                                             count = 0
@@ -726,7 +726,7 @@ while jsonprods:
                                                 count+=1
                                             filtered_terms = []
                                             for finalcatsizetype in finalcatsizetypes:
-                                                filtered_terms = array_merge(filtered_terms, filter(lambda x: re.findall(u'(\b.*' + finalcatsizetype.strip + '\b)', x, flags=re.IGNORECASE), size_type_terms))
+                                                filtered_terms = array_merge(filtered_terms, filter(lambda x: re.findall(u'(\b.*' + finalcatsizetype.strip() + '\b)', x, flags=re.IGNORECASE), size_type_terms))
                                             for filt_term in filtered_terms:
                                                 term = doesprodattrexist(jsonprodattr['pa_sizetype'], filt_term, 'pa_sizetype')
                                                 if term:
