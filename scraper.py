@@ -328,6 +328,7 @@ while jsonprods:
                                 print(traceback.format_exc())
                         # >>> GET THE PRODUCT MISC. ELEMENTS <<< #
                         productmisc_array = re.split('{|}', website['productmisc'])
+                        for p in productmisc_array: print p
                         # --> Define containers for product attributes
                         product_brand = ''
                         product_colors = ''
@@ -445,8 +446,8 @@ while jsonprods:
                                     else:
                                         product_sex = [(doesprodattrexist(jsonprodattr['pa_sex'], 'Male', 'pa_sex'), False),
                                                       (doesprodattrexist(jsonprodattr['pa_sex'], 'Female', 'pa_sex'), False)]
-                                    print('SEX VALUES:')
-                                    print(i)
+                                    #print('SEX VALUES:')
+                                    #print(i)
                                     for sex in product_sex: print(sex)
                                     # --> Attempt scraping of product misc. elements:
                                     prodmisc_backup = productmisc_array[i].strip().decode('string_escape')
