@@ -440,11 +440,12 @@ while jsonprods:
                                     # --- !!! IMPORTANT --> IF THIS SHOULD OVERRIDE OTHER SEX ATTR. IMPORTS, !!! --- #
                                     # --- !!! THEN PUT THIS LAST IN ORDER IN PRODUCTMISC. TEXT FIELD BEFORE SCRAPING !!! --- #
                                     if productmisc_array[(i-1)] == 'is_male':
-                                        product_sex = ['Male']
-                                    elif productmisc_array[(i-1)] == 'is_male':
-                                        product_sex = ['Female']
+                                        product_sex = [(doesprodattrexist(jsonprodattr['product_sex'], 'Male', 'product_sex'), False)]
+                                    elif productmisc_array[(i-1)] == 'is_female':
+                                        product_sex = [(doesprodattrexist(jsonprodattr['product_sex'], 'Female', 'product_sex'), False)]
                                     else:
-                                        product_sex = ['Male', 'Female']
+                                        product_sex = [(doesprodattrexist(jsonprodattr['product_sex'], 'Male', 'product_sex'), False),
+                                                      (doesprodattrexist(jsonprodattr['product_sex'], 'Female', 'product_sex'), False)]
                                     # --> Attempt scraping of product misc. elements:
                                     prodmisc_backup = productmisc_array[i].strip().decode('string_escape')
                                     #prodmisc_elements = root.cssselect(productmisc_array[i])
