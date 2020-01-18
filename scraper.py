@@ -52,7 +52,7 @@ def doesprodattrexist(prodattrlist, term, taxonomy):
 def getmoneyfromtext(price):
     val = re.sub(r'\.(?=.*\.)', '', price.replace(',', '.'))
     if not val: return val
-    else: return '{:f}'.format(float(re.sub('[^\d\.]', '', val)))
+    else: return '{:f}'.format(float(val.replace(r'[^0-9,.]', ''))
     
 # *** --- For converting scraped price to correct value according to wanted currency --- *** #
 def converttocorrectprice(price, currencysymbol):
