@@ -1067,12 +1067,12 @@ while jsonprods:
                                                       'domain': product['domain'],\
                                                       'price': price,\
                                                       'salesprice': salesprice,\
-                                                      'domainmisc':  ", ".join(domainmisc_array),\
-                                                      'prodlogurls': ", ".join(prodlog_image_urls),\
+                                                      'domainmisc':  json.dumps(domainmisc_array),\
+                                                      'prodlogurls': json.dumps(prodlog_image_urls),\
                                                       'prodlogurl': productlogourl,\
-                                                      'finalimgurls': ", ".join(images),\
-                                                      'validimgurls': ", ".join(image_urls_valid),\
-                                                      'imgurls': ", ".join(image_urls),\
+                                                      'finalimgurls': json.dumps(images),\
+                                                      'validimgurls': json.dumps(image_urls_valid),\
+                                                      'imgurls': json.dumps(image_urls),\
                                                       'notfound': notfound,\
                                                       'removeon404': shouldremoveonnotfound,\
                                                       'soldoutfix': soldoutupdatemeta,\
@@ -1111,13 +1111,3 @@ while jsonprods:
     r = requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', headers=headers)
     jsonprods = r.json()
     
-    # --- Handle importing prices from product --- #
-
-    # # An arbitrary query against the database
-    # scraperwiki.sql.select("* from data where 'name'='peter'")
-
-    # You don't have to do things with the ScraperWiki and lxml libraries.
-    # You can use whatever libraries you want: https://morph.io/documentation/python
-    # All that matters is that your final data is written to an SQLite database
-    # called "data.sqlite" in the current working directory which has at least a table
-    # called "data".
