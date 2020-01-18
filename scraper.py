@@ -1067,21 +1067,21 @@ while jsonprods:
                                                       'domain': product['domain'],\
                                                       'price': price,\
                                                       'salesprice': salesprice})
-                              '''domainmisc': domainmisc_array,\
-                              'prodlogurls': prodlog_image_urls,\
-                              'prodlogurl': productlogourl,\
-                              'finalimgurls': images,\
-                              'validimgurls': image_urls_valid,\
-                              'imgurls': image_urls,\
-                              'notfound': shouldremoveonnotfound,\
-                              'soldoutfix': soldoutupdatemeta,\
-                              'soldouthtmlfix': soldouthtmlupdatemeta,\
-                              'catstoaddresult': catstoaddresult,\
-                              'attributes': attributes_to_store,\
-                              'sizetypemapsqls': [insert_sizetosizetype,\
-                                         remove_sizetosizetype,\
-                                         insert_sizetosizetypemisc,\
-                                         remove_sizetosizetypemisc]})'''
+                        #'domainmisc': domainmisc_array,\
+                        #'prodlogurls': prodlog_image_urls,\
+                        #'prodlogurl': productlogourl,\
+                        #'finalimgurls': images,\
+                        #'validimgurls': image_urls_valid,\
+                        #'imgurls': image_urls,\
+                        #'notfound': shouldremoveonnotfound,\
+                        #'soldoutfix': soldoutupdatemeta,\
+                        #'soldouthtmlfix': soldouthtmlupdatemeta,\
+                        #'catstoaddresult': catstoaddresult,\
+                        #'attributes': attributes_to_store,\
+                        #'sizetypemapsqls': [insert_sizetosizetype,\
+                        #           remove_sizetosizetype,\
+                        #           insert_sizetosizetypemisc,\
+                        #           remove_sizetosizetypemisc]})'
                     except:
                         #print("Error: " + str(sys.exc_info()[0]) + " occured!")
                         print(traceback.format_exc())
