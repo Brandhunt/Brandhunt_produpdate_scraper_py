@@ -412,11 +412,7 @@ while jsonprods:
                                             if term:
                                                 brand_array.append((term, False))
                                             else:
-                                                term = []
-                                                term['term_id'] = -1
-                                                term['name'] = brand_termus
-                                                term['slug'] = clean_brand
-                                                term['taxonomy'] = 'pa_brand'
+                                                term = {'term_id':-1, 'name':brand_termus, 'slug':clean_brand, 'taxonomy':'pa_brand'}
                                                 brand_array.append((term, True))
                                             product_brand = brand_array
                                             productmisc_array[i] = '.somethingelse'
@@ -436,11 +432,7 @@ while jsonprods:
                                                  if not parent in cat_result:
                                                       cat_result.append((parent, False))
                                           else:
-                                              term = []
-                                              term['term_id'] = -1
-                                              term['name'] = cat
-                                              term['slug'] = clean_cat
-                                              term['taxonomy'] = 'product_cat'
+                                              term = {'term_id':-1, 'name':cat, 'slug':clean_cat, 'taxonomy':'product_cat'}
                                               cat_result.append((term, True))
                                        catstoaddresult = cat_result
                                     # --- Should the product apply the male/female attribute automatically? --- #
@@ -492,11 +484,7 @@ while jsonprods:
                                                     if term:
                                                         sex_array.append((term, False))
                                                     else:
-                                                        term = []
-                                                        term['term_id'] = -1
-                                                        term['name'] = sex_termus
-                                                        term['slug'] = clean_sex
-                                                        term['taxonomy'] = 'pa_sex'
+                                                        term = {'term_id':-1, 'name':sex_termus, 'slug':clean_sex, 'taxonomy':'pa_sex'}
                                                         sex_array.append((term, True))
                                                 product_sex = sex_array
                                         # --- Get brand attribute(s) from current scrape --- #
@@ -510,11 +498,7 @@ while jsonprods:
                                                 if term:
                                                     brand_array.append((term, False))
                                                 else:
-                                                    term = []
-                                                    term['term_id'] = -1
-                                                    term['name'] = brand_termus
-                                                    term['slug'] = clean_brand
-                                                    term['taxonomy'] = 'pa_brand'
+                                                    term = {'term_id':-1, 'name':brand_termus, 'slug':clean_brand, 'taxonomy':'pa_brand'}
                                                     brand_array.append((term, True))
                                                 product_brand = brand_array
                                         # --- Get size attributes from current scrape --- #
@@ -544,11 +528,7 @@ while jsonprods:
                                                     if term:
                                                         size_array.append((term, False))
                                                     else:
-                                                        term = [{'term_id':-1, 'name':size_termus, 'slug':clean_size, 'taxonomy':'pa_size'}]
-                                                        #term['term_id'] = -1
-                                                        #term['name'] = size_termus
-                                                        #term['slug'] = clean_size
-                                                        #term['taxonomy'] = 'pa_size'
+                                                        term = {'term_id':-1, 'name':size_termus, 'slug':clean_size, 'taxonomy':'pa_size'}
                                                         size_array.append((term, True))
                                                 product_sizes = size_array
                                         # --- Get color attributes from current scrape --- #
@@ -562,11 +542,7 @@ while jsonprods:
                                                     if term:
                                                         color_array.append((term, False))
                                                     else:
-                                                        term = []
-                                                        term['term_id'] = -1
-                                                        term['name'] = color_termus
-                                                        term['slug'] = clean_color
-                                                        term['taxonomy'] = 'pa_color'
+                                                        term = {'term_id':-1, 'name':color_termus, 'slug':clean_color, 'taxonomy':'pa_color'}
                                                         color_array.append((term, True))
                                                 product_colors = color_array
                                         # --- Get categories from current scrape --- #
@@ -585,11 +561,7 @@ while jsonprods:
                                                             if not parent in category_array:
                                                                 category_array.append((parent, False))
                                                     else:
-                                                        term = []
-                                                        term['term_id'] = -1
-                                                        term['name'] = cat_termus
-                                                        term['slug'] = clean_cat
-                                                        term['taxonomy'] = 'product_cat'
+                                                        term = {'term_id':-1, 'name':cat_termus, 'slug':clean_cat, 'taxonomy':'product_cat'}
                                                         category_array.append((term, True))
                                                 product_categories = category_array
                                         # --- Is the product no longer existing - Does the page for it not exist anymore? --- #
@@ -769,11 +741,9 @@ while jsonprods:
                                     if term:
                                         product_sizetypemiscs.append((term, False))
                                     else:
-                                        term = []
-                                        term['term_id'] = -1
-                                        term['name'] = product_sizetypemiscname.strip()
-                                        term['slug'] = product_sizetypemiscname.strip().lower()
-                                        term['taxonomy'] = 'pa_sizetypemisc'
+                                        namus = product_sizetypemiscname.strip()
+                                        slugus = product_sizetypemiscname.strip().lower()
+                                        term = {'term_id':-1, 'name':namus, 'slug':slugus, 'taxonomy':'pa_sizetypemisc'}
                                         product_sizetypemiscs.append((term, True))
                                 # --> Fix/correct binds between existing product sizes and sizetypes(Including misc. sizetypes)! <-- #
                                 if product_sizetypes and product_sizes:
