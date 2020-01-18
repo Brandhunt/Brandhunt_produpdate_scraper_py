@@ -907,7 +907,7 @@ while jsonprods:
                                         term_name = term['name']
                                         product_name = product['name']
                                         if product_name.upper().find(term_name.upper()) != -1:
-                                            termies_result[i].append(doesprodattrexist(jsonprodattr[term['taxonomy']], term['term_id'], term['taxonomy']), False)
+                                            termies_result[i].append((doesprodattrexist(jsonprodattr[term['taxonomy']], term['term_id'], term['taxonomy']), False))
                                 attributes = []
                                 attribute_pos = 1
                                 if termies_result[0]:
