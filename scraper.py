@@ -735,7 +735,7 @@ while jsonprods:
                                     if not product_sizetypes and product_sizes and not product_sizetypemiscname:
                                         product_sizetypemiscname = 'Other'
                                 else:
-                                    if product_sizes and not wc_product_sizetypemiscname:
+                                    if product_sizes and not product_sizetypemiscname:
                                         product_sizetypemiscname = 'Other'
                                 if product_sizetypemiscname:
                                     product_sizetypemiscs = []
