@@ -464,7 +464,7 @@ while jsonprods:
                                         # --- Has the product got any special sale price applied? --- #
                                         if productmisc_array[(i-1)] == 'before_sale_price':
                                             if len(productmisc_array[i]) > 0:
-                                                newprice = productmisc_array[i][0].text()
+                                                newprice = productmisc_array[i][0].text
                                                 if website['currencysymbol']:
                                                     newprice.upper()
                                                     if website['pricedelimitertoignore']:
@@ -485,7 +485,7 @@ while jsonprods:
                                             if len(productmisc_array[i]) > 0:
                                                 sex_array = []
                                                 for sex_termus in productmisc_array[i]:
-                                                    sex_termus = sex_termus.text()
+                                                    sex_termus = sex_termus.text
                                                     clean_sex = sex_termus.strip()
                                                     term = doesprodattrexist(jsonprodattr['pa_sex'], sex_termus, 'pa_sex')
                                                     #TUPPLE STRUCTURE: (Term(ID/NAME/SLUG), newtermTrue_existingtermFalse)
@@ -503,7 +503,7 @@ while jsonprods:
                                         if productmisc_array[(i-1)] == 'pa_brand':
                                             brand_array = []
                                             if len(productmisc_array[i]) > 0:
-                                                brand_termus = productmisc_array[i][0].text()
+                                                brand_termus = productmisc_array[i][0].text
                                                 clean_brand = slugify(brand_termus.strip())
                                                 term = doesprodattrexist(jsonprodattr['pa_brand'], brand_termus, 'pa_brand')
                                                 # TUPPLE STRUCTURE: (Term(ID/NAME/SLUG), newtermTrue_existingtermFalse)
@@ -520,10 +520,11 @@ while jsonprods:
                                         # --- Get size attributes from current scrape --- #
                                         if productmisc_array[(i-1)] == 'pa_size':
                                             if len(productmisc_array[i]) > 0:
-                                                for size in productmisc_array[i]: print(size)
+                                                #PRINT('SIZES, PRODUCTMISC_SCRAPES:')
+                                                #for size in productmisc_array[i]: print(size)
                                                 size_array = []
                                                 for size_termus in productmisc_array[i]:
-                                                    size_termus = size_termus.text()
+                                                    size_termus = size_termus.text
                                                     output = re.search(r'\(.*Only.*\)|\(.*Out.*\)|\(.*In.*\)|\(.*Lager.*\)', size_termus, flags=re.IGNORECASE)
                                                     output2 = re.search(r'.*Bevaka.*', size_termus, flags=re.IGNORECASE)
                                                     output3 = re.search(r'.*Stock.*', size_termus, flags=re.IGNORECASE)
@@ -554,7 +555,7 @@ while jsonprods:
                                             if len(productmisc_array[i]) > 0:
                                                 color_array = []
                                                 for color_termus in productmisc_array[i]:
-                                                    color_termus = color_termus.text()
+                                                    color_termus = color_termus.text
                                                     clean_color = slugify(color_termus.strip())
                                                     term = doesprodattrexist(jsonprodattr['pa_color'], color_termus, 'pa_color')
                                                     if term:
@@ -572,7 +573,7 @@ while jsonprods:
                                             if len(productmisc_array[i]) > 0:
                                                 category_array = []
                                                 for cat_termus in productmisc_array[i]:
-                                                    cat_termus = cat_termus.text()
+                                                    cat_termus = cat_termus.text
                                                     clean_cat = slugify(cat_termus.strip())
                                                     term = doesprodattrexist(jsonprodattr['product_cat'], cat_termus, 'product_cat')
                                                     if term:
