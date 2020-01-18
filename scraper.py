@@ -578,7 +578,8 @@ while jsonprods:
                                             else:
                                                 soldoutupdatemeta = False
                                         # --> Check the HTML if neccessary! Any already existing product attributes found there?
-                                        productmisc_array[i] = lxml.html.tostring(productmisc_array[i])
+                                        #productmisc_array[i] = lxml.html.tostring(productmisc_array[i])
+                                        productmisc_array[i] = etree.tostring(productmisc_array[i])
                                         # --- Get sex attributes from current scrape --- #
                                         if productmisc_array[(i-1)] == 'pa_sex_html':
                                             sexies = jsonprodattr['pa_sex']
