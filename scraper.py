@@ -1082,7 +1082,7 @@ while jsonprods:
                                                       'sizetypemapsqls': json.dumps([insert_sizetosizetype,\
                                                                  remove_sizetosizetype,\
                                                                  insert_sizetosizetypemisc,\
-                                                                 remove_sizetosizetypemisc])})'
+                                                                 remove_sizetosizetypemisc])})
                     except:
                         #print("Error: " + str(sys.exc_info()[0]) + " occured!")
                         print(traceback.format_exc())
