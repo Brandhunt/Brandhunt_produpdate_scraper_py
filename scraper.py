@@ -321,8 +321,8 @@ while jsonprods:
                                             imageval = 'https:' + imageval
                                             image_urls[imagekey] = imageval
                                     image_urls_valid = image_urls.values()
-                                print('IMAGE ELEMENTS:')
-                                for img in image_elements: print img
+                                #print('IMAGE ELEMENTS:')
+                                #for img in image_elements: print img
                                 print('IMAGE URLS:')
                                 for img in image_urls: print img
                                 print('VALID IMAGES:')
@@ -520,6 +520,7 @@ while jsonprods:
                                         # --- Get size attributes from current scrape --- #
                                         if productmisc_array[(i-1)] == 'pa_size':
                                             if len(productmisc_array[i]) > 0:
+                                                for size in productmisc_array[i]: print(size)
                                                 size_array = []
                                                 for size_termus in productmisc_array[i]:
                                                     size_termus = size_termus.text()
