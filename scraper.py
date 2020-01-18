@@ -64,10 +64,10 @@ def converttocorrectprice(price, currencysymbol):
         if price.find('' + ratekey + '') != -1:
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)
-            print('CURRENCY: ' + currencysymbol)
-            print('PRICE: ' + price)
-            print('RATEKEY: ' + ratekey)
-            print('RATEVALUE: ' + str(ratevalue))
+            #print('CURRENCY: ' + currencysymbol)
+            #print('PRICE: ' + price)
+            #print('RATEKEY: ' + ratekey)
+            #print('RATEVALUE: ' + str(ratevalue))
             price = float(price) / ratevalue
             price = getmoneyfromtext(str(price))
             foundinrates = True
@@ -91,7 +91,7 @@ def converttocorrectprice(price, currencysymbol):
         else:
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)
-    print("CONVERTEDPRICE:" + price)
+    #print("CONVERTEDPRICE:" + price)
     return price
 
 # *** --- For grabbing URLs from text-based values/strings --- *** #
@@ -210,7 +210,7 @@ while jsonprods:
                                 else:
                                     price = re.sub(r'\\' + website['pricedelimitertoignore'].strip() + '', '', price)    
                             if website['currencysymbol']:
-                                print('PRICEBEFORECONVERSION:' + price)
+                                #print('PRICEBEFORECONVERSION:' + price)
                                 #print('PRICE ELEMENTS:')
                                 #for p in price_elements: print p
                                 price = converttocorrectprice(price, website['currencysymbol'])
@@ -305,7 +305,7 @@ while jsonprods:
                                 #image_urls = ''
                                 image_elements = root.cssselect(website['imageselector'])
                                 if image_elements:
-                                    for i in range(image_elements.len()):
+                                    for i in range(len(image_elements)):
                                         image_elements[i] = etree.tostring(image_elements[i])
                                     image_dom = ','.join(image_elements)
                                     image_urls = graburls(image_dom, True)
