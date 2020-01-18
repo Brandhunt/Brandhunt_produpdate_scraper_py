@@ -184,8 +184,10 @@ while jsonprods:
                         # >>> GET THE PRICE <<< #
                         price_elements = ''
                         price = ''
-                        print(website['priceselector'])
+                        #print(website['priceselector'])
                         try:
+                            website['priceselector'] = website['priceselector'].decode('string_escape')
+                            #print(website['priceselector'])
                             if website['priceselector'].find('[multiple],'):
                                 website['priceselector'].replace('[multiple],', '')
                                 price_elements = root.cssselect(website['priceselector'])
