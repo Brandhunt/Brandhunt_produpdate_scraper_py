@@ -345,7 +345,7 @@ while jsonprods:
                         # --> Define values that will be saved to database once done:
                         sizetypemisc = ''
                         preexistingcurrency = ''
-                        notfound = ''
+                        notfound = False
                         shouldremoveonnotfound = False
                         soldoutupdatemeta = ''
                         soldouthtmlupdatemeta = ''
@@ -400,7 +400,7 @@ while jsonprods:
                                             productlogourl = prodlog_image_urls[0]       
                                     # --- Should we remove the product on 404 Error? --- #
                                     if productmisc_array[(i-1)] == 'allow_remove_on_404':
-                                        shouldremoveonnotfound = 1
+                                        shouldremoveonnotfound = True
                                     # --- Use custom domain name(In case any brands doesn't exist for current product) --- #
                                     if productmisc_array[(i-1)] == 'domain_name':
                                         brand_array = []
@@ -1073,15 +1073,16 @@ while jsonprods:
                                                       #'finalimgurls': images,\
                                                       #'validimgurls': image_urls_valid,\
                                                       #'imgurls': image_urls,\
-                                                      'notfound': shouldremoveonnotfound})
-                        #'soldoutfix': soldoutupdatemeta,\
-                        #'soldouthtmlfix': soldouthtmlupdatemeta,\
-                        #'catstoaddresult': catstoaddresult,\
-                        #'attributes': attributes_to_store,\
-                        #'sizetypemapsqls': [insert_sizetosizetype,\
-                        #           remove_sizetosizetype,\
-                        #           insert_sizetosizetypemisc,\
-                        #           remove_sizetosizetypemisc]})'
+                                                      'notfound': notfound,\
+                                                      'removeon404': shouldremoveonnotfound,\
+                                                      'soldoutfix': soldoutupdatemeta,\
+                                                      'soldouthtmlfix': soldouthtmlupdatemeta,\
+                                                      #'catstoaddresult': catstoaddresult,\
+                                                      #'attributes': attributes_to_store,\
+                                                      #'sizetypemapsqls': [insert_sizetosizetype,\
+                                                      #           remove_sizetosizetype,\
+                                                      #           insert_sizetosizetypemisc,\
+                                                      #           remove_sizetosizetypemisc]})'
                     except:
                         #print("Error: " + str(sys.exc_info()[0]) + " occured!")
                         print(traceback.format_exc())
