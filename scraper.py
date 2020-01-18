@@ -51,7 +51,7 @@ def doesprodattrexist(prodattrlist, term, taxonomy):
 def getmoneyfromtext(price):
     val = re.sub(r'\.(?=.*\.)', '', price.replace(',', '.'))
     if not val: return val
-    else: return '{:f}'.format(float(val))
+    else: return '{:f}'.format(float(re.sub('[^\d\.]', '', val)))
     
 # *** --- For converting scraped price to correct value according to wanted currency --- *** #
 def converttocorrectprice(price, currencysymbol):
@@ -207,8 +207,8 @@ while jsonprods:
                                     price = re.sub(r'\\' + website['pricedelimitertoignore'].strip() + '', '', price)    
                             if website['currencysymbol']:
                                 print('PRICE:' + price)
-                                print('PRICE ELEMENTS:')
-                                for p in price_elements: print p
+                                #print('PRICE ELEMENTS:')
+                                #for p in price_elements: print p
                                 price = converttocorrectprice(price, website['currencysymbol'])
                             else:
                                 price = price.replace(r'[^0-9,.]', '')
