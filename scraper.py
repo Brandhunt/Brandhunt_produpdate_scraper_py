@@ -354,7 +354,7 @@ while jsonprods:
                         # --> Get 'em!
                         if website['productmisc']:
                             try:
-                                for i in range(1, len(productmisc_array), 2):
+                                for i in range(2, len(productmisc_array), 2):
                                     print(productmisc_array[(i-1)])
                                     print(productmisc_array[i])
                                     # --- Are the sizes belonging to the current product of a a specific misc. size type? --- #
