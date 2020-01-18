@@ -810,8 +810,8 @@ while jsonprods:
                                     #    compare_sizetypemiscid[count] = (doesprodattrexist(jsonprodattr['pa_sizetypemisc'], sizetypemiscid, 'pa_sizetypemisc'), False)
                                     #    count+=1
                                     #SAVE VALUES FOR INSERT
-                                    compare_sizeid = list(set(product_sizes) - set(sizeid_col))
-                                    compare_sizetypemiscid = list(set(product_sizetypemiscs) - set(compare_sizetypemiscid)) 
+                                    compare_sizeid = list(set(product_size_col) - set(sizeid_col))
+                                    compare_sizetypemiscid = list(set(product_sizetypemisc_col) - set(compare_sizetypemiscid)) 
                                     if compare_sizetypemiscid and compare_sizeid:
                                         insert_sizetosizetypemisc = []
                                         for sizetypemiscid_insert in compare_sizetypemiscid:
@@ -821,8 +821,8 @@ while jsonprods:
                                                 #insert_sizetosizetypemisc[count] = (sizeid_insert, sizetypemiscid_insert, product['productid'])
                                                 #count+=1
                                     #SAVE VALUES FOR REMOVAL
-                                    compare_sizeid = list(set(sizeid_col) - set(product_sizes))
-                                    compare_sizetypemiscid = list(set(compare_sizetypemiscid) - set(product_sizetypemiscs))
+                                    compare_sizeid = list(set(sizeid_col) - set(product_size_col))
+                                    compare_sizetypemiscid = list(set(compare_sizetypemiscid) - set(product_sizetypemisc_col))
                                     if compare_sizetypemiscid and compare_sizeid:
                                         remove_sizetosizetypemisc = []
                                         for sizetypemiscid_remove in compare_sizetypemiscid:
