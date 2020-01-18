@@ -192,7 +192,7 @@ while jsonprods:
                                 website['priceselector'].replace('[multiple],', '')
                                 price_elements = root.cssselect(website['priceselector'])
                                 for el in price_elements:
-                                    if not el:
+                                    if el is None:
                                         continue
                                     price = price + el.text + ' '
                             else:
