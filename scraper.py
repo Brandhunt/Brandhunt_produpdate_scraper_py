@@ -751,61 +751,86 @@ while jsonprods:
                                 if product_sizetypes and product_sizes:
                                     sizeid_col = product['sizetosizetypemaps']['size']
                                     sizetypeid_col = product['sizetosizetypemaps']['sizetype']
-                                    count = 0
-                                    for sizeid in sizeid_col:
-                                        sizeid_col[count] = (doesprodattrexist(jsonprodattr['pa_size'], sizeid, 'pa_size'), False)
-                                        count+=1
-                                    count = 0
-                                    for sizetypeid in sizetypeid_col:
-                                        sizetypeid_col[count] = (doesprodattrexist(jsonprodattr['pa_sizetype'], sizetypeid, 'pa_sizetype'), False)
-                                        count+=1
+                                    product_size_col = []
+                                    product_sizetype_col = []
+                                    #for e in range(0, len(product_sizes)): product_size_col[e] = product_sizes[e][0]['term_id']
+                                    #for e in range(0, len(product_sizetypes)): product_sizetype_col[e] = product_sizetypes[e][0]['term_id']
+                                    for s in product_sizes: product_size_col.append(s[0]['term_id'])
+                                    for s in product_sizetypes: product_sizetype_col.append(s[0]['term_id'])
+                                    #count = 0
+                                    #for sizeid in sizeid_col:
+                                    #    sizeid_col[count] = (doesprodattrexist(jsonprodattr['pa_size'], sizeid, 'pa_size'), False)
+                                    #    count+=1
+                                    #count = 0
+                                    #for sizetypeid in sizetypeid_col:
+                                    #    sizetypeid_col[count] = (doesprodattrexist(jsonprodattr['pa_sizetype'], sizetypeid, 'pa_sizetype'), False)
+                                    #    count+=1
+                                    #CONVERT COMPARE ARRAYS
+                                    #sizeid_col = [value for key, value in sizeid_col.items() if key == '']
+                                    #sizetypeid_col = [value for key, value in sizetypeid_col.items() if key == '']
+                                    #product_size_col = [value for key, value in product_sizes.items() if key == '']
+                                    #product_sizetype_col = [value for key, value in product_sizetypes.items() if key == '']
                                     #SAVE VALUES FOR INSERT
-                                    compare_sizeid = list(set(product_sizes) - set(sizeid_col))
-                                    compare_sizetypeid = list(set(product_sizetypes) - set(sizetypeid_col))
+                                    compare_sizeid = list(set(product_size_col) - set(sizeid_col))
+                                    compare_sizetypeid = list(set(product_sizetype_col) - set(sizetypeid_col))
                                     if compare_sizetypeid and compare_sizeid:
+                                        insert_sizetosizetype = []
                                         for sizetypeid_insert in compare_sizetypeid:
-                                            count = 0
+                                            #count = 0
                                             for sizeid_insert in compare_sizeid:
-                                                insert_sizetosizetype[count] = (sizeid_insert, sizetypeid_insert, product['productid'])
-                                                count+=1
+                                                insert_sizetosizetype.append((sizeid_insert, sizetypeid_insert, product['productid']))
+                                                #insert_sizetosizetype[count] = (sizeid_insert, sizetypeid_insert, product['productid'])
+                                                #count+=1
                                     #SAVE VALUES FOR REMOVAL
-                                    compare_sizeid = list(set(sizeid_col) - set(product_sizes))
-                                    compare_sizetypeid = list(set(sizetypeid_col) - set(product_sizetypes))
+                                    compare_sizeid = list(set(sizeid_col) - set(product_size_col))
+                                    compare_sizetypeid = list(set(sizetypeid_col) - set(product_sizetype_col))
                                     if compare_sizetypeid and compare_sizeid:
+                                        remove_sizetosizetype = []
                                         for sizetypeid_remove in compare_sizetypeid:
-                                            count = 0
+                                            #count = 0
                                             for sizeid_remove in compare_sizeid:
-                                                remove_sizetosizetype[count] = (sizeid_remove, sizetypeid_remove, product['productid'])
-                                                count+=1
+                                                remove_sizetosizetype.append((sizeid_remove, sizetypeid_remove, product['productid']))
+                                                #remove_sizetosizetype[count] = (sizeid_remove, sizetypeid_remove, product['productid'])
+                                                #count+=1
                                 if product_sizetypemiscs and product_sizes:
                                     sizeid_col = product['sizetosizetypemaps']['size_misc']
-                                    compare_sizetypemiscid = product['sizetosizetypemaps']['sizetype_misc'] 
-                                    count = 0
-                                    for sizeid in sizeid_col:
-                                        sizeid_col[count] = (doesprodattrexist(jsonprodattr['pa_size'], sizeid, 'pa_size'), False)
-                                        count+=1
-                                    count = 0
-                                    for sizetypemiscid in compare_sizetypemiscid:
-                                        compare_sizetypemiscid[count] = (doesprodattrexist(jsonprodattr['pa_sizetypemisc'], sizetypemiscid, 'pa_sizetypemisc'), False)
-                                        count+=1
+                                    compare_sizetypemiscid = product['sizetosizetypemaps']['sizetype_misc']
+                                    product_size_col = []
+                                    product_sizetypemisc_col = []
+                                    #for e in range(0, len(product_sizes)): product_size_col[e] = product_sizes[e][0]['term_id']
+                                    #for e in range(0, len(product_sizetypes)): product_sizetypemisc_col[e] = product_sizetypemiscs[e][0]['term_id']
+                                    for s in product_sizes: product_size_col.append(s[0]['term_id'])
+                                    for s in product_sizetypemiscs: product_sizetypemisc_col.append(s[0]['term_id'])
+                                    #count = 0
+                                    #for sizeid in sizeid_col:
+                                    #    sizeid_col[count] = (doesprodattrexist(jsonprodattr['pa_size'], sizeid, 'pa_size'), False)
+                                    #    count+=1
+                                    #count = 0
+                                    #for sizetypemiscid in compare_sizetypemiscid:
+                                    #    compare_sizetypemiscid[count] = (doesprodattrexist(jsonprodattr['pa_sizetypemisc'], sizetypemiscid, 'pa_sizetypemisc'), False)
+                                    #    count+=1
                                     #SAVE VALUES FOR INSERT
                                     compare_sizeid = list(set(product_sizes) - set(sizeid_col))
                                     compare_sizetypemiscid = list(set(product_sizetypemiscs) - set(compare_sizetypemiscid)) 
                                     if compare_sizetypemiscid and compare_sizeid:
+                                        insert_sizetosizetypemisc = []
                                         for sizetypemiscid_insert in compare_sizetypemiscid:
-                                            count = 0
+                                            #count = 0
                                             for sizeid_insert in compare_sizeid:
-                                                insert_sizetosizetypemisc[count] = (sizeid_insert, sizetypemiscid_insert, product['productid'])
-                                                count+=1
+                                                insert_sizetosizetypemisc.append((sizeid_insert, sizetypemiscid_insert, product['productid']))
+                                                #insert_sizetosizetypemisc[count] = (sizeid_insert, sizetypemiscid_insert, product['productid'])
+                                                #count+=1
                                     #SAVE VALUES FOR REMOVAL
                                     compare_sizeid = list(set(sizeid_col) - set(product_sizes))
                                     compare_sizetypemiscid = list(set(compare_sizetypemiscid) - set(product_sizetypemiscs))
                                     if compare_sizetypemiscid and compare_sizeid:
+                                        remove_sizetosizetypemisc = []
                                         for sizetypemiscid_remove in compare_sizetypemiscid:
-                                            count = 0
+                                            #count = 0
                                             for sizeid_remove in compare_sizeid:
-                                                remove_sizetosizetypemisc[count] = (sizeid_remove, sizetypemiscid_remove, product['productid'])
-                                                count+=1
+                                                remove_sizetosizetypemisc.append((sizeid_remove, sizetypemiscid_remove, product['productid']))
+                                                #remove_sizetosizetypemisc[count] = (sizeid_remove, sizetypemiscid_remove, product['productid'])
+                                                #count+=1
                                 # --> Apply color, size, sex and brand to the product! (Filter the attributes before save)
                                 # --> (Filter the attributes before database save)
                                 attributes = []
