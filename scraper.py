@@ -45,8 +45,7 @@ def doesprodattrexist(prodattrlist, term, taxonomy):
     for prodattr in prodattrlist:
         if prodattr['term_id'] == term or prodattr['name'] == term or prodattr['slug'] == term:
             return prodattr
-        else:
-            return 0
+    return 0
     
 # *** --- For getting proper value from scraped HTML elements --- *** #
 def getmoneyfromtext(price):
