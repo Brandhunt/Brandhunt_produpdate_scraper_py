@@ -171,19 +171,20 @@ while jsonprods:
                         html = ''
                         try:
                             html = scraperwiki.scrape(product['url'])
-                            print("HTML:")
-                            print(html)
+                            #print("HTML:")
+                            #print(html)
                         except:
                             #print("Error when scraping URL for product ID " + product['productid'] + ": " + str(sys.exc_info()[0]) + " occured!")
                             print(traceback.format_exc())
                         # >>> GET THE HTML ROOT <<< #
                         root = lxml.html.fromstring(html)
-                        print("ROOT:")
-                        for r in root: print r
+                        #print("ROOT:")
+                        #for r in root: print r
                         print("Currently scraping product with ID " + str(product['productid']))
                         # >>> GET THE PRICE <<< #
                         price_elements = ''
                         price = ''
+                        print(website['priceselector'])
                         try:
                             if website['priceselector'].find('[multiple],'):
                                 website['priceselector'].replace('[multiple],', '')
