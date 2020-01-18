@@ -207,7 +207,7 @@ while jsonprods:
                                 else:
                                     price = re.sub(r'\\' + website['pricedelimitertoignore'].strip() + '', '', price)    
                             if website['currencysymbol']:
-                                #print('PRICE:' + price)
+                                print('PRICEBEFORECONVERSION:' + price)
                                 #print('PRICE ELEMENTS:')
                                 #for p in price_elements: print p
                                 price = converttocorrectprice(price, website['currencysymbol'])
@@ -248,7 +248,7 @@ while jsonprods:
                         if website['domainmisc']:
                             try:
                                 domainmisc_array = re.split('{|}', website['domainmisc'])
-                                for i in range(0, domainmisc_array.len(), 2):
+                                for i in range(0, len(domainmisc_array), 2):
                                     domainmisc_array[(i + 1)] = root.cssselect(domainmisc_array[(i + 1)])
                                 print('DOMAINMISC:')
                                 for d in domainmisc_array: print d
@@ -266,7 +266,7 @@ while jsonprods:
                                 website['productlogoselector'] = website['productlogoselector'].decode('string_escape')
                                 prodlog_image_elements = root.cssselect(website['productlogoselector'])
                                 if prodlog_image_elements:
-                                    for i in range(prodlog_image_elements.len()):
+                                    for i in range(len(prodlog_image_elements)):
                                         prodlog_image_elements[i] = etree.tostring(prodlog_image_elements[i])
                                     image_dom = ','.join(prodlog_image_elements)
                                     prodlog_image_urls = graburls(image_dom, True)
@@ -350,7 +350,7 @@ while jsonprods:
                         # --> Get 'em!
                         if website['productmisc']:
                             try:
-                                for i in range(0, productmisc_array.len(), 2):
+                                for i in range(0, len(productmisc_array), 2):
                                     # --- Are the sizes belonging to the current product of a a specific misc. size type? --- #
                                     if productmisc_array[i] == 'sizetypemisc':
                                         sizetypemisc = productmisc_array[(i + 1)]
@@ -379,7 +379,7 @@ while jsonprods:
                                     # --- Should the product skip any URLs(Product logo and normal IMGs) containing any specific string(s)? --- #
                                     if productmisc_array[i] == 'skip_img_containing':
                                         if image_urls_valid != '':
-                                            for e in range(0, image_urls_valid.len(), 1):
+                                            for e in range(0, len(image_urls_valid), 1):
                                                 if image_urls_valid[e].find(productmisc_array[(i + 1)]):
                                                     del image_urls_valid[e]
                                                 images = ','.join(image_urls_valid)
@@ -449,7 +449,7 @@ while jsonprods:
                                     if productmisc_array[(i+1)]:
                                         # --- Has the product got any special sale price applied? --- #
                                         if productmisc_array[i] == 'before_sale_price':
-                                            if productmisc_array[(i+1)].len() > 0:
+                                            if len(productmisc_array[(i+1)]) > 0:
                                                 newprice = productmisc_array[(i+1)][0]
                                                 if website['currencysymbol']:
                                                     newprice.upper()
@@ -468,7 +468,7 @@ while jsonprods:
                                                 price = newprice
                                         # --- Get sex attributes from current scrape --- #
                                         if productmisc_array[i] == 'pa_sex':
-                                            if productmisc_array[(i+1)].len() > 0:
+                                            if len(productmisc_array[(i+1)]) > 0:
                                                 sex_array = []
                                                 for sex_termus in productmisc_array[(i+1)]:
                                                     clean_sex = sex_termus.strip()
@@ -487,7 +487,7 @@ while jsonprods:
                                         # --- Get brand attribute(s) from current scrape --- #
                                         if productmisc_array[i] == 'pa_brand':
                                             brand_array = []
-                                            if productmisc_array[(i+1)].len() > 0:
+                                            if len(productmisc_array[(i+1)]) > 0:
                                                 brand_termus = productmisc_array[(i+1)][0]
                                                 clean_brand = slugify(brand_termus.strip())
                                                 term = doesprodattrexist(jsonprodattr['pa_brand'], brand_termus, 'pa_brand')
@@ -504,7 +504,7 @@ while jsonprods:
                                                 product_brand = brand_array
                                         # --- Get size attributes from current scrape --- #
                                         if productmisc_array[i] == 'pa_size':
-                                            if productmisc_array[(i+1)].len() > 0:
+                                            if len(productmisc_array[(i+1)]) > 0:
                                                 size_array = []
                                                 for size_termus in productmisc_array[(i+1)]:
                                                     output = re.search(r'\(.*Only.*\)|\(.*Out.*\)|\(.*In.*\)|\(.*Lager.*\)', size_termus, flags=re.IGNORECASE)
@@ -534,7 +534,7 @@ while jsonprods:
                                                 product_sizes = size_array
                                         # --- Get color attributes from current scrape --- #
                                         if productmisc_array[i] == 'pa_color':
-                                            if productmisc_array[(i+1)].len() > 0:
+                                            if len(productmisc_array[(i+1)]) > 0:
                                                 color_array = []
                                                 for color_termus in productmisc_array[(i+1)]:
                                                     clean_color = slugify(color_termus.strip())
@@ -551,7 +551,7 @@ while jsonprods:
                                                 product_colors = color_array
                                         # --- Get categories from current scrape --- #
                                         if productmisc_array[i] == 'pa_category':
-                                            if productmisc_array[(i+1)].len() > 0:
+                                            if len(productmisc_array[(i+1)]) > 0:
                                                 category_array = []
                                                 for cat_termus in productmisc_array[(i+1)]:
                                                     clean_cat = slugify(cat_termus.strip())
@@ -573,11 +573,11 @@ while jsonprods:
                                                 product_categories = category_array
                                         # --- Is the product no longer existing - Does the page for it not exist anymore? --- #
                                         if productmisc_array[i] == 'notfound':
-                                            if productmisc_array[(i+1)].len() > 0:
+                                            if len(productmisc_array[(i+1)]) > 0:
                                                 notfound = True
                                         # --- Has the product sold out yet? --- #
                                         if productmisc_array[i] == 'sold_out':
-                                            if productmisc_array[(i+1)].len() > 0:
+                                            if len(productmisc_array[(i+1)]) > 0:
                                                 soldoutupdatemeta = True
                                                 price = '0.0 BUCKS'
                                                 price = price.replace(r'[^0-9,.]', '')
@@ -682,7 +682,7 @@ while jsonprods:
                                         # --- Has the product sold out yet? --- #
                                         if productmisc_array[i] == 'sold_out_html':
                                             selector_one_string_two = prodmisc_backup.split(',')
-                                            if selector_one_string_two.len() > 1:
+                                            if len(selector_one_string_two) > 1:
                                                 productmisc_array[(i+1)] = lxml.html.tostring(selector_one_string_two[0].strip().decode('string_escape'))
                                                 if productmisc_array[(i+1)].find(selector_one_string_two[1]):
                                                     soldouthtmlupdatemeta = True
