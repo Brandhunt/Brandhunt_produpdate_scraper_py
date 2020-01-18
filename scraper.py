@@ -897,7 +897,7 @@ while jsonprods:
                         # >>> CHECK FOR PRODUCT PROPERITES IN TITLE(IF ENABLED) <<< #
                         if website['lookforprodpropintitle'] == '1':
                             try:
-                                termies = []
+                                termies = [[], [], []]
                                 termies[0] = jsonprodattr['pa_brand']
                                 termies[1] = jsonprodattr['pa_color']
                                 termies[2] = jsonprodattr['pa_sex']
