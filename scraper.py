@@ -438,7 +438,7 @@ while jsonprods:
                                     # --- Should the product apply the male/female attribute automatically? --- #
                                     # --- !!! IMPORTANT --> IF THIS SHOULD OVERRIDE OTHER SEX ATTR. IMPORTS, !!! --- #
                                     # --- !!! THEN PUT THIS LAST IN ORDER IN PRODUCTMISC. TEXT FIELD BEFORE SCRAPING !!! --- #
-                                    if len(product_sex) < 0:
+                                    if not product_sex:
                                         if productmisc_array[(i-1)] == 'is_male':
                                             product_sex = [(doesprodattrexist(jsonprodattr['pa_sex'], 'Male', 'pa_sex'), False)]
                                         elif productmisc_array[(i-1)] == 'is_female':
