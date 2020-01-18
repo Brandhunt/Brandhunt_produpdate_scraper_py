@@ -957,8 +957,8 @@ while jsonprods:
                                     attribute_pos+=1
                                 else:
                                     sex_values = product_sex
-                                    print('SEX VALUES, INPRODTITLE:')
-                                    for sex in sex_values: print(sex)
+                                    #print('SEX VALUES, INPRODTITLE:')
+                                    #for sex in sex_values: print(sex)
                                     if sex_values:
                                         existing_sex = re.split(',\s*', sex_values)
                                         '''count = 0
