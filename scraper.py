@@ -525,7 +525,7 @@ while jsonprods:
                                                 size_array = []
                                                 for size_termus in productmisc_array[i]:
                                                     size_termus = size_termus.text
-                                                    print(size_termus)
+                                                    #print(size_termus)
                                                     output = re.search(r'\(.*Only.*\)|\(.*Out.*\)|\(.*In.*\)|\(.*Lager.*\)', size_termus, flags=re.IGNORECASE)
                                                     output2 = re.search(r'.*Bevaka.*', size_termus, flags=re.IGNORECASE)
                                                     output3 = re.search(r'.*Stock.*', size_termus, flags=re.IGNORECASE)
@@ -544,11 +544,11 @@ while jsonprods:
                                                     if term:
                                                         size_array.append((term, False))
                                                     else:
-                                                        term = []
-                                                        term['term_id'] = -1
-                                                        term['name'] = size_termus
-                                                        term['slug'] = clean_size
-                                                        term['taxonomy'] = 'pa_size'
+                                                        term = [{'term_id':-1, 'name':size_termus, 'slug':clean_size, 'taxonomy':'pa_size'}]
+                                                        #term['term_id'] = -1
+                                                        #term['name'] = size_termus
+                                                        #term['slug'] = clean_size
+                                                        #term['taxonomy'] = 'pa_size'
                                                         size_array.append((term, True))
                                                 product_sizes = size_array
                                         # --- Get color attributes from current scrape --- #
