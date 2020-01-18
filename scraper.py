@@ -1076,7 +1076,7 @@ while jsonprods:
                                                       'notfound': notfound,\
                                                       'removeon404': shouldremoveonnotfound,\
                                                       'soldoutfix': soldoutupdatemeta,\
-                                                      'soldouthtmlfix': soldouthtmlupdatemeta})
+                                                      'soldouthtmlfix': soldouthtmlupdatemeta,\
                                                       'catstoaddresult': json.dumps(catstoaddresult),\
                                                       'attributes': json.dumps(attributes_to_store),\
                                                       'sizetypemapsqls': json.dumps([insert_sizetosizetype,\
