@@ -328,7 +328,8 @@ while jsonprods:
                                 print(traceback.format_exc())
                         # >>> GET THE PRODUCT MISC. ELEMENTS <<< #
                         productmisc_array = re.split('{|}', website['productmisc'])
-                        for p in productmisc_array: print p
+                        #print('PRODUCTMISCARRAY BEFORE:')
+                        #for p in productmisc_array: print p
                         # --> Define containers for product attributes
                         product_brand = ''
                         product_colors = ''
@@ -356,12 +357,12 @@ while jsonprods:
                                 for i in range(1, len(productmisc_array), 2):
                                     # --- Are the sizes belonging to the current product of a a specific misc. size type? --- #
                                     if productmisc_array[(i-1)] == 'sizetypemisc':
-                                        sizetypemisc = productmisc_array[(i + 1)]
+                                        sizetypemisc = productmisc_array[i]
                                     # --- Are there any pre-existing currencies to apply to the price(s)? --- #
                                     if productmisc_array[(i-1)] == 'pre_existing_currency':
-                                        preexistingcurrency = productmisc_array[(i + 1)]
+                                        preexistingcurrency = productmisc_array[i]
                                         newprice = ''
-                                        newprice = price + productmisc_array[(i + 1)].strip()
+                                        newprice = price + productmisc_array[i].strip()
                                         if website['currencysymbol']:
                                             newprice.upper()
                                             newprice = converttocorrectprice(newprice, website['currencysymbol'])
@@ -371,7 +372,7 @@ while jsonprods:
                                         price = newprice
                                         if salesprice != '':
                                             newprice = ''
-                                            newprice = price + productmisc_array[(i + 1)].strip()
+                                            newprice = price + productmisc_array[i].strip()
                                             if website['currencysymbol']:
                                                 newprice.upper()
                                                 newprice = converttocorrectprice(newprice, website['currencysymbol'])
@@ -383,12 +384,12 @@ while jsonprods:
                                     if productmisc_array[(i-1)] == 'skip_img_containing':
                                         if image_urls_valid != '':
                                             for e in range(0, len(image_urls_valid), 1):
-                                                if image_urls_valid[e].find(productmisc_array[(i + 1)]) != -1:
+                                                if image_urls_valid[e].find(productmisc_array[i]) != -1:
                                                     del image_urls_valid[e]
                                                 images = ','.join(image_urls_valid)
                                         if prodlog_image_urls != '':
                                             for imagekey, imageval in prodlog_image_urls.items():
-                                                if imageval.find(productmisc_array[(i + 1)]) != -1:
+                                                if imageval.find(productmisc_array[i]) != -1:
                                                     del prodlog_image_urls[imagekey]
                                             productlogourl = prodlog_image_urls[0]       
                                     # --- Should we remove the product on 404 Error? --- #
@@ -397,8 +398,8 @@ while jsonprods:
                                     # --- Use custom domain name(In case any brands doesn't exist for current product) --- #
                                     if productmisc_array[(i-1)] == 'domain_name':
                                         brand_array = []
-                                        if productmisc_array[(i + 1)] != '':
-                                            brand_termus = productmisc_array[(i + 1)].strip()
+                                        if productmisc_array[i] != '':
+                                            brand_termus = productmisc_array[i].strip()
                                             clean_brand = slugify(brand_termus.strip())
                                             term = doesprodattrexist(jsonprodattr['pa_brand'], brand_termus, 'pa_brand')
                                              #TUPPLE STRUCTURE: (Term(ID/NAME/SLUG), newtermTrue_existingtermFalse)
@@ -415,7 +416,7 @@ while jsonprods:
                                             productmisc_array[i] = '.somethingelse'
                                     # --- Should the product apply a specific category automatically? --- #
                                     if productmisc_array[(i-1)] == 'add_category':
-                                       cats_to_add = ','.split(productmisc_array[(i + 1)])
+                                       cats_to_add = ','.split(productmisc_array[i])
                                        cat_result = []
                                        for cat in cats_to_add:
                                           clean_cat = slugify(cat.strip())
@@ -446,7 +447,7 @@ while jsonprods:
                                     else:
                                         product_sex = [(doesprodattrexist(jsonprodattr['pa_sex'], 'Male', 'pa_sex'), False),
                                                       (doesprodattrexist(jsonprodattr['pa_sex'], 'Female', 'pa_sex'), False)]
-                                    #print('SEX VALUES:')
+                                    print('SEX VALUES:')
                                     #print(i)
                                     for sex in product_sex: print(sex)
                                     # --> Attempt scraping of product misc. elements:
