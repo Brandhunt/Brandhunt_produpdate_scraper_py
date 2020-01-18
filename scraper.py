@@ -88,7 +88,8 @@ def converttocorrectprice(price, currencysymbol):
             price = getmoneyfromtext(str(price))
         else:
             price = price.replace(r'[^0-9,.]', '')
-            price = getmoneyfromtext(price)       
+            price = getmoneyfromtext(price)
+    print("CONVERTEDPRICE:" + price)
     return price
 
 # *** --- For grabbing URLs from text-based values/strings --- *** #
