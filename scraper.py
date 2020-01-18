@@ -446,6 +446,7 @@ while jsonprods:
                                         product_sex = [(doesprodattrexist(jsonprodattr['pa_sex'], 'Male', 'pa_sex'), False),
                                                       (doesprodattrexist(jsonprodattr['pa_sex'], 'Female', 'pa_sex'), False)]
                                     print('SEX VALUES:')
+                                    print(i)
                                     for sex in product_sex: print(sex)
                                     # --> Attempt scraping of product misc. elements:
                                     prodmisc_backup = productmisc_array[i].strip().decode('string_escape')
