@@ -221,6 +221,7 @@ while jsonprods:
                         salesprice = ''
                         if website['salespriceselector']:
                             try:
+                                website['salespriceselector'] = website['salespriceselector'].decode('string_escape')
                                 salesprice_elements = root.cssselect(website['salespriceselector'])
                                 salesprice = salesprice_elements[0].text
                                 if website['pricedelimitertoignore']:
@@ -257,6 +258,7 @@ while jsonprods:
                         #productlogo = ''
                         if website['productlogoselector']:
                             try:
+                                website['productlogoselector'] = website['productlogoselector'].decode('string_escape')
                                 prodlog_image_elements = root.cssselect(website['productlogoselector'])
                                 if prodlog_image_elements:
                                     image_dom = ','.join(prodlog_image_elements)
@@ -286,6 +288,7 @@ while jsonprods:
                         images = ''
                         if website['imageselector'] and len(website['imageselector']):
                             try:
+                                website['imageselector'] = website['imageselector'].decode('string_escape')
                                 #image_urls = ''
                                 image_elements = root.cssselect(website['imageselector'])
                                 if image_elements:
