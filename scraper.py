@@ -26,6 +26,7 @@ except ImportError:
      from urlparse import urljoin
         
 from slugify import slugify
+from lxml import etree
 
 # --- FUNCTION SECTION --- #
 
@@ -206,13 +207,14 @@ while jsonprods:
                                 else:
                                     price = re.sub(r'\\' + website['pricedelimitertoignore'].strip() + '', '', price)    
                             if website['currencysymbol']:
-                                print('PRICE:' + price)
+                                #print('PRICE:' + price)
                                 #print('PRICE ELEMENTS:')
                                 #for p in price_elements: print p
                                 price = converttocorrectprice(price, website['currencysymbol'])
                             else:
                                 price = price.replace(r'[^0-9,.]', '')
                                 price = getmoneyfromtext(price)
+                            print('FINALPRICE:' + price)
                         except:
                             #print("Error when scraping price for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
                             print(traceback.format_exc())
@@ -237,6 +239,7 @@ while jsonprods:
                                 else:
                                     salesprice = salesprice.replace(r'[^0-9,.]', '')
                                     salesprice = getmoneyfromtext(salesprice)
+                                print('FINALSALESPRICE:' + salesprice)
                             except:
                                 #print("Error when scraping sales price for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
                                 print(traceback.format_exc())
@@ -247,6 +250,8 @@ while jsonprods:
                                 domainmisc_array = re.split('{|}', website['domainmisc'])
                                 for i in range(0, domainmisc_array.len(), 2):
                                     domainmisc_array[(i + 1)] = root.cssselect(domainmisc_array[(i + 1)])
+                                 print('DOMAINMISC:')
+                                 for d in domainmisc_array: print d
                             except:
                                 #print("Error when scraping misc. domain information for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
                                 print(traceback.format_exc())
@@ -261,6 +266,8 @@ while jsonprods:
                                 website['productlogoselector'] = website['productlogoselector'].decode('string_escape')
                                 prodlog_image_elements = root.cssselect(website['productlogoselector'])
                                 if prodlog_image_elements:
+                                    for i in range(prodlog_image_elements.len()):
+                                        prodlog_image_elements[i] = etree.tostring(prodlog_image_elements[i])
                                     image_dom = ','.join(prodlog_image_elements)
                                     prodlog_image_urls = graburls(image_dom, True)
                                     if len(prodlog_image_urls) > 0:
@@ -275,9 +282,12 @@ while jsonprods:
                                             if imageval[0:2] == '//':
                                                 imageval = 'https:' + imageval
                                                 prodlog_image_urls[imagekey] = imageval
-                                    productlogourl = prodlog_image_urls[0]
+                                    productlogourl = prodlog_image_urls[0]   
                                 else:
                                     print("No product logo URLs could be found for product ID " + product['productid'] + "!")
+                                print('PRODUCTLOGOS:')
+                                for p in prodlog_image_urls: print p
+                                print('PRODUCTLOGOURL:' + productlogourl)
                             except:
                                 #print("Error when scraping product logo images for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
                                 print(traceback.format_exc())
@@ -292,6 +302,8 @@ while jsonprods:
                                 #image_urls = ''
                                 image_elements = root.cssselect(website['imageselector'])
                                 if image_elements:
+                                    for i in range(image_elements.len()):
+                                        image_elements[i] = etree.tostring(image_elements[i])
                                     image_dom = ','.join(image_elements)
                                     image_urls = graburls(image_dom, True)
                                 if len(image_urls) > 0:
@@ -307,6 +319,8 @@ while jsonprods:
                                             imageval = 'https:' + imageval
                                             image_urls[imagekey] = imageval
                                     image_urls_valid = image_urls.values()
+                                print('IMAGES:')
+                                for img in images: print img    
                             except:
                                 #print("Error when scraping images for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
                                 print(traceback.format_exc())
