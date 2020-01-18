@@ -1067,8 +1067,8 @@ while jsonprods:
                                                       'domain': product['domain'],\
                                                       'price': price,\
                                                       'salesprice': salesprice,\
-                                                      #'domainmisc': domainmisc_array,\
-                                                      #'prodlogurls': prodlog_image_urls,\
+                                                      'domainmisc': domainmisc_array,\
+                                                      'prodlogurls': prodlog_image_urls,\
                                                       'prodlogurl': productlogourl,\
                                                       #'finalimgurls': images,\
                                                       #'validimgurls': image_urls_valid,\
