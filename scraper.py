@@ -928,7 +928,8 @@ while jsonprods:
                                 if termies_result[0]:
                                     brand_values = product_brand
                                     if brand_values:
-                                        existing_brands = re.split(',\s*', brand_values)
+                                        #existing_brands = re.split(',\s*', brand_values)
+                                        existing_brands = brand_values
                                         '''count = 0
                                         for brand in existing_brands:
                                             existing_brands[count] = (brand, False)
@@ -939,7 +940,8 @@ while jsonprods:
                                 else:
                                     brand_values = product_brand
                                     if brand_values:
-                                        existing_brands = re.split(',\s*', brand_values)
+                                        #existing_brands = re.split(',\s*', brand_values)
+                                        existing_brands = brand_values
                                         '''count = 0
                                         for brand in existing_brands:
                                             existing_brands[count] = (brand, False)
@@ -950,7 +952,8 @@ while jsonprods:
                                 if termies_result[1]:
                                     color_values = product_colors
                                     if color_values:
-                                        existing_colors = re.split(',\s*', color_values)
+                                        #existing_colors = re.split(',\s*', color_values)
+                                        existing_colors = color_values
                                         '''count = 0
                                         for color in existing_colors:
                                             existing_colors[count] = (color, False)
@@ -961,7 +964,8 @@ while jsonprods:
                                 else:
                                     color_values = product_colors
                                     if color_values:
-                                        existing_colors = re.split(',\s*', color_values)
+                                        #existing_colors = re.split(',\s*', color_values)
+                                        existing_colors = color_values
                                         '''count = 0
                                         for color in existing_colors:
                                             existing_colors[count] = (color, False)
@@ -972,7 +976,8 @@ while jsonprods:
                                 if termies_result[2]:
                                     sex_values = product_sex
                                     if sex_values:
-                                        existing_sex = re.split(',\s*', sex_values)
+                                        #existing_sex = re.split(',\s*', sex_values)
+                                        existing_sex = sex_values
                                         '''count = 0
                                         for sex in existing_sex:
                                             existing_sex[count] = (sex, False)
@@ -985,7 +990,8 @@ while jsonprods:
                                     #print('SEX VALUES, INPRODTITLE:')
                                     #for sex in sex_values: print(sex)
                                     if sex_values:
-                                        existing_sex = re.split(',\s*', sex_values)
+                                        #existing_sex = re.split(',\s*', sex_values)
+                                        existing_sex = sex_values
                                         '''count = 0
                                         for sex in existing_sex:
                                             existing_sex[count] = (sex, False)
@@ -995,19 +1001,22 @@ while jsonprods:
                                         attribute_pos+=1
                                 size_values = product_sizes
                                 if size_values:
-                                    existing_sizes = re.split(',\s*', size_values)
+                                    #existing_sizes = re.split(',\s*', size_values)
+                                    existing_sizes = size_values
                                     product_sizes = existing_sizes
                                     attributes.append({'name':'Size', 'options':product_sizes, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                                 sizetype_values = product_sizetypes
                                 if sizetype_values:
-                                    existing_sizetypes = re.split(',\s*', sizetype_values)
+                                    #existing_sizetypes = re.split(',\s*', sizetype_values)
+                                    existing_sizetypes = sizetype_values
                                     product_sizetypes = existing_sizetypes
                                     attributes.append({'name':'Sizetype', 'options':product_sizetypes, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                                 sizetypemisc_values = product_sizetypemiscs
                                 if sizetypemisc_values:
-                                    existing_sizetypemiscs = re.split(',\s*', sizetypemisc_values)
+                                    #existing_sizetypemiscs = re.split(',\s*', sizetypemisc_values)
+                                    existing_sizetypemiscs = sizetypemisc_values
                                     product_sizetypemiscs = existing_sizetypemiscs
                                     attributes.append({'name':'Sizetypemisc', 'options':product_sizetypemiscs, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
