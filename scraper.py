@@ -61,7 +61,7 @@ def converttocorrectprice(price, currencysymbol):
     jsonrates = json['rates']
     foundinrates = False
     for ratekey, ratevalue in jsonrates.items():
-        if price.find('' + ratekey + ''):
+        if price.find('' + ratekey + '') != -1:
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)
             print('CURRENCY: ' + currencysymbol)
@@ -73,17 +73,17 @@ def converttocorrectprice(price, currencysymbol):
             foundinrates = True
             break
     if not foundinrates:
-        if price.find('$'):
+        if price.find('$') != -1:
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)
             price = float(price) / jsonrates['USD']
             price = getmoneyfromtext(str(price))
-        elif price.find('£'):
+        elif price.find('£') != -1:
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)
             price = float(price) / jsonrates['GBP']
             price = getmoneyfromtext(str(price))
-        elif price.find('€'):
+        elif price.find('€') != -1:
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)
             price = float(price) / jsonrates['EUR']
@@ -192,7 +192,7 @@ while jsonprods:
                         try:
                             website['priceselector'] = website['priceselector'].decode('string_escape')
                             #print(website['priceselector'])
-                            if website['priceselector'].find('[multiple],'):
+                            if website['priceselector'].find('[multiple],') != -1:
                                 website['priceselector'].replace('[multiple],', '')
                                 price_elements = root.cssselect(website['priceselector'])
                                 for el in price_elements:
@@ -203,7 +203,7 @@ while jsonprods:
                                 price_elements = root.cssselect(website['priceselector'])
                                 price = price_elements[0].text
                             if website['pricedelimitertoignore']:
-                                if website['pricedelimitertoignore'].strip().find(' '):
+                                if website['pricedelimitertoignore'].strip().find(' ') != -1:
                                     sepdelimiters = website['pricedelimitertoignore'].strip().split(' ')
                                     for delim in sepdelimiters:
                                         price = re.sub(r'\\' + delim.strip() + '', '', price)
@@ -230,7 +230,7 @@ while jsonprods:
                                 salesprice_elements = root.cssselect(website['salespriceselector'])
                                 salesprice = salesprice_elements[0].text
                                 if website['pricedelimitertoignore']:
-                                    if website['pricedelimitertoignore'].strip().find(' '):
+                                    if website['pricedelimitertoignore'].strip().find(' ') != -1:
                                         sepdelimiters = website['pricedelimitertoignore'].strip().split(' ')
                                         for delim in sepdelimiters:
                                             salesprice = re.sub(r'\\' + delim.strip() + '', '', salesprice)
@@ -279,7 +279,7 @@ while jsonprods:
                                             if imageval != newimageval:
                                                 prodlog_image_urls[imagekey] = newimageval
                                                 imageval = newimageval
-                                            if not image.find('//'):
+                                            if image.find('//') == -1:
                                                 del prodlog_image_urls[imagekey]
                                                 continue
                                             if imageval[0:2] == '//':
@@ -315,7 +315,7 @@ while jsonprods:
                                         if imageval != newimageval:
                                             image_urls[imagekey] = newimageval
                                             imageval = newimageval
-                                        if not image.find('//') or image.find('blank.'):
+                                        if image.find('//') == -1 or image.find('blank.') != -1:
                                             del image_urls[imagekey]
                                             continue
                                         if imageval[0:2] == '//':
@@ -383,12 +383,12 @@ while jsonprods:
                                     if productmisc_array[i] == 'skip_img_containing':
                                         if image_urls_valid != '':
                                             for e in range(0, len(image_urls_valid), 1):
-                                                if image_urls_valid[e].find(productmisc_array[(i + 1)]):
+                                                if image_urls_valid[e].find(productmisc_array[(i + 1)]) != -1:
                                                     del image_urls_valid[e]
                                                 images = ','.join(image_urls_valid)
                                         if prodlog_image_urls != '':
                                             for imagekey, imageval in prodlog_image_urls.items():
-                                                if imageval.find(productmisc_array[(i + 1)]):
+                                                if imageval.find(productmisc_array[(i + 1)]) != -1:
                                                     del prodlog_image_urls[imagekey]
                                             productlogourl = prodlog_image_urls[0]       
                                     # --- Should we remove the product on 404 Error? --- #
@@ -457,7 +457,7 @@ while jsonprods:
                                                 if website['currencysymbol']:
                                                     newprice.upper()
                                                     if website['pricedelimitertoignore']:
-                                                        if website['pricedelimitertoignore'].strip().find(' '):
+                                                        if website['pricedelimitertoignore'].strip().find(' ') != -1:
                                                             sepdelimiters = website['pricedelimitertoignore'].strip().split(' ')
                                                             for delim in sepdelimiters:
                                                                 newprice = re.sub(r'\\' + delim.strip() + '', '', newprice)
@@ -596,7 +596,7 @@ while jsonprods:
                                             for sexterm in sexies:
                                                 term_name = sexterm['name']
                                                 sex_html = productmisc_array[(i+1)]
-                                                if sex_html.upper().find(term_name.upper()):
+                                                if sex_html.upper().find(term_name.upper()) != -1:
                                                     term = doesprodattrexist(jsonprodattr['pa_sex'], sexterm['term_id'], 'pa_sex')
                                                     if term:
                                                         sexies_result.append((term, False))
@@ -620,7 +620,7 @@ while jsonprods:
                                                     size_html = re.sub(r'\s+-\s+.*Stock.*', '', size_html, flags=re.IGNORECASE)
                                                 elif output4 is not None:
                                                     size_html = re.sub(r'.*Size\s+', '', size_html, flags=re.IGNORECASE)
-                                                if size_html.upper().find(term_name.upper()):
+                                                if size_html.upper().find(term_name.upper()) != -1:
                                                     term = doesprodattrexist(jsonprodattr['pa_sex'], sexterm['term_id'], 'pa_sex')
                                                     if term:
                                                         sexies_result.append((term, False))
@@ -636,7 +636,7 @@ while jsonprods:
                                             for brandterm in brandies:
                                                 term_name = brandterm['name']
                                                 brand_html = productmisc_array[(i+1)]
-                                                if brand_html.upper().find(term_name.upper()):
+                                                if brand_html.upper().find(term_name.upper()) != -1:
                                                     term = doesprodattrexist(jsonprodattr['pa_brand'], brandterm['term_id'], 'pa_brand')
                                                     if term:
                                                         brandies_result.append((term, False))
@@ -652,7 +652,7 @@ while jsonprods:
                                             for catterm in caties:
                                                 term_name = catterm['name']
                                                 cat_html = productmisc_array[(i+1)]
-                                                if cat_html.upper().find(term_name.upper()):
+                                                if cat_html.upper().find(term_name.upper()) != -1:
                                                     term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                     if term:
                                                         caties_result.append((term, False))
@@ -673,7 +673,7 @@ while jsonprods:
                                             for colorterm in colories:
                                                 term_name = colorterm['name']
                                                 color_html = productmisc_array[(i+1)]
-                                                if color_html.upper().find(term_name.upper()):
+                                                if color_html.upper().find(term_name.upper()) != -1:
                                                     term = doesprodattrexist(jsonprodattr['pa_color'], colorterm['term_id'], 'pa_color')
                                                     if term:
                                                         colories_result.append((term, False))
@@ -687,7 +687,7 @@ while jsonprods:
                                             selector_one_string_two = prodmisc_backup.split(',')
                                             if len(selector_one_string_two) > 1:
                                                 productmisc_array[(i+1)] = lxml.html.tostring(selector_one_string_two[0].strip().decode('string_escape'))
-                                                if productmisc_array[(i+1)].find(selector_one_string_two[1]):
+                                                if productmisc_array[(i+1)].find(selector_one_string_two[1]) != -1:
                                                     soldouthtmlupdatemeta = True
                                                     price = '0.0 BUCKS'
                                                     price = price.replace(r'[^0-9,.]', '')
@@ -906,7 +906,7 @@ while jsonprods:
                                     for term in termies[i]:
                                         term_name = term['name']
                                         product_name = product['name']
-                                        if product_name.upper().find(term_name.upper()):
+                                        if product_name.upper().find(term_name.upper()) != -1:
                                             termies_result[i].append(doesprodattrexist(jsonprodattr[term['taxonomy']], term['term_id'], term['taxonomy']), false)
                                 attributes = []
                                 attribute_pos = 1
@@ -1005,7 +1005,7 @@ while jsonprods:
                                         if hasattr(array_categorymaps, term_name):
                                             infliction_array = jsoncatmaps[term_name]['catinflections'].split(',')
                                             for infliction in infliction_array:
-                                                if product_name.upper().find(infliction.upper()):
+                                                if product_name.upper().find(infliction.upper()) != -1:
                                                     term = doesprodattrexist(jsonprodattr['product_cat'], term['term_id'], 'product_cat')
                                                     if term:
                                                         category_result.append((term, False))
@@ -1014,7 +1014,7 @@ while jsonprods:
                                                         parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
                                                         if not parent in category_result:
                                                             category_result.append((parent, False))
-                                    if product_name.upper().find(term_name.upper()):
+                                    if product_name.upper().find(term_name.upper()) != -1:
                                         term = doesprodattrexist(jsonprodattr['product_cat'], term['term_id'], 'product_cat')
                                         if term:
                                             category_result.append((term, False))
