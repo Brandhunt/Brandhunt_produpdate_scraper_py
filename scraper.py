@@ -66,7 +66,7 @@ def converttocorrectprice(price, currencysymbol):
             price = getmoneyfromtext(price)
             print('CURRENCY: ' + currencysymbol)
             print('PRICE: ' + price)
-            print('RATEKEY: ' + str(ratekey)
+            print('RATEKEY: ' + ratekey)
             print('RATEVALUE: ' + str(ratevalue))
             price = float(price) / ratevalue
             price = getmoneyfromtext(str(price))
