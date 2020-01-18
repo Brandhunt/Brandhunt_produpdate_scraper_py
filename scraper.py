@@ -66,7 +66,7 @@ def converttocorrectprice(price, currencysymbol):
             #print('PRICE: ' + price)
             #print('RATEVALUE: ' + str(ratevalue))
             price = float(price) / ratevalue
-            price = getmoneyfromtext(price)
+            price = getmoneyfromtext(str(price))
             foundinrates = True
             break
     if not foundinrates:
@@ -74,17 +74,17 @@ def converttocorrectprice(price, currencysymbol):
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)
             price = float(price) / jsonrates['USD']
-            price = getmoneyfromtext(price)
+            price = getmoneyfromtext(str(price))
         elif website['priceselector'].find('£'):
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)
             price = float(price) / jsonrates['GBP']
-            price = getmoneyfromtext(price)
+            price = getmoneyfromtext(str(price))
         elif website['priceselector'].find('€'):
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)
             price = float(price) / jsonrates['EUR']
-            price = getmoneyfromtext(price)
+            price = getmoneyfromtext(str(price))
         else:
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)       
