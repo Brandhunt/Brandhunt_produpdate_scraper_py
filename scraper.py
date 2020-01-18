@@ -907,7 +907,7 @@ while jsonprods:
                                         term_name = term['name']
                                         product_name = product['name']
                                         if product_name.upper().find(term_name.upper()) != -1:
-                                            termies_result[i].append(doesprodattrexist(jsonprodattr[term['taxonomy']], term['term_id'], term['taxonomy']), false)
+                                            termies_result[i].append(doesprodattrexist(jsonprodattr[term['taxonomy']], term['term_id'], term['taxonomy']), False)
                                 attributes = []
                                 attribute_pos = 1
                                 if termies_result[0]:
@@ -1094,4 +1094,3 @@ while jsonprods:
     # All that matters is that your final data is written to an SQLite database
     # called "data.sqlite" in the current working directory which has at least a table
     # called "data".
-
