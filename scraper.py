@@ -64,7 +64,9 @@ def converttocorrectprice(price, currencysymbol):
         if price.find('' + ratekey + ''):
             price = price.replace(r'[^0-9,.]', '')
             price = getmoneyfromtext(price)
+            print('CURRENCY: ' + currencysymbol)
             print('PRICE: ' + price)
+            print('RATEKEY: ' + str(ratekey)
             print('RATEVALUE: ' + str(ratevalue))
             price = float(price) / ratevalue
             price = getmoneyfromtext(str(price))
