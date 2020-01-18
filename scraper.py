@@ -347,8 +347,8 @@ while jsonprods:
                         preexistingcurrency = ''
                         notfound = False
                         shouldremoveonnotfound = False
-                        soldoutupdatemeta = ''
-                        soldouthtmlupdatemeta = ''
+                        soldoutupdatemeta = False
+                        soldouthtmlupdatemeta = False
                         catstoaddresult = ''
                         attributes_to_store = ''
                         insert_sizetosizetype = ''
@@ -1067,12 +1067,12 @@ while jsonprods:
                                                       'domain': product['domain'],\
                                                       'price': price,\
                                                       'salesprice': salesprice,\
-                                                      'domainmisc': domainmisc_array,\
-                                                      'prodlogurls': prodlog_image_urls,\
+                                                      'domainmisc':  ", ".join(domainmisc_array),\
+                                                      'prodlogurls': ", ".join(prodlog_image_urls),\
                                                       'prodlogurl': productlogourl,\
-                                                      #'finalimgurls': images,\
-                                                      #'validimgurls': image_urls_valid,\
-                                                      #'imgurls': image_urls,\
+                                                      'finalimgurls': ", ".join(images),\
+                                                      'validimgurls': ", ".join(image_urls_valid),\
+                                                      'imgurls': ", ".join(image_urls),\
                                                       'notfound': notfound,\
                                                       'removeon404': shouldremoveonnotfound,\
                                                       'soldoutfix': soldoutupdatemeta,\
