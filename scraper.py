@@ -1053,7 +1053,7 @@ while jsonprods:
                                         existing_categories = product['category_ids']
                                         if existing_categories:
                                             category_result = array_merge(category_result, existing_categories)
-                                    catstoaddresult = cat_result
+                                    catstoaddresult = category_result
                             except:
                                 #print("Error when looking after prod. properties in title for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
                                 print(traceback.format_exc())
