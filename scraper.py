@@ -1077,12 +1077,12 @@ while jsonprods:
                                                       'removeon404': shouldremoveonnotfound,\
                                                       'soldoutfix': soldoutupdatemeta,\
                                                       'soldouthtmlfix': soldouthtmlupdatemeta})
-                                                      #'catstoaddresult': catstoaddresult,\
-                                                      #'attributes': attributes_to_store,\
-                                                      #'sizetypemapsqls': [insert_sizetosizetype,\
-                                                      #           remove_sizetosizetype,\
-                                                      #           insert_sizetosizetypemisc,\
-                                                      #           remove_sizetosizetypemisc]})'
+                                                      'catstoaddresult': json.dumps(catstoaddresult),\
+                                                      'attributes': json.dumps(attributes_to_store),\
+                                                      'sizetypemapsqls': json.dumps([insert_sizetosizetype,\
+                                                                 remove_sizetosizetype,\
+                                                                 insert_sizetosizetypemisc,\
+                                                                 remove_sizetosizetypemisc])})'
                     except:
                         #print("Error: " + str(sys.exc_info()[0]) + " occured!")
                         print(traceback.format_exc())
