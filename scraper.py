@@ -325,7 +325,7 @@ while jsonprods:
                                         if imageval != newimageval:
                                             image_urls[imagekey] = newimageval
                                             imageval = newimageval
-                                        if image.find('//') == -1 or image.find('blank.') != -1:
+                                        if imageval.find('//') == -1 or imageval.find('blank.') != -1:
                                             del image_urls[imagekey]
                                             continue
                                         if imageval[0:2] == '//':
