@@ -114,10 +114,11 @@ def graburls(text, imageonly):
             finalmatches.append(match.group())
         #print('URLNOENCODEMATCHES:')
         #for match in matches: print(match)
-        print('FINALMATCHES')
-        for match in finalmatches: print(match)
-        return list(set(finalmatches)).values()
+        #print('FINALMATCHES')
+        #for match in finalmatches: print(match)
+        return list(set(finalmatches))
     except:
+        print('Error grabbing urls!')
         return []
     
 # *** --- For converting relative URLs to absolute URLs --- *** #
@@ -313,10 +314,10 @@ while jsonprods:
                                     for i in range(len(image_elements)):
                                         image_elements[i] = etree.tostring(image_elements[i])
                                     image_dom = ','.join(image_elements)
-                                    print('IMAGE DOM: ' + image_dom)
+                                    #print('IMAGE DOM: ' + image_dom)
                                     image_urls = graburls(image_dom, True)
-                                    print('PRE-IMAGE URLS: ')
-                                    for img in image_urls: print(img)
+                                    #print('PRE-IMAGE URLS: ')
+                                    #for img in image_urls: print(img)
                                 if len(image_urls) > 0:
                                     for imagekey, imageval in image_urls.items():
                                         newimageval = urljoin(product['url'], imageval)
@@ -332,8 +333,8 @@ while jsonprods:
                                     image_urls_valid = image_urls.values()
                                 #print('IMAGE ELEMENTS:')
                                 #for img in image_elements: print img
-                                print('IMAGE URLS:')
-                                for img in image_urls: print img
+                                #print('IMAGE URLS:')
+                                #for img in image_urls: print img
                                 print('VALID IMAGES:')
                                 for img in image_urls_valid: print img
                             except:
