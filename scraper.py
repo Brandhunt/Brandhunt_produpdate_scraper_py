@@ -336,8 +336,8 @@ while jsonprods:
                                 #for img in image_elements: print img
                                 #print('IMAGE URLS:')
                                 #for img in image_urls: print img
-                                print('VALID IMAGES:')
-                                for img in image_urls_valid: print img
+                                #print('VALID IMAGES:')
+                                #for img in image_urls_valid: print img
                             except:
                                 #print("Error when scraping images for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
                                 print(traceback.format_exc())
