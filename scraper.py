@@ -402,6 +402,7 @@ while jsonprods:
                                         if image_urls_valid != '':
                                             for e in range(0, len(image_urls_valid), 1):
                                                 if image_urls_valid[e].find(productmisc_array[i]) != -1:
+                                                    print('DELETE VALUE')
                                                     del image_urls_valid[e]
                                                 images = ','.join(image_urls_valid)
                                         if prodlog_image_urls != '':
