@@ -400,8 +400,8 @@ while jsonprods:
                                     # --- Should the product skip any URLs(Product logo and normal IMGs) containing any specific string(s)? --- #
                                     if productmisc_array[(i-1)] == 'skip_img_containing':
                                         if image_urls_valid != '':
+                                            count = 0
                                             for e in range(0, len(image_urls_valid), 1):
-                                                count = 0
                                                 if image_urls_valid[(e+count)].find(productmisc_array[i]) != -1:
                                                     del image_urls_valid[e+count]
                                                     count-=1
