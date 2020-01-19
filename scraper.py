@@ -307,7 +307,10 @@ while jsonprods:
                                     for i in range(len(image_elements)):
                                         image_elements[i] = etree.tostring(image_elements[i])
                                     image_dom = ','.join(image_elements)
+                                    error_log('HEPP': image_dom)
                                     image_urls = graburls(image_dom, True)
+                                    error_log('HOPP':)
+                                    for img in image_urls: print(img)
                                 if len(image_urls) > 0:
                                     for imagekey, imageval in image_urls.items():
                                         newimageval = urljoin(product['url'], imageval)
