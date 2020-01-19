@@ -399,6 +399,7 @@ while jsonprods:
                                             salesprice = newprice
                                     # --- Should the product skip any URLs(Product logo and normal IMGs) containing any specific string(s)? --- #
                                     if productmisc_array[(i-1)] == 'skip_img_containing':
+                                        print('HEPP')
                                         if image_urls_valid != '':
                                             for e in range(0, len(image_urls_valid), 1):
                                                 if image_urls_valid[e].find(productmisc_array[i]) != -1:
