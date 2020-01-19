@@ -116,7 +116,8 @@ def graburls(text, imageonly):
         #for match in matches: print(match)
         #print('FINALMATCHES')
         #for match in finalmatches: print(match)
-        return list(set(finalmatches))
+        finalmatches = list(set(finalmatches))
+        return { i : finalmatches[i] for i in range(0, len(finalmatches)) }
     except:
         print('Error grabbing urls!')
         return []
