@@ -402,8 +402,8 @@ while jsonprods:
                                         if image_urls_valid != '':
                                             for e in range(0, len(image_urls_valid), 1):
                                                 count = 0
-                                                if image_urls_valid[(e-count)].find(productmisc_array[i]) != -1:
-                                                    del image_urls_valid[e-count]
+                                                if image_urls_valid[(e+count)].find(productmisc_array[i]) != -1:
+                                                    del image_urls_valid[e+count]
                                                     count-=1
                                                 images = ','.join(image_urls_valid)
                                         if prodlog_image_urls != '':
