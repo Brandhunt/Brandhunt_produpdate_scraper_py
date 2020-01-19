@@ -106,10 +106,15 @@ def graburls(text, imageonly):
         matches = re.findall(r'((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\:\~@\-_=#]+' + imgsuffix + '', text)
         for match in matches[0]:
             finalmatches.append(match)
+        print('URLNOENCODEMATCHES:')
+        for match in matches: print(match)
         # --> For URLs - with - URL encoding characters:
         matches = re.findall(r'((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\\%:\~@\-_=#]+' + imgsuffix + '', text)
         for match in matches[0]:
             finalmatches.append(match)
+        print('URLNOENCODEMATCHES:')
+        for match in matches: print(match)
+        print('FINALMATCHES')
         for match in finalmatches: print(match)
         return list(set(finalmatches)).values()
     except:
