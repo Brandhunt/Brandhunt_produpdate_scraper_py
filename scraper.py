@@ -313,7 +313,7 @@ while jsonprods:
                                     for i in range(len(image_elements)):
                                         image_elements[i] = etree.tostring(image_elements[i])
                                     image_dom = ','.join(image_elements)
-                                    #print('IMAGE DOM: ' + image_dom)
+                                    print('IMAGE DOM: ' + image_dom)
                                     image_urls = graburls(image_dom, True)
                                     print('PRE-IMAGE URLS: ')
                                     for img in image_urls: print(img)
