@@ -243,7 +243,7 @@ while jsonprods:
                             else:
                                 price_elements = root.cssselect(website['priceselector'])
                                 if price_elements:
-                                    if any(char.isdigit() for char in price_elements[0]):
+                                    if any(char.isdigit() for char in price_elements[0].text):
                                         price = price_elements[0].text
                                     else:
                                         price = '-1'
@@ -276,7 +276,7 @@ while jsonprods:
                                 website['salespriceselector'] = website['salespriceselector'].decode('string_escape')
                                 salesprice_elements = root.cssselect(website['salespriceselector'])   
                                 if salesprice_elements:
-                                    if any(char.isdigit() for char in salesprice_elements[0]):
+                                    if any(char.isdigit() for char in salesprice_elements[0].text):
                                         salesprice = salesprice_elements[0].text
                                     else:
                                         salesprice = '-1'
@@ -569,7 +569,7 @@ while jsonprods:
                                                 size_array = []
                                                 for size_termus in productmisc_array[i]:
                                                     size_termus = size_termus.text
-                                                    #print(size_termus)
+                                                    print(size_termus)
                                                     output = re.search(r'\(.*Only.*\)|\(.*Out.*\)|\(.*In.*\)|\(.*Lager.*\)', size_termus, flags=re.IGNORECASE)
                                                     output2 = re.search(r'.*Bevaka.*', size_termus, flags=re.IGNORECASE)
                                                     output3 = re.search(r'.*Stock.*', size_termus, flags=re.IGNORECASE)
