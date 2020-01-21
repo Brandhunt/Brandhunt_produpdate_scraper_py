@@ -687,9 +687,9 @@ while jsonprods:
                                                 elif output4 is not None:
                                                     size_html = re.sub(r'.*Size\s+', '', size_html, flags=re.IGNORECASE)
                                                 if size_html.upper().find(term_name.upper()) != -1:
-                                                    term = doesprodattrexist(jsonprodattr['pa_sex'], sexterm['term_id'], 'pa_sex')
+                                                    term = doesprodattrexist(jsonprodattr['pa_size'], sizeterm['term_id'], 'pa_size')
                                                     if term:
-                                                        sexies_result.append((term, False))
+                                                        sizies_result.append((term, False))
                                             if sizies_result:
                                                 if product_sizes == '':
                                                     product_sizes = sizies_result
