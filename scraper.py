@@ -568,6 +568,7 @@ while jsonprods:
                                                 #for size in productmisc_array[i]: print(size)
                                                 size_array = []
                                                 for size_termus in productmisc_array[i]:
+                                                    print(etree.tostring(size_termus))
                                                     size_termus = size_termus.text
                                                     print(size_termus)
                                                     output = re.search(r'\(.*Only.*\)|\(.*Out.*\)|\(.*In.*\)|\(.*Lager.*\)', size_termus, flags=re.IGNORECASE)
