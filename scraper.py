@@ -571,6 +571,8 @@ while jsonprods:
                                                     #print(etree.tostring(size_termus))
                                                     size_text = size_termus.text
                                                     #print(size_termus)
+                                                    print(size_termus.text)
+                                                    print(size_termus.tail)
                                                     if size_text is None:
                                                         size_termus = size_termus.tail
                                                     else:
