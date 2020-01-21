@@ -571,10 +571,13 @@ while jsonprods:
                                                     #print(etree.tostring(size_termus))
                                                     size_text = size_termus.text
                                                     #print(size_termus)
-                                                    print(size_termus.text)
-                                                    print("".join(size_termus.itertext()))
+                                                    #print(size_termus.text)
+                                                    #print("".join(size_termus.itertext()))
                                                     if size_text is None:
-                                                        size_termus = "".join(size_termus.itertext())
+                                                        if size_termus.tail is None:
+                                                            size_termus = "".join(size_termus.itertext())
+                                                        else:
+                                                            size_termus = size_termus.tail
                                                     else:
                                                         size_termus = size_text
                                                     output = re.search(r'\(.*Only.*\)|\(.*Out.*\)|\(.*In.*\)|\(.*Lager.*\)', size_termus, flags=re.IGNORECASE)
@@ -744,7 +747,7 @@ while jsonprods:
                                         if productmisc_array[(i-1)] == 'sold_out_html':
                                             selector_one_string_two = prodmisc_backup.split(',')
                                             if len(selector_one_string_two) > 1:
-                                                productmisc_array[i] = lxml.html.tostring(selector_one_string_two[0].strip().decode('string_escape'))
+                                                productmisc_array[i] = etree.tostring(selector_one_string_two[0].strip().decode('string_escape'))
                                                 if productmisc_array[i].find(selector_one_string_two[1]) != -1:
                                                     soldouthtmlupdatemeta = True
                                                     price = '0.0 BUCKS'
