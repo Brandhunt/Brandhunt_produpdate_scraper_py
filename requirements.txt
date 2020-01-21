@@ -10,3 +10,4 @@ cssselect==0.9.1
 mysql-connector-python==8.0.11
 splinter>=0.7.3
 python-slugify>=4.0.0
+selenium>=2.40.0
