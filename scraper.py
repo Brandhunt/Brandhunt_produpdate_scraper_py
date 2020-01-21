@@ -19,6 +19,7 @@ import sys
 import traceback
 
 from splinter import Browser
+from urllib2 import HTTPError
 
 try:
     from urllib.parse import urljoin
@@ -184,6 +185,37 @@ while jsonprods:
                             html = scraperwiki.scrape(product['url'])
                             #print("HTML:")
                             #print(html)
+                        except HTTPError:
+                            if err.code == 404:
+                                notfound = True
+                                removeon404 = False
+                                if website['productmisc']:
+                                    if website['productmisc'].find('allow_remove_on_404'):
+                                            removeon404 = True
+                                try:
+                                    scraperwiki.sqlite.save(unique_keys=['productid'],\
+                                                data={'productid': product['productid'],\
+                                                      'url': product['url'],\
+                                                      'domain': product['domain'],\
+                                                      'price': '',\
+                                                      'salesprice': '',\
+                                                      'domainmisc':  '',\
+                                                      'prodlogurls': '',\
+                                                      'prodlogurl': '',\
+                                                      'finalimgurls': '',\
+                                                      'validimgurls': '',\
+                                                      'imgurls': '',\
+                                                      'notfound': notfound,\
+                                                      'removeon404': removeon404,\
+                                                      'soldoutfix': '',\
+                                                      'soldouthtmlfix': '',\
+                                                      'catstoaddresult': '',\
+                                                      'attributes': '',\
+                                                      'sizetypemapsqls': ''})
+                                except:
+                                    print(traceback.format_exc())
+                            else:
+                                raise
                         except:
                             #print("Error when scraping URL for product ID " + product['productid'] + ": " + str(sys.exc_info()[0]) + " occured!")
                             print(traceback.format_exc())
