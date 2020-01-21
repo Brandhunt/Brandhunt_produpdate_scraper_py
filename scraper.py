@@ -212,8 +212,10 @@ while jsonprods:
                                                       'catstoaddresult': '',\
                                                       'attributes': '',\
                                                       'sizetypemapsqls': ''})
+                                    continue
                                 except:
                                     print(traceback.format_exc())
+                                    continue
                             else:
                                 raise
                         except:
