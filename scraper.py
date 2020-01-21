@@ -18,8 +18,12 @@ import re
 import sys
 import traceback
 
-from splinter import Browser
-from selenium import webdriver
+#from splinter import Browser
+
+from selenium import webdriver  
+from selenium.webdriver.common.keys import Keys  
+from selenium.webdriver.chrome.options import Options 
+
 from urllib2 import HTTPError
 
 try:
@@ -1167,7 +1171,11 @@ while jsonprods:
                 elif website['scrapetype'] == 'phantomjs_morph_io':
                     try:
                         #with Browser("phantomjs") as browser:
-                        browser = webdriver.PhantomJS()
+                        chrome_options = Options()
+                        chrome_options.add_argument("--headless")
+                        chrome_options.add_argument("--disable-gpu")
+                        chrome_options.binary_location = '/usr/bin/google-chrome'
+                        browser = webdriver.Chrome(executable_path=os.path.abspath(“chromedriver"), chrome_options=chrome_options)
                         browser.driver.set_window_size(1920, 1080)
                         # submit the search form...
                         ##browser.fill("q", "parliament")
