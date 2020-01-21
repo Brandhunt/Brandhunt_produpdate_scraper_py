@@ -242,7 +242,10 @@ while jsonprods:
                                     price = price + el.text + ' '
                             else:
                                 price_elements = root.cssselect(website['priceselector'])
-                                price = price_elements[0].text
+                                if price_elements:
+                                    price = price_elements[0].text
+                                else:
+                                    price = '-1'
                             if website['pricedelimitertoignore']:
                                 if website['pricedelimitertoignore'].strip().find(' ') != -1:
                                     sepdelimiters = website['pricedelimitertoignore'].strip().split(' ')
