@@ -2153,10 +2153,10 @@ while jsonprods:
 
 
 
-                except:
-                    #print("Error: " + sys.exc_info()[0] + " occured!")
-                    print(traceback.format_exc())
-                    continue
+                    except:
+                        #print("Error: " + sys.exc_info()[0] + " occured!")
+                        print(traceback.format_exc())
+                        continue
                 else:
                     continue
     offset = offset + limit
