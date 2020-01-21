@@ -309,8 +309,8 @@ while jsonprods:
                                 domainmisc_array = re.split('{|}', website['domainmisc'])
                                 for i in range(1, len(domainmisc_array), 2):
                                     domainmisc_array[i] = root.cssselect(domainmisc_array[i])
-                                print('DOMAINMISC:')
-                                for d in domainmisc_array: print d
+                                #print('DOMAINMISC:')
+                                #for d in domainmisc_array: print d
                             except:
                                 #print("Error when scraping misc. domain information for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
                                 print(traceback.format_exc())
