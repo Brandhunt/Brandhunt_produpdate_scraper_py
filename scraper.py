@@ -185,7 +185,7 @@ while jsonprods:
                             html = scraperwiki.scrape(product['url'])
                             #print("HTML:")
                             #print(html)
-                        except HTTPError:
+                        except HTTPError, err:
                             if err.code == 404:
                                 notfound = True
                                 removeon404 = False
