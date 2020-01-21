@@ -1195,7 +1195,7 @@ while jsonprods:
                                 browser.visit(product['url'])
                                 #print("HTML:")
                                 #print(html)
-                            except HTTPError, err:
+                            except HTTPError as err:
                                 if err.code == 404:
                                     notfound = True
                                     removeon404 = False
