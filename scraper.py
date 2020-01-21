@@ -146,7 +146,7 @@ wp_connectwp_url_5 = os.environ['MORPH_WP_CONNECT_URL_5']
 token = base64.standard_b64encode(wp_username + ':' + wp_password)
 headers = {'Authorization': 'Basic ' + token}
 
-offset = 0
+offset = int(os.environ['MORPH_START_OFFSET'])
 limit = 25
 
 #r = requests.get(wp_connectwp_url, headers=headers)
