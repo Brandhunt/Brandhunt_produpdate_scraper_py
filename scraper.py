@@ -1178,7 +1178,7 @@ while jsonprods:
                         chrome_options.add_argument('--disable-extensions')
                         #chrome_options.binary_location = '/usr/bin/google-chrome'
                         #browser = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver', chrome_options=chrome_options)
-                        with Browser('chrome', headless=True, options=options) as browser:
+                        with Browser('chrome', headless=True, options=chrome_options) as browser:
                             browser.driver.set_window_size(1920, 1080)
                             # submit the search form...
                             ##browser.fill("q", "parliament")
