@@ -352,7 +352,7 @@ while jsonprods:
                                 else:
                                     print("No product logo URLs could be found for product ID " + product['productid'] + "!")
                                 print('PRODUCTLOGOS:')
-                                for p in prodlog_image_urls: print p
+                                for p in prodlog_image_urls: print(p)
                                 print('PRODUCTLOGOURL:' + productlogourl)
                             except:
                                 #print("Error when scraping product logo images for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
@@ -1350,7 +1350,7 @@ while jsonprods:
                                     else:
                                         print("No product logo URLs could be found for product ID " + product['productid'] + "!")
                                     print('PRODUCTLOGOS:')
-                                    for p in prodlog_image_urls: print p
+                                    for p in prodlog_image_urls: print(p)
                                     print('PRODUCTLOGOURL:' + productlogourl)
                                 except:
                                     #print("Error when scraping product logo images for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
