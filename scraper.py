@@ -307,8 +307,8 @@ while jsonprods:
                         if website['domainmisc']:
                             try:
                                 domainmisc_array = re.split('{|}', website['domainmisc'])
-                                for i in range(0, len(domainmisc_array), 2):
-                                    domainmisc_array[(i + 1)] = root.cssselect(domainmisc_array[(i + 1)])
+                                for i in range(1, len(domainmisc_array), 2):
+                                    domainmisc_array[i] = root.cssselect(domainmisc_array[i])
                                 print('DOMAINMISC:')
                                 for d in domainmisc_array: print d
                             except:
