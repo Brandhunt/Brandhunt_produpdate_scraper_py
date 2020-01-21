@@ -572,7 +572,7 @@ while jsonprods:
                                                     size_text = size_termus.text
                                                     #print(size_termus)
                                                     print(size_termus.text)
-                                                    print(size_termus.tail)
+                                                    print("".join(size_termus.itertext()))
                                                     if size_text is None:
                                                         size_termus = "".join(size_termus.itertext())
                                                     else:
