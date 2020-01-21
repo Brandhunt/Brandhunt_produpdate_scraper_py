@@ -1175,7 +1175,7 @@ while jsonprods:
                         chrome_options.add_argument("--headless")
                         chrome_options.add_argument("--disable-gpu")
                         chrome_options.binary_location = '/usr/bin/google-chrome'
-                        browser = webdriver.Chrome(executable_path=os.path.abspath(“chromedriver"), chrome_options=chrome_options)
+                        browser = webdriver.Chrome(executable_path=os.path.abspath("chromedriver"), chrome_options=chrome_options)
                         browser.driver.set_window_size(1920, 1080)
                         # submit the search form...
                         ##browser.fill("q", "parliament")
