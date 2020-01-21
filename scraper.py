@@ -243,10 +243,13 @@ while jsonprods:
                             else:
                                 price_elements = root.cssselect(website['priceselector'])
                                 if price_elements:
-                                    if any(char.isdigit() for char in price_elements[0].text):
-                                        price = price_elements[0].text
-                                    else:
-                                        price = '-1'
+                                    for price_el in price_elements:
+                                        if price_el.text is not None:
+                                            if any(char.isdigit() for char in price_el.text):
+                                                price = price_el.text
+                                                break
+                                            else:
+                                                price = '-1'
                                 else:
                                     price = '-1'
                             if website['pricedelimitertoignore']:
