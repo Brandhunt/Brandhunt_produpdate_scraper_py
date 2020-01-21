@@ -245,7 +245,7 @@ while jsonprods:
                                 if price_elements:
                                     if any(char.isdigit() for char in price_elements[0]):
                                         price = price_elements[0].text
-                                    else
+                                    else:
                                         price = '-1'
                                 else:
                                     price = '-1'
@@ -278,7 +278,7 @@ while jsonprods:
                                 if salesprice_elements:
                                     if any(char.isdigit() for char in salesprice_elements[0]):
                                         salesprice = salesprice_elements[0].text
-                                    else
+                                    else:
                                         salesprice = '-1'
                                 else:
                                     salesprice = '-1'
