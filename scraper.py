@@ -18,7 +18,7 @@ import re
 import sys
 import traceback
 
-#from splinter import Browser
+from splinter import Browser
 
 from selenium import webdriver  
 from selenium.webdriver.common.keys import Keys  
@@ -1174,6 +1174,7 @@ while jsonprods:
                         chrome_options = Options()
                         chrome_options.add_argument("--headless")
                         chrome_options.add_argument("--disable-gpu")
+                        chrome_options.add_argument('--no-sandbox')
                         #chrome_options.binary_location = '/usr/bin/google-chrome'
                         browser = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver', chrome_options=chrome_options)
                         browser.driver.set_window_size(1920, 1080)
