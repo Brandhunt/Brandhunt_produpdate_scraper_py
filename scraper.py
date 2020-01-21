@@ -574,7 +574,7 @@ while jsonprods:
                                                     print(size_termus.text)
                                                     print(size_termus.tail)
                                                     if size_text is None:
-                                                        size_termus = size_termus.tail
+                                                        size_termus = "".join(size_termus.itertext())
                                                     else:
                                                         size_termus = size_text
                                                     output = re.search(r'\(.*Only.*\)|\(.*Out.*\)|\(.*In.*\)|\(.*Lager.*\)', size_termus, flags=re.IGNORECASE)
