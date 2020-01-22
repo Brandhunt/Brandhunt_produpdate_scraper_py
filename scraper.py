@@ -1202,7 +1202,7 @@ while jsonprods:
                         optionals.add_argument('--no-sandbox')
                         with Browser('chrome', headless=True, options=optionals) as browser:
                             #browser = webdriver.Chrome(options=optionals, service_args=["--verbose"])
-                            browser.set_window_size(1920, 1080)
+                            browser.driver.set_window_size(1920, 1080)
                             # submit the search form...
                             ##browser.fill("q", "parliament")
                             ##button = browser.find_by_css("button[type='submit']")
