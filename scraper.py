@@ -1219,7 +1219,7 @@ while jsonprods:
                             # >>> VISIT THE PAGE THROUGH BROWSER <<< #
                             try:
                                 browser.visit(product['url'])
-                                time.sleep(2)
+                                time.sleep(10)
                                 #browser.get(product['url'])
                                 #print("HTML:")
                                 #print(html)
