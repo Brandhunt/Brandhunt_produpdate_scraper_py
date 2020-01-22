@@ -1361,7 +1361,7 @@ while jsonprods:
                                         for i in range(len(prodlog_image_elements)):
                                             #print('HUPP: ' + prodlog_image_elements[i])
                                             #prodlog_image_elements[i] = prodlog_image_elements[i].html
-                                            prodlog_image_elements[i] = prodlog_image_elements[i].get_attribute('outerHTML')
+                                            prodlog_image_elements[i] = prodlog_image_elements[i]._element.get_attribute('outerHTML')
                                         image_dom = ','.join(prodlog_image_elements)
                                         #print('IMAGEDOM: ' + image_dom)
                                         prodlog_image_urls = graburls(image_dom, True)
@@ -1403,7 +1403,7 @@ while jsonprods:
                                     if image_elements:
                                         for i in range(len(image_elements)):
                                             #image_elements[i] = image_elements[i].html
-                                            image_elements[i] = image_elements[i].html.get_attribute('outerHTML')
+                                            image_elements[i] = image_elements[i]._element.get_attribute('outerHTML')
                                         image_dom = ','.join(image_elements)
                                         #print('IMAGE DOM: ' + image_dom)
                                         image_urls = graburls(image_dom, True)
