@@ -143,13 +143,13 @@ def reltoabs(relurl, baseurl):
 #import os
 #os.chmod('/usr/local/bin/chromedriver', 755)
 
-optionuls = webdriver.ChromeOptions()
-optionuls.add_argument('--headless')
-optionuls.add_argument('--disable-dev-shm-usage')
+#optionuls = webdriver.ChromeOptions()
+#optionuls.add_argument('--headless')
+#optionuls.add_argument('--disable-dev-shm-usage')
 #optionuls.add_argument('--no-sandbox')
-browsur = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver',options=optionuls, service_args=["--verbose"])
-browsur.set_window_size(1920, 1080)
-browsur.get('https://www.fz.se')
+#browsur = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver',options=optionuls, service_args=["--verbose"])
+#browsur.set_window_size(1920, 1080)
+#browsur.get('https://www.fz.se')
 
 # --> Connect to Wordpress Site via REST API and get all the proper URLs to be scraped!
 
