@@ -135,6 +135,10 @@ def reltoabs(relurl, baseurl):
 #    if scraperwiki.sql.select('* from data'):
 #        scraperwiki.sql.execute('DELETE FROM data')
 
+from pathlib import Path
+print("File      Path:", Path(__file__).absolute())
+print("Directory Path:", Path().absolute())  
+
 optionuls = webdriver.ChromeOptions()
 optionuls.add_argument('--headless')
 optionuls.add_argument('--disable-dev-shm-usage')
