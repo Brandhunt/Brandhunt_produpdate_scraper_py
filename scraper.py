@@ -137,7 +137,10 @@ def reltoabs(relurl, baseurl):
 
 #from pathlib import Path
 #print("File      Path:", Path(__file__).absolute())
-#print("Directory Path:", Path().absolute())  
+#print("Directory Path:", Path().absolute())
+
+import os
+os.chmod('/usr/local/bin/chromedriver', 0755)
 
 optionuls = webdriver.ChromeOptions()
 optionuls.add_argument('--headless')
