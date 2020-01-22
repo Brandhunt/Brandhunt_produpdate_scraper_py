@@ -252,7 +252,7 @@ while jsonprods:
                         price = ''
                         #print(website['priceselector'])
                         try:
-                            website['priceselector'] = website['priceselector'].decode('string_escape')
+                            website['priceselector'] = website['priceselector'].encode().decode("unicode-escape")
                             #print(website['priceselector'])
                             if website['priceselector'].find('[multiple],') != -1:
                                 website['priceselector'].replace('[multiple],', '')
@@ -297,7 +297,7 @@ while jsonprods:
                         salesprice = ''
                         if website['salespriceselector']:
                             try:
-                                website['salespriceselector'] = website['salespriceselector'].decode('string_escape')
+                                website['salespriceselector'] = website['salespriceselector'].encode().decode("unicode-escape")
                                 salesprice_elements = root.cssselect(website['salespriceselector'])   
                                 if salesprice_elements:
                                     if any(char.isdigit() for char in salesprice_elements[0].text):
@@ -343,7 +343,7 @@ while jsonprods:
                         #productlogo = ''
                         if website['productlogoselector']:
                             try:
-                                website['productlogoselector'] = website['productlogoselector'].decode('string_escape')
+                                website['productlogoselector'] = website['productlogoselector'].encode().decode("unicode-escape")
                                 prodlog_image_elements = root.cssselect(website['productlogoselector'])
                                 if prodlog_image_elements:
                                     for i in range(len(prodlog_image_elements)):
@@ -378,7 +378,7 @@ while jsonprods:
                         images = ''
                         if website['imageselector'] and len(website['imageselector']):
                             try:
-                                website['imageselector'] = website['imageselector'].decode('string_escape')
+                                website['imageselector'] = website['imageselector'].encode().decode("unicode-escape")
                                 #image_urls = ''
                                 image_elements = root.cssselect(website['imageselector'])
                                 if image_elements:
@@ -533,9 +533,9 @@ while jsonprods:
                                         #print(i)
                                         #for sex in product_sex: print(sex)
                                     # --> Attempt scraping of product misc. elements:
-                                    prodmisc_backup = productmisc_array[i].strip().decode('string_escape')
+                                    prodmisc_backup = productmisc_array[i].strip().encode().decode("unicode-escape")
                                     #prodmisc_elements = root.cssselect(productmisc_array[i])
-                                    productmisc_array[i] = root.cssselect(productmisc_array[i].decode('string_escape'))
+                                    productmisc_array[i] = root.cssselect(productmisc_array[i].encode().decode("unicode-escape"))
                                     if productmisc_array[i]:
                                         # --- Has the product got any special sale price applied? --- #
                                         if productmisc_array[(i-1)] == 'before_sale_price':
@@ -674,7 +674,7 @@ while jsonprods:
                                         # --> Check the HTML if neccessary! Any already existing product attributes found there?
                                         #productmisc_array[i] = lxml.html.tostring(productmisc_array[i])
                                         #productmisc_array[i] = etree.tostring(productmisc_array[i][0])
-                                        selected = root.cssselect(prodmisc_backup.strip().decode('string_escape'))
+                                        selected = root.cssselect(prodmisc_backup.strip().encode().decode("unicode-escape"))
                                         productmisc_array[i] = etree.tostring(selected[0])
                                         # --- Get sex attributes from current scrape --- #
                                         if productmisc_array[(i-1)] == 'pa_sex_html':
@@ -773,7 +773,7 @@ while jsonprods:
                                         if productmisc_array[(i-1)] == 'sold_out_html':
                                             selector_one_string_two = prodmisc_backup.split(',')
                                             if len(selector_one_string_two) > 1:
-                                                soldoutselect = root.cssselect(selector_one_string_two[0].strip().decode('string_escape'))
+                                                soldoutselect = root.cssselect(selector_one_string_two[0].strip().encode().decode("unicode-escape"))
                                                 productmisc_array[i] = etree.tostring(soldoutselect[0])
                                                 if productmisc_array[i].find(selector_one_string_two[1]) != -1:
                                                     soldouthtmlupdatemeta = True
@@ -1259,7 +1259,7 @@ while jsonprods:
                             price = ''
                             #print(website['priceselector'])
                             try:
-                                website['priceselector'] = website['priceselector'].decode('string_escape')
+                                website['priceselector'] = website['priceselector'].encode().decode("unicode-escape")
                                 #print(website['priceselector'])
                                 if website['priceselector'].find('[multiple],') != -1:
                                     website['priceselector'].replace('[multiple],', '')
@@ -1303,7 +1303,7 @@ while jsonprods:
                             salesprice = ''
                             if website['salespriceselector']:
                                 try:
-                                    website['salespriceselector'] = website['salespriceselector'].decode('string_escape')
+                                    website['salespriceselector'] = website['salespriceselector'].encode().decode("unicode-escape")
                                     salesprice_elements = browser.find_by_css(website['salespriceselector'])
                                     if salesprice_elements:
                                         if any(char.isdigit() for char in salesprice_elements[0].text):
@@ -1349,7 +1349,7 @@ while jsonprods:
                             #productlogo = ''
                             if website['productlogoselector']:
                                 try:
-                                    website['productlogoselector'] = website['productlogoselector'].decode('string_escape')
+                                    website['productlogoselector'] = website['productlogoselector'].encode().decode("unicode-escape")
                                     prodlog_image_elements = browser.find_by_css(website['productlogoselector']) 
                                     if prodlog_image_elements:
                                         for i in range(len(prodlog_image_elements)):
@@ -1384,7 +1384,7 @@ while jsonprods:
                             images = ''
                             if website['imageselector'] and len(website['imageselector']):
                                 try:
-                                    website['imageselector'] = website['imageselector'].decode('string_escape')
+                                    website['imageselector'] = website['imageselector'].encode().decode("unicode-escape")
                                     #image_urls = ''
                                     image_elements = browser.find_by_css(website['imageselector'])
                                     if image_elements:
@@ -1539,8 +1539,8 @@ while jsonprods:
                                             #print(i)
                                             #for sex in product_sex: print(sex)
                                         # --> Attempt scraping of product misc. elements:
-                                        prodmisc_backup = productmisc_array[i].strip().decode('string_escape')
-                                        productmisc_array[i] = browser.find_by_css(productmisc_array[i].decode('string_escape'))
+                                        prodmisc_backup = productmisc_array[i].strip().encode().decode("unicode-escape")
+                                        productmisc_array[i] = browser.find_by_css(productmisc_array[i].encode().decode("unicode-escape"))
                                         if productmisc_array[i]:
                                             # --- Has the product got any special sale price applied? --- #
                                             if productmisc_array[(i-1)] == 'before_sale_price':
@@ -1679,7 +1679,7 @@ while jsonprods:
                                             # --> Check the HTML if neccessary! Any already existing product attributes found there?
                                             #productmisc_array[i] = lxml.html.tostring(productmisc_array[i])
                                             #productmisc_array[i] = etree.tostring(productmisc_array[i][0])
-                                            selected = browser.find_by_css(prodmisc_backup.strip().decode('string_escape'))
+                                            selected = browser.find_by_css(prodmisc_backup.strip().encode().decode("unicode-escape"))
                                             productmisc_array[i] = selected[0].html
                                             # --- Get sex attributes from current scrape --- #
                                             if productmisc_array[(i-1)] == 'pa_sex_html':
@@ -1778,7 +1778,7 @@ while jsonprods:
                                             if productmisc_array[(i-1)] == 'sold_out_html':
                                                 selector_one_string_two = prodmisc_backup.split(',')
                                                 if len(selector_one_string_two) > 1:
-                                                    soldoutselect = browser.find_by_css(selector_one_string_two[0].strip().decode('string_escape'))
+                                                    soldoutselect = browser.find_by_css(selector_one_string_two[0].strip().encode().decode("unicode-escape"))
                                                     productmisc_array[i] = soldoutselect[0].html
                                                     if productmisc_array[i].find(selector_one_string_two[1]) != -1:
                                                         soldouthtmlupdatemeta = True
