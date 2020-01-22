@@ -1018,10 +1018,10 @@ while jsonprods:
                                     if brand_values:
                                         #existing_brands = re.split(',\s*', brand_values)
                                         existing_brands = brand_values
-                                        '''count = 0
-                                        for brand in existing_brands:
-                                            existing_brands[count] = (brand, False)
-                                            count+=1'''
+                                        ###count = 0
+                                        ###for brand in existing_brands:
+                                        ###    existing_brands[count] = (brand, False)
+                                        ###    count+=1
                                         termies_result[0] = array_merge(termies_result[0], existing_brands)
                                     attributes.append({'name':'Brand', 'options':termies_result[0], 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
@@ -1030,10 +1030,10 @@ while jsonprods:
                                     if brand_values:
                                         #existing_brands = re.split(',\s*', brand_values)
                                         existing_brands = brand_values
-                                        '''count = 0
-                                        for brand in existing_brands:
-                                            existing_brands[count] = (brand, False)
-                                            count+=1'''
+                                        ###count = 0
+                                        ###for brand in existing_brands:
+                                        ###    existing_brands[count] = (brand, False)
+                                        ###    count+=1
                                         product_brand = existing_brands
                                         attributes.append({'name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1})
                                         attribute_pos+=1
@@ -1042,10 +1042,10 @@ while jsonprods:
                                     if color_values:
                                         #existing_colors = re.split(',\s*', color_values)
                                         existing_colors = color_values
-                                        '''count = 0
-                                        for color in existing_colors:
-                                            existing_colors[count] = (color, False)
-                                            count+=1'''
+                                        ###count = 0
+                                        ###for color in existing_colors:
+                                        ###    existing_colors[count] = (color, False)
+                                        ###    count+=1
                                         termies_result[1] = array_merge(termies_result[1], existing_colors)
                                     attributes.append({'name':'Color', 'options':termies_result[1], 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
@@ -1054,10 +1054,10 @@ while jsonprods:
                                     if color_values:
                                         #existing_colors = re.split(',\s*', color_values)
                                         existing_colors = color_values
-                                        '''count = 0
-                                        for color in existing_colors:
-                                            existing_colors[count] = (color, False)
-                                            count+=1'''
+                                        ###count = 0
+                                        ###for color in existing_colors:
+                                        ###    existing_colors[count] = (color, False)
+                                        ###    count+=1
                                         product_colors = existing_colors
                                         attributes.append({'name':'Color', 'options':product_colors, 'position':attribute_pos, 'visible':1, 'variation':1})
                                         attribute_pos+=1
@@ -1066,10 +1066,10 @@ while jsonprods:
                                     if sex_values:
                                         #existing_sex = re.split(',\s*', sex_values)
                                         existing_sex = sex_values
-                                        '''count = 0
-                                        for sex in existing_sex:
-                                            existing_sex[count] = (sex, False)
-                                            count+=1'''
+                                        ###count = 0
+                                        ###for sex in existing_sex:
+                                        ###    existing_sex[count] = (sex, False)
+                                        ###    count+=1
                                         termies_result[2] = array_merge(termies_result[2], existing_sex)
                                     attributes.append({'name':'Sex', 'options':termies_result[2], 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
@@ -1080,10 +1080,10 @@ while jsonprods:
                                     if sex_values:
                                         #existing_sex = re.split(',\s*', sex_values)
                                         existing_sex = sex_values
-                                        '''count = 0
-                                        for sex in existing_sex:
-                                            existing_sex[count] = (sex, False)
-                                            count+=1'''
+                                        ###count = 0
+                                        ###for sex in existing_sex:
+                                        ###    existing_sex[count] = (sex, False)
+                                        ###    count+=1
                                         product_sex = existing_sex
                                         attributes.append({'name':'Sex', 'options':product_sex, 'position':attribute_pos, 'visible':1, 'variation':1})
                                         attribute_pos+=1
