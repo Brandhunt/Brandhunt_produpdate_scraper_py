@@ -1365,6 +1365,7 @@ while jsonprods:
                                         if len(prodlog_image_urls) > 0:
                                             for imagekey, imageval in prodlog_image_urls.items():
                                                 newimageval = urljoin(product['url'], imageval)
+                                                print(newimageval)
                                                 if imageval != newimageval:
                                                     prodlog_image_urls[imagekey] = newimageval
                                                     imageval = newimageval
@@ -1374,8 +1375,8 @@ while jsonprods:
                                                 if imageval[0:2] == '//':
                                                     imageval = 'https:' + imageval
                                                     prodlog_image_urls[imagekey] = imageval
-                                        print('HEPP')
-                                        for prod in prodlog_image_urls: print(prod)
+                                        #print('HEPP')
+                                        #for prod in prodlog_image_urls: print(prod)
                                         productlogourl = prodlog_image_urls[0]   
                                     else:
                                         print("No product logo URLs could be found for product ID " + product['productid'] + "!")
