@@ -149,9 +149,9 @@ wp_connectwp_url_3 = os.environ['MORPH_WP_CONNECT_URL_3']
 wp_connectwp_url_4 = os.environ['MORPH_WP_CONNECT_URL_4']
 wp_connectwp_url_5 = os.environ['MORPH_WP_CONNECT_URL_5']
 
-encodestring = b('' + wp_username + ':' + wp_password);
+encodestring = wp_username + ':' + wp_password;
 #token = base64.standard_b64encode(wp_username + ':' + wp_password)
-token = base64.standard_b64encode(encodestring)
+token = base64.standard_b64encode(encodestring.encode())
 headers = {'Authorization': 'Basic ' + token}
 
 offset = int(os.environ['MORPH_START_OFFSET'])
