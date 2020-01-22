@@ -1361,6 +1361,7 @@ while jsonprods:
                                         for i in range(len(prodlog_image_elements)):
                                             prodlog_image_elements[i] = prodlog_image_elements[i].html
                                         image_dom = ','.join(prodlog_image_elements)
+                                        print('IMAGEDOM: ' + image_dom)
                                         prodlog_image_urls = graburls(image_dom, True)
                                         if len(prodlog_image_urls) > 0:
                                             for imagekey, imageval in prodlog_image_urls.items():
