@@ -3,11 +3,12 @@
 # Find out more: https://morph.io/documentation/python
 
 # Custom version of scraperwiki library
--e git+http://github.com/openaustralia/scraperwiki-python.git@morph_defaults#egg=scraperwiki
+#-e git+http://github.com/openaustralia/scraperwiki-python.git@morph_defaults#egg=scraperwiki
 
 lxml~=4.3.3
 cssselect~=1.0.0
 mysql-connector-python==8.0.11
+scraperwiki==0.5.1
 splinter~=0.10.0
 python-slugify>=4.0.0
 #selenium>=2.40.0
