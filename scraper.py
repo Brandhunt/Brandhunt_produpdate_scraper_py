@@ -135,17 +135,17 @@ def reltoabs(relurl, baseurl):
 #    if scraperwiki.sql.select('* from data'):
 #        scraperwiki.sql.execute('DELETE FROM data')
 
-from pathlib import Path
-print("File      Path:", Path(__file__).absolute())
-print("Directory Path:", Path().absolute())  
+#from pathlib import Path
+#print("File      Path:", Path(__file__).absolute())
+#print("Directory Path:", Path().absolute())  
 
 optionuls = webdriver.ChromeOptions()
 optionuls.add_argument('--headless')
 optionuls.add_argument('--disable-dev-shm-usage')
-optionuls.add_argument('--no-sandbox')
+#optionuls.add_argument('--no-sandbox')
 browsur = webdriver.Chrome(options=optionuls, service_args=["--verbose"])
 browsur.set_window_size(1920, 1080)
-browsur.get('https://www.glassdoor.com/index.htm')
+browsur.get('https://www.fz.se')
 
 # --> Connect to Wordpress Site via REST API and get all the proper URLs to be scraped!
 
