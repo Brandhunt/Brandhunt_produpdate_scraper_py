@@ -2158,8 +2158,8 @@ while jsonprods:
                         #print("Error: " + sys.exc_info()[0] + " occured!")
                         print(traceback.format_exc())
                         continue'''
-                else:
-                    continue
+                ###else:
+                ###    continue
     offset = offset + limit
     r = requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', headers=headers)
     jsonprods = r.json()
