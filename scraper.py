@@ -1183,7 +1183,7 @@ while jsonprods:
                         optionals.add_argument('--headless')
                         optionals.add_argument('--disable-dev-shm-usage')
                         optionals.add_argument('--no-sandbox')
-                        browser = webdriver.Chrome(options=options2, service_args=["--verbose"])
+                        browser = webdriver.Chrome(options=optionals, service_args=["--verbose"])
                         browser.set_window_size(1920, 1080)
                         # submit the search form...
                         ##browser.fill("q", "parliament")
