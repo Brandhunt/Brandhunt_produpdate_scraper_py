@@ -7,7 +7,7 @@
 
 # --- IMPORT SECTION --- #
 
-import scraperwiki
+'''import scraperwiki
 from lxml import etree
 import lxml.html
 import os
@@ -15,12 +15,12 @@ import requests
 import json
 import base64
 import mysql.connector
-import re
+import re'''
 from selenium import webdriver
 #from selenium.webdriver.common.keys import Keys  
 #from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
-from slugify import slugify
+'''from slugify import slugify
 #from splinter import Browser
 import sys
 import traceback
@@ -29,7 +29,7 @@ from urllib.error import HTTPError
 try:
     from urllib.parse import urljoin
 except ImportError:
-    from urlparse import urljoin
+    from urlparse import urljoin'''
 
 # --- FUNCTION SECTION --- #
 
