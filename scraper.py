@@ -34,7 +34,7 @@ except ImportError:
 # --- FUNCTION SECTION --- #
 
 # *** --- Replacement for PHP's array merge functionality --- *** #
-def array_merge(array1, array2):
+'''def array_merge(array1, array2):
     if isinstance(array1, list) and isinstance(array2, list):
         return array1 + array2
     elif isinstance(array1, dict) and isinstance(array2, dict):
@@ -127,7 +127,7 @@ def graburls(text, imageonly):
     
 # *** --- For converting relative URLs to absolute URLs --- *** #
 def reltoabs(relurl, baseurl):
-    pass
+    pass'''
       
 # --> First, check if the database should be reset:
 
@@ -145,7 +145,7 @@ browsur.get('https://www.glassdoor.com/index.htm')
 
 # --> Connect to Wordpress Site via REST API and get all the proper URLs to be scraped!
 
-wp_username = os.environ['MORPH_WP_USERNAME']
+'''wp_username = os.environ['MORPH_WP_USERNAME']
 wp_password = os.environ['MORPH_WP_PASSWORD']
 wp_connectwp_url = os.environ['MORPH_WP_CONNECT_URL']
 wp_connectwp_url_2 = os.environ['MORPH_WP_CONNECT_URL_2']
@@ -1175,7 +1175,7 @@ while jsonprods:
                         #print("Error: " + str(sys.exc_info()[0]) + " occured!")
                         print(traceback.format_exc())
                         #STORE PRODUCT IN DATABASE AS SHOULD_DELETE IF HTTP404 ERROR EXISTS
-                        continue
+                        continue'''
                 '''elif website['scrapetype'] == 'phantomjs_morph_io':
                     try:
                         #with Browser("phantomjs") as browser:
@@ -2160,7 +2160,7 @@ while jsonprods:
                         continue'''
                 ###else:
                 ###    continue
-    offset = offset + limit
+    '''offset = offset + limit
     r = requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', headers=headers)
-    jsonprods = r.json()
+    jsonprods = r.json()'''
     
