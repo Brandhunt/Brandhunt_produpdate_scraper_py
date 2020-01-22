@@ -1359,16 +1359,17 @@ while jsonprods:
                                     prodlog_image_elements = browser.find_by_css(website['productlogoselector']) 
                                     if prodlog_image_elements:
                                         for i in range(len(prodlog_image_elements)):
-                                            print('HUPP: ' + prodlog_image_elements[i])
-                                            prodlog_image_elements[i] = prodlog_image_elements[i].html
+                                            #print('HUPP: ' + prodlog_image_elements[i])
+                                            #prodlog_image_elements[i] = prodlog_image_elements[i].html
+                                            prodlog_image_elements[i] = prodlog_image_elements[i].get_attribute('outerHTML')
                                         image_dom = ','.join(prodlog_image_elements)
-                                        print('IMAGEDOM: ' + image_dom)
+                                        #print('IMAGEDOM: ' + image_dom)
                                         prodlog_image_urls = graburls(image_dom, True)
                                         if len(prodlog_image_urls) > 0:
                                             for imagekey, imageval in prodlog_image_urls.items():
-                                                print('OLD: ' + imageval)
+                                                #print('OLD: ' + imageval)
                                                 newimageval = urljoin(product['url'], imageval)
-                                                print('NEW: ' + newimageval)
+                                                #print('NEW: ' + newimageval)
                                                 if imageval != newimageval:
                                                     prodlog_image_urls[imagekey] = newimageval
                                                     imageval = newimageval
@@ -1401,7 +1402,8 @@ while jsonprods:
                                     image_elements = browser.find_by_css(website['imageselector'])
                                     if image_elements:
                                         for i in range(len(image_elements)):
-                                            image_elements[i] = image_elements[i].html
+                                            #image_elements[i] = image_elements[i].html
+                                            image_elements[i] = image_elements[i].html.get_attribute('outerHTML')
                                         image_dom = ','.join(image_elements)
                                         #print('IMAGE DOM: ' + image_dom)
                                         image_urls = graburls(image_dom, True)
