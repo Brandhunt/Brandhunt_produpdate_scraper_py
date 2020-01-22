@@ -24,6 +24,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from slugify import slugify
 from splinter import Browser
 import sys
+import time
 import traceback
 #from urllib2 import HTTPError
 from urllib.error import HTTPError
@@ -1197,7 +1198,7 @@ while jsonprods:
                         #with Browser('chrome', headless=True, options=chrome_options) as browser:
                         optionals = Options()
                         #optionals.add_argument('--headless')
-                        #optionals.add_argument('--disable-dev-shm-usage')
+                        optionals.add_argument('--disable-dev-shm-usage')
                         #optionals.add_argument('--disable-extensions')
                         #optionals.add_argument('--no-sandbox')
                         optionals.add_argument('--disable-gpu')
@@ -1216,6 +1217,7 @@ while jsonprods:
                             # >>> VISIT THE PAGE THROUGH BROWSER <<< #
                             try:
                                 browser.visit(product['url'])
+                                time.sleep(15)
                                 #browser.get(product['url'])
                                 #print("HTML:")
                                 #print(html)
