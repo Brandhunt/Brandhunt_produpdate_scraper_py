@@ -1364,8 +1364,9 @@ while jsonprods:
                                         prodlog_image_urls = graburls(image_dom, True)
                                         if len(prodlog_image_urls) > 0:
                                             for imagekey, imageval in prodlog_image_urls.items():
+                                                print('OLD: ' + imageval)
                                                 newimageval = urljoin(product['url'], imageval)
-                                                print(newimageval)
+                                                print('NEW: ' + newimageval)
                                                 if imageval != newimageval:
                                                     prodlog_image_urls[imagekey] = newimageval
                                                     imageval = newimageval
