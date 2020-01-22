@@ -229,8 +229,8 @@ while jsonprods:
                                                       'imgurls': '',\
                                                       'notfound': notfound,\
                                                       'removeon404': removeon404,\
-                                                      'soldoutfix': '',\
-                                                      'soldouthtmlfix': '',\
+                                                      'soldoutfix': 0,\
+                                                      'soldouthtmlfix': 0,\
                                                       'catstoaddresult': '',\
                                                       'attributes': '',\
                                                       'sizetypemapsqls': ''})
