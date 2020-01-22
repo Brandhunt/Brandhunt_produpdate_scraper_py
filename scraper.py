@@ -402,7 +402,7 @@ while jsonprods:
                                         if imageval[0:2] == '//':
                                             imageval = 'https:' + imageval
                                             image_urls[imagekey] = imageval
-                                    image_urls_valid = image_urls.values()
+                                    image_urls_valid = list(image_urls.values())
                                 #print('IMAGE ELEMENTS:')
                                 #for img in image_elements: print img
                                 #print('IMAGE URLS:')
