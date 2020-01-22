@@ -778,7 +778,7 @@ while jsonprods:
                                             if len(selector_one_string_two) > 1:
                                                 soldoutselect = root.cssselect(str(selector_one_string_two[0]).strip().encode().decode("unicode-escape"))
                                                 productmisc_array[i] = etree.tostring(soldoutselect[0])
-                                                if productmisc_array[i].find(selector_one_string_two[1]) != -1:
+                                                if productmisc_array[i].find(str(selector_one_string_two[1])) != -1:
                                                     soldouthtmlupdatemeta = True
                                                     price = '0.0 BUCKS'
                                                     price = price.replace(r'[^0-9,.]', '')
