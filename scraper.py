@@ -740,6 +740,8 @@ while jsonprods:
                                             for catterm in caties:
                                                 term_name = catterm['name']
                                                 cat_html = productmisc_array[i]
+                                                print(type(cat_html))
+                                                print(type(term_name))
                                                 if cat_html.upper().find(term_name.upper()) != -1:
                                                     term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                     if term:
