@@ -1219,7 +1219,7 @@ while jsonprods:
                             # >>> VISIT THE PAGE THROUGH BROWSER <<< #
                             try:
                                 browser.visit(product['url'])
-                                time.sleep(5)
+                                time.sleep(2)
                                 #browser.get(product['url'])
                                 #print("HTML:")
                                 #print(html)
@@ -1359,6 +1359,7 @@ while jsonprods:
                                     prodlog_image_elements = browser.find_by_css(website['productlogoselector']) 
                                     if prodlog_image_elements:
                                         for i in range(len(prodlog_image_elements)):
+                                            print('HUPP: ' + prodlog_image_elements[i])
                                             prodlog_image_elements[i] = prodlog_image_elements[i].html
                                         image_dom = ','.join(prodlog_image_elements)
                                         print('IMAGEDOM: ' + image_dom)
