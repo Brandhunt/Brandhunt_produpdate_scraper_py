@@ -1176,7 +1176,7 @@ while jsonprods:
                         print(traceback.format_exc())
                         #STORE PRODUCT IN DATABASE AS SHOULD_DELETE IF HTTP404 ERROR EXISTS
                         continue'''
-                '''elif website['scrapetype'] == 'phantomjs_morph_io':
+'''                elif website['scrapetype'] == 'phantomjs_morph_io':
                     try:
                         #with Browser("phantomjs") as browser:
                         ##chrome_options = Options()
@@ -2160,7 +2160,7 @@ while jsonprods:
                         continue'''
                 ###else:
                 ###    continue
-    '''offset = offset + limit
+'''    offset = offset + limit
     r = requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', headers=headers)
     jsonprods = r.json()'''
     
