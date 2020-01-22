@@ -135,6 +135,14 @@ def reltoabs(relurl, baseurl):
 #    if scraperwiki.sql.select('* from data'):
 #        scraperwiki.sql.execute('DELETE FROM data')
 
+optionuls = webdriver.ChromeOptions()
+optionuls.add_argument('--headless')
+optionuls.add_argument('--disable-dev-shm-usage')
+optionuls.add_argument('--no-sandbox')
+browsur = webdriver.Chrome(options=optionuls, service_args=["--verbose"])
+browsur.set_window_size(1920, 1080)
+browsur.get('https://www.glassdoor.com/index.htm')
+
 # --> Connect to Wordpress Site via REST API and get all the proper URLs to be scraped!
 
 wp_username = os.environ['MORPH_WP_USERNAME']
