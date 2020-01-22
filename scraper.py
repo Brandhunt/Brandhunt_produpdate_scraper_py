@@ -2160,6 +2160,7 @@ while jsonprods:
                                                                      remove_sizetosizetype,\
                                                                      insert_sizetosizetypemisc,\
                                                                      remove_sizetosizetypemisc])})
+                            browser.quit()
                     except:
                         #print("Error: " + sys.exc_info()[0] + " occured!")
                         print(traceback.format_exc())
