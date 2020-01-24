@@ -546,6 +546,11 @@ while jsonprods:
                                                     newprice = getmoneyfromtext(newprice)   
                                                 saleprice = price
                                                 price = newprice
+                                                print(saleprice)
+                                                print(price)
+                                                print(i)
+                                                for p in productmisc_array[i]: print(p)
+                                                print(productmisc_array[(i-1)])
                                         # --- Get sex attributes from current scrape --- #
                                         if productmisc_array[(i-1)] == 'pa_sex':
                                             if len(productmisc_array[i]) > 0:
