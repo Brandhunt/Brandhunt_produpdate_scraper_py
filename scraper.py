@@ -277,7 +277,7 @@ while jsonprods:
                             else:
                                 price = price.replace(r'[^0-9,.]', '')
                                 price = getmoneyfromtext(price)
-                            print('FINALPRICE:' + price)
+                            #print('FINALPRICE:' + price)
                         except:
                             #print("Error when scraping price for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
                             print(traceback.format_exc())
@@ -309,7 +309,7 @@ while jsonprods:
                                 else:
                                     salesprice = salesprice.replace(r'[^0-9,.]', '')
                                     salesprice = getmoneyfromtext(salesprice)
-                                print('FINALSALESPRICE:' + salesprice)
+                                #print('FINALSALESPRICE:' + salesprice)
                             except:
                                 #print("Error when scraping sales price for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
                                 print(traceback.format_exc())
@@ -355,9 +355,9 @@ while jsonprods:
                                     productlogourl = prodlog_image_urls[0]   
                                 else:
                                     print("No product logo URLs could be found for product ID " + product['productid'] + "!")
-                                print('PRODUCTLOGOS:')
-                                for p in prodlog_image_urls: print(p)
-                                print('PRODUCTLOGOURL:' + productlogourl)
+                                #print('PRODUCTLOGOS:')
+                                #for p in prodlog_image_urls: print(p)
+                                #print('PRODUCTLOGOURL:' + productlogourl)
                             except:
                                 #print("Error when scraping product logo images for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
                                 print(traceback.format_exc())
