@@ -247,6 +247,8 @@ while jsonprods:
                                     if el is None:
                                         continue
                                     price = price + el.text + ' '
+                                if price != '':
+                                    price = re.sub(r'([^a-zA-Z]\w+\%+)', '', price)
                             else:
                                 price_elements = root.cssselect(website['priceselector'])
                                 if price_elements:
@@ -254,6 +256,7 @@ while jsonprods:
                                         if price_el.text is not None:
                                             if any(char.isdigit() for char in price_el.text):
                                                 price = price_el.text
+                                                price = re.sub(r'([^a-zA-Z]\w+\%+)', '', price)
                                                 break
                                             else:
                                                 price = '-1'
@@ -288,6 +291,7 @@ while jsonprods:
                                 if salesprice_elements:
                                     if any(char.isdigit() for char in salesprice_elements[0].text):
                                         salesprice = salesprice_elements[0].text
+                                        salesprice = re.sub(r'([^a-zA-Z]\w+\%+)', '', salesprice)
                                     else:
                                         salesprice = '-1'
                                 else:
