@@ -188,12 +188,25 @@ while jsonprods:
                         # >>> GET THE HTML <<< #
                         html = ''
                         try:
-                            html = scraperwiki.scrape(product['url'])
+                            #html = scraperwiki.scrape(product['url'])
+                            html = scraperwiki.scrape(product['url'],\
+                                   user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
                             #print("HTML:")
                             #print(html)
                         #except HTTPError, err:
                         except HTTPError as err:
-                            if err.code == 404:
+                            if err.code == 302:
+                                try:
+                                    url_headers = {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',\
+                                    'User-Agent':'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36',\
+                                              'Accept-Encoding':'gzip, deflate',\
+                                              'Accept-Language':'en-US,en;q=0.8'}
+                                    url_session = requests.session()
+                                    response = url_session.get(url=product['url'], headers=url_headers)
+                                    html = response.content
+                                except:
+                                    print(traceback.format_exc())
+                            elif err.code == 404:
                                 notfound = True
                                 removeon404 = False
                                 if website['productmisc']:
