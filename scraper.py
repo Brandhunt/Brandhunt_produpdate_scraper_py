@@ -631,7 +631,7 @@ while jsonprods:
                                                             size_termus = size_termus.tail
                                                     else:
                                                         size_termus = size_text
-                                                    print('FOUND SIZE TERM: ' + size_termus)
+                                                    #print('FOUND SIZE TERM: ' + size_termus)
                                                     output = re.search(r'\(.*Only.*\)|\(.*Out.*\)|\(.*In.*\)|\(.*Lager.*\)', size_termus, flags=re.IGNORECASE)
                                                     output2 = re.search(r'.*Bevaka.*', size_termus, flags=re.IGNORECASE)
                                                     output3 = re.search(r'.*Stock.*', size_termus, flags=re.IGNORECASE)
@@ -652,7 +652,7 @@ while jsonprods:
                                                     else:
                                                         term = {'term_id':-1, 'name':size_termus, 'slug':clean_size, 'taxonomy':'pa_size'}
                                                         size_array.append((term, True))
-                                                for size in size_array: print('FINAL SIZE TERM: ' + size[0]['name'])
+                                                #for size in size_array: print('FINAL SIZE TERM: ' + size[0]['name'])
                                                 product_sizes = size_array
                                         # --- Get color attributes from current scrape --- #
                                         if productmisc_array[(i-1)] == 'pa_color':
