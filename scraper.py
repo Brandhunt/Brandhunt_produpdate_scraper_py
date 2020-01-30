@@ -597,7 +597,7 @@ while jsonprods:
                                         if productmisc_array[(i-1)] == 'pa_size':
                                             if len(productmisc_array[i]) > 0:
                                                 #PRINT('SIZES, PRODUCTMISC_SCRAPES:')
-                                                #for size in productmisc_array[i]: print(size)
+                                                for size in productmisc_array[i]: print('SCRAPED SIZE: ' + str(etree.tostring(size)))
                                                 size_array = []
                                                 for size_termus in productmisc_array[i]:
                                                     #print(etree.tostring(size_termus))
@@ -633,7 +633,7 @@ while jsonprods:
                                                     else:
                                                         term = {'term_id':-1, 'name':size_termus, 'slug':clean_size, 'taxonomy':'pa_size'}
                                                         size_array.append((term, True))
-                                                    for size in size_array: print('FINAL SIZE TERM: ' + size[0]['name'])
+                                                for size in size_array: print('FINAL SIZE TERM: ' + size[0]['name'])
                                                 product_sizes = size_array
                                         # --- Get color attributes from current scrape --- #
                                         if productmisc_array[(i-1)] == 'pa_color':
