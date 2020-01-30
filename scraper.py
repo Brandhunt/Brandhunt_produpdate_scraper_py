@@ -205,9 +205,15 @@ while jsonprods:
                                 html = scraperwiki.scrape(product['url'],\
                                        user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
                             else:
-                                scraper = cfscrape.create_scraper(delay=10)
+                                headers = {
+                                    "User-Agent":"Mozilla/5.0 (Windows NT 5.1; Win64; x64; rv:47.0) Gecko/20180101 Firefox/47.0",
+                                    "Referer" : product['url']
+                                }
+                                session = requests.session()
+                                scraper = cfscrape.create_scraper(sess=session, delay=10)
+                                #scraper = cfscrape.create_scraper(delay=10)
                                 #scraper = cfscrape.create_scraper()
-                                html = scraper.get(product['url']).content
+                                html = scraper.get(product['url'], headers=headers).content
                             #print("HTML:")
                             #print(html)
                         #except HTTPError, err:
