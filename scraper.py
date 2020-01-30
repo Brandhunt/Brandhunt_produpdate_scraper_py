@@ -203,8 +203,8 @@ while jsonprods:
                                 html = scraperwiki.scrape(product['url'],\
                                        user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
                             else:
-                                #scraper = cfscrape.create_scraper(delay=3)
-                                scraper = cfscrape.create_scraper()
+                                scraper = cfscrape.create_scraper(delay=10)
+                                #scraper = cfscrape.create_scraper()
                                 html = scraper.get(product['url']).content
                             #print("HTML:")
                             #print(html)
