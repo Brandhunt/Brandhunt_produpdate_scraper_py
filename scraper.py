@@ -195,22 +195,6 @@ while jsonprods:
                                 use_alt_scrape = True
                                 website['productmisc'] = re.sub(r'({use_alt_scrape}.*?(?=\{))', '', website['productmisc'])
                                 #print(scrapsite['scrapefield']['domainmisc'])
-                            '''output = re.search(r'({override_timeout}(.*?))\{', scrapsite['scrapefield']['domainmisc'])
-                            if output is not None and len(output.group(1)) > 0:
-                                override_timeout = output.group(2)
-                                scrapsite['scrapefield']['domainmisc'] = re.sub(r'({override_timeout}.*?(?=\{))', '', scrapsite['scrapefield']['domainmisc'])
-                                #print(scrapsite['scrapefield']['domainmisc'])
-                            output = re.search(r'({incr_link}(.*?))\{', scrapsite['scrapefield']['domainmisc'])
-                            if output is not None and len(output.group(1)) > 0:
-                                incr_link = output.group(2)
-                                scrapsite['scrapefield']['domainmisc'] = re.sub(r'({incr_link}.*?(?=\{))', '', scrapsite['scrapefield']['domainmisc'])
-                                #print(scrapsite['scrapefield']['domainmisc'])
-                                output = re.search(r'({incr_link_startnumber}(.*?))\{', scrapsite['scrapefield']['domainmisc'])
-                                if output is not None and len(output.group(1)) > 0:
-                                    incr_link_startnumber = output.group(2)
-                                    scrapsite['scrapefield']['domainmisc'] = re.sub(r'({incr_link_startnumber}.*?(?=\{))', '', scrapsite['scrapefield']['domainmisc'])
-                                else:
-                                    incr_link_startnumber = '0''''
                         # >>> GET THE HTML <<< #
                         html = ''
                         try:
