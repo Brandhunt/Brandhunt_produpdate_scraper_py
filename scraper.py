@@ -10,6 +10,7 @@
 import os
 os.environ['SCRAPERWIKI_DATABASE_NAME'] = 'sqlite:///data.sqlite'
 
+import cfscrape
 import scraperwiki
 from lxml import etree
 import lxml.html
@@ -185,12 +186,42 @@ while jsonprods:
                 # --- First, get the HTML for each domain part --- #
                 if website['scrapetype'] == 'standard_morph_io':
                     try:
+                        # --> Check if any product import values should be pre-fetched from the domain misc.
+                        use_alt_scrape = False
+                        if website['productmisc']:
+                            #print(website['productmisc'])
+                            output = re.search(r'({use_alt_scrape}(.*?))\{', website['productmisc'])
+                            if output is not None and len(output.group(1)) > 0:
+                                use_alt_scrape = True
+                                website['productmisc'] = re.sub(r'({use_alt_scrape}.*?(?=\{))', '', website['productmisc'])
+                                #print(scrapsite['scrapefield']['domainmisc'])
+                            '''output = re.search(r'({override_timeout}(.*?))\{', scrapsite['scrapefield']['domainmisc'])
+                            if output is not None and len(output.group(1)) > 0:
+                                override_timeout = output.group(2)
+                                scrapsite['scrapefield']['domainmisc'] = re.sub(r'({override_timeout}.*?(?=\{))', '', scrapsite['scrapefield']['domainmisc'])
+                                #print(scrapsite['scrapefield']['domainmisc'])
+                            output = re.search(r'({incr_link}(.*?))\{', scrapsite['scrapefield']['domainmisc'])
+                            if output is not None and len(output.group(1)) > 0:
+                                incr_link = output.group(2)
+                                scrapsite['scrapefield']['domainmisc'] = re.sub(r'({incr_link}.*?(?=\{))', '', scrapsite['scrapefield']['domainmisc'])
+                                #print(scrapsite['scrapefield']['domainmisc'])
+                                output = re.search(r'({incr_link_startnumber}(.*?))\{', scrapsite['scrapefield']['domainmisc'])
+                                if output is not None and len(output.group(1)) > 0:
+                                    incr_link_startnumber = output.group(2)
+                                    scrapsite['scrapefield']['domainmisc'] = re.sub(r'({incr_link_startnumber}.*?(?=\{))', '', scrapsite['scrapefield']['domainmisc'])
+                                else:
+                                    incr_link_startnumber = '0''''
                         # >>> GET THE HTML <<< #
                         html = ''
                         try:
                             #html = scraperwiki.scrape(product['url'])
-                            html = scraperwiki.scrape(product['url'],\
-                                   user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
+                            if (use_alt_scrape == False):
+                                html = scraperwiki.scrape(product['url'],\
+                                       user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
+                            else:
+                                #scraper = cfscrape.create_scraper(delay=3)
+                                scraper = cfscrape.create_scraper()
+                                html = scraper.get(product['url']).content
                             #print("HTML:")
                             #print(html)
                         #except HTTPError, err:
