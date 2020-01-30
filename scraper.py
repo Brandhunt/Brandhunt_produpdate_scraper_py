@@ -10,7 +10,7 @@
 import os
 os.environ['SCRAPERWIKI_DATABASE_NAME'] = 'sqlite:///data.sqlite'
 
-import cfscrape
+#import cfscrape
 import scraperwiki
 from lxml import etree
 import lxml.html
@@ -187,33 +187,29 @@ while jsonprods:
                 if website['scrapetype'] == 'standard_morph_io':
                     try:
                         # --> Check if any product import values should be pre-fetched from the domain misc.
-                        use_alt_scrape = False
-                        if website['productmisc']:
-                            #print(website['productmisc'])
-                            output = re.search(r'({use_alt_scrape}(.*?))\{', website['productmisc'])
-                            if output is not None and len(output.group(1)) > 0:
-                                #print('HUPP')
-                                use_alt_scrape = True
-                                #website['productmisc'] = re.sub(r'({use_alt_scrape}.*?(?=\{))', '', website['productmisc'])
-                                #print(scrapsite['scrapefield']['domainmisc'])
+                        #use_alt_scrape = False
+                        #if website['productmisc']:
+                        #    output = re.search(r'({use_alt_scrape}(.*?))\{', website['productmisc'])
+                        #    if output is not None and len(output.group(1)) > 0:
+                        #        use_alt_scrape = True
                         # >>> GET THE HTML <<< #
                         html = ''
                         try:
                             #html = scraperwiki.scrape(product['url'])
-                            print(str(use_alt_scrape))
-                            if use_alt_scrape is False:
-                                html = scraperwiki.scrape(product['url'],\
-                                       user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
-                            else:
-                                headers = {
-                                    "User-Agent":"Mozilla/5.0 (Windows NT 5.1; Win64; x64; rv:47.0) Gecko/20180101 Firefox/47.0",
-                                    "Referer" : product['url']
-                                }
-                                session = requests.session()
-                                scraper = cfscrape.create_scraper(sess=session, delay=10)
-                                #scraper = cfscrape.create_scraper(delay=10)
-                                #scraper = cfscrape.create_scraper()
-                                html = scraper.get(product['url'], headers=headers).content
+                            #print(str(use_alt_scrape))
+                            #if use_alt_scrape is False:
+                            html = scraperwiki.scrape(product['url'],\
+                                   user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
+                            #else:
+                            #    headers = {
+                            #        "User-Agent":"Mozilla/5.0 (Windows NT 5.1; Win64; x64; rv:47.0) Gecko/20180101 Firefox/47.0",
+                            #        "Referer" : product['url']
+                            #    }
+                            #    session = requests.session()
+                            #    scraper = cfscrape.create_scraper(sess=session, delay=10)
+                            #    #scraper = cfscrape.create_scraper(delay=10)
+                            #    #scraper = cfscrape.create_scraper()
+                            #    html = scraper.get(product['url'], headers=headers).content
                             #print("HTML:")
                             #print(html)
                         #except HTTPError, err:
