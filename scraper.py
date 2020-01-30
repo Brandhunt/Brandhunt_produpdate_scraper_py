@@ -192,6 +192,7 @@ while jsonprods:
                             #print(website['productmisc'])
                             output = re.search(r'({use_alt_scrape}(.*?))\{', website['productmisc'])
                             if output is not None and len(output.group(1)) > 0:
+                                print('HUPP')
                                 use_alt_scrape = True
                                 website['productmisc'] = re.sub(r'({use_alt_scrape}.*?(?=\{))', '', website['productmisc'])
                                 #print(scrapsite['scrapefield']['domainmisc'])
@@ -199,6 +200,7 @@ while jsonprods:
                         html = ''
                         try:
                             #html = scraperwiki.scrape(product['url'])
+                            print(str(use_alt_scrape))
                             if (use_alt_scrape == False):
                                 html = scraperwiki.scrape(product['url'],\
                                        user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
