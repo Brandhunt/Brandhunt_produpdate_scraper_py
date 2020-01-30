@@ -194,7 +194,7 @@ while jsonprods:
                             if output is not None and len(output.group(1)) > 0:
                                 print('HUPP')
                                 use_alt_scrape = True
-                                website['productmisc'] = re.sub(r'({use_alt_scrape}.*?(?=\{))', '', website['productmisc'])
+                                #website['productmisc'] = re.sub(r'({use_alt_scrape}.*?(?=\{))', '', website['productmisc'])
                                 #print(scrapsite['scrapefield']['domainmisc'])
                         # >>> GET THE HTML <<< #
                         html = ''
