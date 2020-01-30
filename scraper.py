@@ -189,7 +189,7 @@ while jsonprods:
                         # --> Check if any product import values should be pre-fetched from the domain misc.
                         use_alt_scrape = False
                         if website['productmisc']:
-                            #print(website['productmisc'])
+                            print(website['productmisc'])
                             output = re.search(r'({use_alt_scrape}(.*?))\{', website['productmisc'])
                             if output is not None and len(output.group(1)) > 0:
                                 print('HUPP')
