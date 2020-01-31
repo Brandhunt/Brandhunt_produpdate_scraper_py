@@ -12,6 +12,7 @@ os.environ['SCRAPERWIKI_DATABASE_NAME'] = 'sqlite:///data.sqlite'
 
 #import cfscrape
 import scraperwiki
+import socks
 from lxml import etree
 import lxml.html
 import requests
@@ -173,6 +174,23 @@ jsoncatsizetypemaps = json.loads(r.content)
 r = requests.get(wp_connectwp_url_5, headers=headers)
 jsoncatmaps = json.loads(r.content)
 
+# --> Get the proxy information and related modules!
+
+proxy_http = ''
+proxy_https = ''
+proxies = []
+morph_proxies = str(os.environ['MORPH_PROXY_LIST'])
+morph_prox_array = re.split('{|}', morph_proxies)
+for i in range(2, len(morph_prox_array), 2):
+    if morph_prox_array[(i-1)] == 'http':
+        proxy_http = morph_prox_array[i].strip()
+    elif morph_prox_array[(i-1)] == 'https':
+        proxy_https = morph_prox_array[i].strip()
+        
+if proxy_http != '' or proxy_https != '':
+    proxies = {'http': proxy_http,\
+               'https': proxy_https}
+
 # --> Decode and handle these URLs!
 
 #arraus = []
@@ -187,29 +205,32 @@ while jsonprods:
                 if website['scrapetype'] == 'standard_morph_io':
                     try:
                         # --> Check if any product import values should be pre-fetched from the domain misc.
-                        #use_alt_scrape = False
-                        #if website['productmisc']:
-                        #    output = re.search(r'({use_alt_scrape}(.*?))\{', website['productmisc'])
-                        #    if output is not None and len(output.group(1)) > 0:
-                        #        use_alt_scrape = True
+                        use_alt_scrape = False
+                        if website['productmisc']:
+                            output = re.search(r'({use_alt_scrape}(.*?))\{', website['productmisc'])
+                            if output is not None and len(output.group(1)) > 0:
+                                use_alt_scrape = True
                         # >>> GET THE HTML <<< #
                         html = ''
                         try:
                             #html = scraperwiki.scrape(product['url'])
                             #print(str(use_alt_scrape))
-                            #if use_alt_scrape is False:
-                            html = scraperwiki.scrape(product['url'],\
-                                   user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
-                            #else:
-                            #    headers = {
-                            #        "User-Agent":"Mozilla/5.0 (Windows NT 5.1; Win64; x64; rv:47.0) Gecko/20180101 Firefox/47.0",
-                            #        "Referer" : product['url']
-                            #    }
-                            #    session = requests.session()
-                            #    scraper = cfscrape.create_scraper(sess=session, delay=10)
-                            #    #scraper = cfscrape.create_scraper(delay=10)
-                            #    #scraper = cfscrape.create_scraper()
-                            #    html = scraper.get(product['url'], headers=headers).content
+                            if use_alt_scrape is False:
+                                html = scraperwiki.scrape(product['url'],\
+                                       user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
+                            else:
+                                headers = {
+                                    'User-Agent':'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36',
+                                    'Referer' : product['url']
+                                }
+                                session = requests.session()
+                                scraper = cfscrape.create_scraper(sess=session, delay=10)
+                                #scraper = cfscrape.create_scraper(delay=10)
+                                #scraper = cfscrape.create_scraper()
+                                if proxies:
+                                    html = scraper.get(product['url'], headers=headers, proxies=proxies).content
+                                else:
+                                    html = scraper.get(product['url'], headers=headers).content
                             #print("HTML:")
                             #print(html)
                         #except HTTPError, err:
