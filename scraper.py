@@ -1093,7 +1093,8 @@ while jsonprods:
                                         filtsexattrs = list(oldsexattrs) + existing_sex
                                         newsexattrs = list(newsexattrs)
                                         for flt in filtsexattrs:
-                                            newsexattrs.append(((doesprodattrexist(jsonprodattr['pa_sex'], flt, 'pa_sex'), False))
+                                            #flt = doesprodattrexist(jsonprodattr['pa_sex'], flt, 'pa_sex')
+                                            newsexattrs.append((doesprodattrexist(jsonprodattr['pa_sex'], flt, 'pa_sex'), False))
                                         product_sex = newsexattrs
                                     attributes.append({'name':'Sex', 'options':product_sex, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
