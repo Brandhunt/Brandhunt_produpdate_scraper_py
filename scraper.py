@@ -974,8 +974,6 @@ while jsonprods:
                                         output = re.search(r'(skip_domainbrand_if_found)', website['productmisc'])
                                         if output is not None and len(output.group(0)) > 0:
                                             skip_domain_name = True
-                                            if domain_name != '':
-                                                product_brand.pop(0)
                                     brand_values = product['attributes']['brand']
                                     if brand_values:
                                         existing_brands = re.split(',\s*', brand_values)
@@ -988,6 +986,8 @@ while jsonprods:
                                             brand = doesprodattrexist(jsonprodattr['pa_brand'], brand, 'pa_brand')
                                             existing_brands[count] = (brand, False)
                                             count+=1
+                                        if skip_domain_name is True and len(existing_brands) > 0:
+                                            product_brand.pop(0)
                                         product_brand = product_brand + existing_brands
                                         print('FINAL BRANDS: ' + json.dumps(product_brand))
                                     attributes.append({'name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1})
