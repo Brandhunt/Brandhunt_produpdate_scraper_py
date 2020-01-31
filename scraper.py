@@ -59,7 +59,7 @@ def add_together_attrs(attrlist1, attrlist2):
                 or attr_array['slug'] == attr_array2['slug']\
                 or attr_array['term_id'] == attr_array2['term_id']:
                     attr2_copy = attr2
-                    finalattrlist.addend(attr)
+                    finalattrlist.append(attr)
                     removeCurrentAttr = True
                     attrlist1 = list(filter(lambda attr: attr[0]['name'] != attr_array2['name']\
                                             or attr[0]['slug'] == attr_array2['slug']\
