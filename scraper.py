@@ -885,7 +885,10 @@ while jsonprods:
                                             term = doesprodattrexist(jsonprodattr['product_cat'], cat, 'product_cat')
                                             existing_categories[count] = ((term, False))
                                             count+=1
+                                        print('PRODCAT BEFORE: ' + json.dumps(product_categories))
+                                        print('EXISCAT BEFORE: ' + json.dumps(existing_categories))
                                         product_categories = add_together_attrs(product_categories, existing_categories, 'product_cat')
+                                        print('PRODCAT AFTER: ' + json.dumps(product_categories))
                                         #product_categories = product_categories + existing_categories   
                                     #SAVE CAT. IDS AND PRODUCT HERE IN REMOTE SITE
                                 # --> Apply sizetype attributes where needed! <-- #
@@ -899,7 +902,7 @@ while jsonprods:
                                         product_category_names = []
                                         matching_cats = []
                                         for cat in product_categories:
-                                            print(json.dumps(cat))
+                                            print('CAT BEFIRE SIZETYPEMISC: ' + json.dumps(cat))
                                             category_to_cast_id = cat[0]['term_id']
                                             term = doesprodattrexist(jsonprodattr['product_cat'], category_to_cast_id, 'product_cat')
                                             if term:
