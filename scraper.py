@@ -1090,10 +1090,10 @@ while jsonprods:
                                         #add_together_attrs(product_sex, existing_sex)
                                         newsexattrs=(ps for ps in product_sex if ps[0]['term_id'] == -1)
                                         oldsexattrs=(ps[0]['term_id'] for ps in product_sex if ps[0]['term_id'] > -1)
-                                        print('newsexattrs: ' + json.dumps(newsexattrs))
-                                        print('oldsexattrs: ' + json.dumps(oldsexattrs))
+                                        print('newsexattrs: ' + json.dumps(list(newsexattrs)))
+                                        print('oldsexattrs: ' + json.dumps(list(oldsexattrs)))
                                         filtsexattrs = list(oldsexattrs) + existing_sex
-                                        print('filtsexattrs: ' + json.dumps(filtsexattrs))
+                                        print('filtsexattrs: ' + json.dumps(list(filtsexattrs)))
                                         newsexattrs = list(newsexattrs)
                                         for flt in filtsexattrs:
                                             #flt = doesprodattrexist(jsonprodattr['pa_sex'], flt, 'pa_sex')
