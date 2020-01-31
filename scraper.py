@@ -44,6 +44,37 @@ def array_merge(array1, array2):
         return array1.union(array2)
     return False
 
+# *** --- Custom substitute for adding together attributes variables --- *** #
+def add_together_attrs(attrlist1, attrlist2):
+    finalattrlist = []
+    end_of_lists = False
+    while end_of_lists is False:
+        for attr in attrlist1.copy():
+            attr2_copy = []
+            removeCurrentAttr = False
+            attr_array = attr[0]
+            for attr2 in attrlist2.copy():
+                attr_array2 = attr2[0]
+                if attr_array['name'] == attr_array2['name']\
+                or attr_array['slug'] == attr_array2['slug']\
+                or attr_array['term_id'] == attr_array2['term_id']:
+                    attr2_copy = attr2
+                    finalattrlist.add(attr)
+                    removeCurrentAttr = True
+                    attrlist1 = list(filter(lambda attr: attr[0]['name'] != attr_array2['name']\
+                                            or attr[0]['slug'] == attr_array2['slug']\
+                                            or attr[0]['term_id'] == attr_array2['term_id'], attrlist1))
+                    break
+                    #attrlist.remove(attr)
+                    #attrlist2.remove(attr2)
+            if removeCurrentAttr is True:
+                attrlist2 = list(filter(lambda attr2: attr2_copy[0]['name'] != attr_array['name']\
+                                            or attr2_copy[0]['slug'] == attr_array['slug']\
+                                            or attr2_copy[0]['term_id'] == attr_array['term_id'], attrlist2))
+                break
+            end_of_lists = True
+    return finalattrlist
+
 # *** --- For checking if a certain product attribute exists --- *** #
 def doesprodattrexist(prodattrlist, term, taxonomy):
     for prodattr in prodattrlist:
@@ -1054,7 +1085,8 @@ while jsonprods:
                                             sex = doesprodattrexist(jsonprodattr['pa_sex'], sex, 'pa_sex')
                                             existing_sex[count] = (sex, False)
                                             count+=1
-                                        product_sex = product_sex + existing_sex
+                                        #product_sex = product_sex + existing_sex
+                                        add_together_attrs(product_sex, existing_sex)
                                     attributes.append({'name':'Sex', 'options':product_sex, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                                 if product_sizes:
