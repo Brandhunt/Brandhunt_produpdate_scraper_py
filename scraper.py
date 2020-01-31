@@ -978,10 +978,11 @@ while jsonprods:
                                     if brand_values:
                                         existing_brands = re.split(',\s*', brand_values)
                                         count = 0
-                                        for brand in existing_brands:
+                                        for brand in existing_brands.copy():
                                             if skip_domain_name is True:
                                                 if domain_name != '':
                                                     if brand.upper().find(domain_name.upper()) != -1:
+                                                        del existing_brands[count]
                                                         continue
                                             brand = doesprodattrexist(jsonprodattr['pa_brand'], brand, 'pa_brand')
                                             existing_brands[count] = (brand, False)
