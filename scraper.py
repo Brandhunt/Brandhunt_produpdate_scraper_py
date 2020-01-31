@@ -10,7 +10,7 @@
 import os
 os.environ['SCRAPERWIKI_DATABASE_NAME'] = 'sqlite:///data.sqlite'
 
-#import cfscrape
+import cfscrape
 import scraperwiki
 import socks
 from lxml import etree
