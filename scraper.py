@@ -56,10 +56,10 @@ def add_together_attrs(attrlist1, attrlist2, prodattr):
     newattrs=list((a for a in attrlist1 if a[0]['term_id'] == -1))
     oldattrs=list((a[0]['term_id'] for a in attrlist1 if a[0]['term_id'] > -1))
     attrlist2=list((a[0]['term_id'] for a in attrlist2))
-    #print('newattrs: ' + json.dumps(list(newattrs)))
-    #print('oldattrs: ' + json.dumps(list(oldattrs)))
+    print('newattrs: ' + json.dumps(list(newattrs)))
+    print('oldattrs: ' + json.dumps(list(oldattrs)))
     filtattrs = oldattrs + attrlist2
-    #print('filtattrs: ' + json.dumps(list(filtattrs)))
+    print('filtattrs: ' + json.dumps(list(filtattrs)))
     for flt in filtattrs:
         flt = doesprodattrexist(jsonprodattr[prodattr], flt, prodattr)
         if flt != 0:
@@ -1079,9 +1079,9 @@ while jsonprods:
                                             #existing_sex[count] = sex['term_id']
                                             count+=1
                                         #product_sex = product_sex + existing_sex
-                                        print('FINAL SEX BEFORE: ' + json.dumps(product_sex))
+                                        #print('FINAL SEX BEFORE: ' + json.dumps(product_sex))
                                         product_sex = add_together_attrs(product_sex, existing_sex, 'pa_sex')
-                                        print('FINAL SEX AFTER: ' + json.dumps(product_sex))
+                                        #print('FINAL SEX AFTER: ' + json.dumps(product_sex))
                                     attributes.append({'name':'Sex', 'options':product_sex, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                                 if product_sizes:
