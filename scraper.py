@@ -226,7 +226,7 @@ while jsonprods:
                                 #    'DNT':'1',\
                                 #    'User-Agent':'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36',\
                                 #    'Referer' : product['url']}
-                                headers = {'Accept-Language':'sv-SE,sv;q=0.8,en-US;q=0.5,en;q=0.3'\
+                                headers = {'Accept-Language':'sv-SE,sv;q=0.8,en-US;q=0.5,en;q=0.3',\
                                     'User-Agent':'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36',\
                                     'Referer' : product['url']}
                                 session = requests.session()
