@@ -13,6 +13,7 @@ os.environ['SCRAPERWIKI_DATABASE_NAME'] = 'sqlite:///data.sqlite'
 import cfscrape
 import scraperwiki
 import socks
+from socks import GeneralProxyError
 from lxml import etree
 import lxml.html
 import requests
@@ -235,6 +236,9 @@ while jsonprods:
                             #print("HTML:")
                             #print(html)
                         #except HTTPError, err:
+                        except GeneralProxyError as err:
+                            print(json.dumps(err))
+                            continue
                         except HTTPError as err:
                             if err.code == 302:
                                 try:
