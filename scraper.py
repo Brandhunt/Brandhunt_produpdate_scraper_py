@@ -885,7 +885,8 @@ while jsonprods:
                                             term = doesprodattrexist(jsonprodattr['product_cat'], cat, 'product_cat')
                                             existing_categories[count] = ((term, False))
                                             count+=1
-                                        product_categories = product_categories + existing_categories   
+                                        product_categories = add_together_attrs(product_categories, existing_categories, 'product_cat')
+                                        #product_categories = product_categories + existing_categories   
                                     #SAVE CAT. IDS AND PRODUCT HERE IN REMOTE SITE
                                 # --> Apply sizetype attributes where needed! <-- #
                                 product_sizetypemiscname = sizetypemisc
@@ -1043,7 +1044,8 @@ while jsonprods:
                                         if skip_domain_name is True and len(product_brand) > 0 and len(existing_brands) > 0:
                                             product_brand = existing_brands
                                         else:
-                                            product_brand = product_brand + existing_brands
+                                            #product_brand = product_brand + existing_brands
+                                            product_brand = add_together_attrs(product_brand, existing_brands, 'pa_brand')
                                         #print('FINAL BRANDS: ' + json.dumps(product_brand))
                                     attributes.append({'name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
@@ -1056,7 +1058,8 @@ while jsonprods:
                                             color = doesprodattrexist(jsonprodattr['pa_color'], color, 'pa_color')
                                             existing_colors[count] = (color, False)
                                             count+=1
-                                        product_colors = product_colors + existing_colors
+                                        #product_colors = product_colors + existing_colors
+                                        product_colors = add_together_attrs(product_colors, existing_colors, 'pa_color')
                                     attributes.append({'name':'Color', 'options':product_colors, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                                 if product_sex:
@@ -1082,7 +1085,8 @@ while jsonprods:
                                             size = doesprodattrexist(jsonprodattr['pa_size'], size, 'pa_size')
                                             existing_sizes[count] = (size, False)
                                             count+=1
-                                        product_sizes = product_sizes + existing_sizes
+                                        #product_sizes = product_sizes + existing_sizes
+                                        product_sizes = add_together_attrs(product_sizes, existing_sizes, 'pa_size')
                                     attributes.append({'name':'Size', 'options':product_sizes, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                                 if product_sizetypes:
@@ -1094,7 +1098,8 @@ while jsonprods:
                                             sizetype = doesprodattrexist(jsonprodattr['pa_sizetype'], sizetype, 'pa_sizetype')
                                             existing_sizetypes[count] = (sizetype, False)
                                             count+=1
-                                        product_sizetypes = product_sizetypes + existing_sizetypes
+                                        #product_sizetypes = product_sizetypes + existing_sizetypes
+                                        product_sizetypes = add_together_attrs(product_sizetypes, existing_sizetypes, 'pa_sizetype')
                                     attributes.append({'name':'Sizetype', 'options':product_sizetypes, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                                 if product_sizetypemiscs:
@@ -1106,7 +1111,8 @@ while jsonprods:
                                             sizetypemisc = doesprodattrexist(jsonprodattr['pa_sizetypemisc'], sizetypemisc, 'pa_sizetypemisc')
                                             existing_sizetypemiscs[count] = (sizetypemisc, False)
                                             count+=1
-                                        product_sizetypemiscs = product_sizetypemiscs + existing_sizetypemiscs
+                                        #product_sizetypemiscs = product_sizetypemiscs + existing_sizetypemiscs
+                                        product_sizetypemiscs = add_together_attrs(product_sizetypemiscs, existing_sizetypemiscs, 'pa_sizetypemisc')
                                     attributes.append({'name':'Sizetypemisc', 'options':product_sizetypemiscs, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                                 attributes_to_store = attributes
