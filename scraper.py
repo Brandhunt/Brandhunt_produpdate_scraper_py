@@ -523,7 +523,7 @@ while jsonprods:
                                                 term = {'term_id':-1, 'name':brand_termus, 'slug':clean_brand, 'taxonomy':'pa_brand'}
                                                 brand_array.append((term, True))
                                             product_brand = brand_array
-                                            print('DOMAIN NAME BRAND:' + json.dumps(product_brand))
+                                            #print('DOMAIN NAME BRAND:' + json.dumps(product_brand))
                                             productmisc_array[i] = '.somethingelse'
                                     # --- Should the product apply a specific category automatically? --- #
                                     if productmisc_array[(i-1)] == 'add_category':
@@ -616,7 +616,7 @@ while jsonprods:
                                                     term = {'term_id':-1, 'name':brand_termus, 'slug':clean_brand, 'taxonomy':'pa_brand'}
                                                     brand_array.append((term, True))
                                                 product_brand = brand_array
-                                                print('PA_BRAND_PRODMISC: ' + json.dumps(product_brand))
+                                                #print('PA_BRAND_PRODMISC: ' + json.dumps(product_brand))
                                         # --- Get size attributes from current scrape --- #
                                         if productmisc_array[(i-1)] == 'pa_size':
                                             if len(productmisc_array[i]) > 0:
@@ -766,7 +766,7 @@ while jsonprods:
                                                     product_brand = brandies_result
                                                 else:
                                                     product_brand = array_merge(product_brand, brandies_result)
-                                                print('PA_BRAND_PRODMISC: ' + json.dumps(product_brand))
+                                                #print('PA_BRAND_PRODMISC: ' + json.dumps(product_brand))
                                         # --- Get categories from current scrape --- #
                                         if productmisc_array[(i-1)] == 'pa_category_html':
                                             caties = jsonprodattr['product_cat']
@@ -991,7 +991,7 @@ while jsonprods:
                                             product_brand = existing_brands
                                         else:
                                             product_brand = product_brand + existing_brands
-                                        print('FINAL BRANDS: ' + json.dumps(product_brand))
+                                        #print('FINAL BRANDS: ' + json.dumps(product_brand))
                                     attributes.append({'name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                                 if product_colors:
