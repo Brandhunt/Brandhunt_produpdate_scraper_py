@@ -221,7 +221,7 @@ while jsonprods:
                                 html = scraperwiki.scrape(product['url'],\
                                        user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
                             else:
-                                '''headers = {
+                                headers = {
                                     'User-Agent':'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36',
                                     'Referer' : product['url']
                                 }
@@ -232,13 +232,13 @@ while jsonprods:
                                 if proxies:
                                     html = scraper.get(product['url'], headers=headers, proxies=proxies).content
                                 else:
-                                    html = scraper.get(product['url'], headers=headers).content'''
-                                s = socks.socksocket()
+                                    html = scraper.get(product['url'], headers=headers).content
+                                '''s = socks.socksocket()
                                 proxy_https = re.split(':', proxy_https)
                                 s.set_proxy(socks.SOCKS4, proxy_https[0], proxy_https[1])
                                 s.connect((product['url'], 80))
                                 s.sendall("GET / HTTP/1.1 ...")
-                                print(s.recv(4096))
+                                print(s.recv(4096))'''
                             #print("HTML:")
                             #print(html)
                         #except HTTPError, err:
