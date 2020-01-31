@@ -1083,10 +1083,17 @@ while jsonprods:
                                         count = 0
                                         for sex in existing_sex:
                                             sex = doesprodattrexist(jsonprodattr['pa_sex'], sex, 'pa_sex')
-                                            existing_sex[count] = (sex, False)
+                                            #existing_sex[count] = (sex, False)
+                                            existing_sex[count] = sex['term_id']
                                             count+=1
                                         #product_sex = product_sex + existing_sex
-                                        add_together_attrs(product_sex, existing_sex)
+                                        #add_together_attrs(product_sex, existing_sex)
+                                        newsexattrs=(ps for ps in product_sex if ps[0]['term_id'] == -1)
+                                        oldsexattrs=(ps[0]['term_id'] for ps in product_sex if ps[0]['term_id'] > -1)
+                                        filtsexattrs = oldsexattrs + existing_sex
+                                        for flt in filtsexattrs:
+                                            newsexattrs.append(doesprodattrexist(jsonprodattr['pa_sex'], flt, 'pa_sex'))
+                                        product_sex = newsexattrs
                                     attributes.append({'name':'Sex', 'options':product_sex, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                                 if product_sizes:
