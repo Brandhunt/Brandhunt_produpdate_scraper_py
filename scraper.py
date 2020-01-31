@@ -236,7 +236,7 @@ while jsonprods:
                                 s = socks.socksocket()
                                 proxy_https = re.split(':', proxy_https)
                                 s.set_proxy(socks.SOCKS4, proxy_https[0], proxy_https[1])
-                                s.connect(product['url'])
+                                s.connect(product['url'], 80)
                                 s.sendall("GET / HTTP/1.1 ...")
                                 print(s.recv(4096))
                             #print("HTML:")
