@@ -1091,7 +1091,9 @@ while jsonprods:
                                             existing_sizes[count] = (size, False)
                                             count+=1
                                         #product_sizes = product_sizes + existing_sizes
+                                        print('FINAL SIZES BEFORE: ' + json.dumps(product_sizes))
                                         product_sizes = add_together_attrs(product_sizes, existing_sizes, 'pa_size')
+                                        print('FINAL SIZES AFTER: ' + json.dumps(product_sizes))
                                     attributes.append({'name':'Size', 'options':product_sizes, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                                 if product_sizetypes:
