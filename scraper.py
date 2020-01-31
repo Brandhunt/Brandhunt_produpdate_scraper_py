@@ -643,7 +643,7 @@ while jsonprods:
                                         # --- Get brand attribute(s) from current scrape --- #
                                         if productmisc_array[(i-1)] == 'pa_brand':
                                             brand_array = []
-                                            if len(productmisc_array[i]) > 0:
+                                            if len(productmisc_array[i]) > 0 && productmisc_array[i][0] is not None:
                                                 brand_termus = productmisc_array[i][0].text
                                                 clean_brand = slugify(brand_termus.strip())
                                                 term = doesprodattrexist(jsonprodattr['pa_brand'], brand_termus, 'pa_brand')
