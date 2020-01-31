@@ -1070,7 +1070,7 @@ while jsonprods:
                                             existing_sex[count] = sex['term_id']
                                             count+=1
                                         #product_sex = product_sex + existing_sex
-                                        product_sex = add_together_attrs(product_sex, existing_sex)
+                                        product_sex = add_together_attrs(product_sex, existing_sex, 'pa_sex')
                                     attributes.append({'name':'Sex', 'options':product_sex, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                                 if product_sizes:
