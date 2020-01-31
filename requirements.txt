@@ -12,6 +12,7 @@ mysql-connector-python==8.0.11
 scraperwiki==0.5.1
 #splinter~=0.10.0
 python-slugify>=4.0.0
+pysocks==1.7.1 
 ###selenium==3.11.0
 
 #alembic==0.9.9
