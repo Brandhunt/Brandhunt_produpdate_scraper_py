@@ -969,11 +969,13 @@ while jsonprods:
                                 attributes = []
                                 attribute_pos = 1 
                                 if product_brand:
-                                    skip_domain_name = False
+                                    #skip_domain_name = False
                                     if website['productmisc']:
                                         output = re.search(r'(skip_domainbrand_if_found)', website['productmisc'])
                                         if output is not None and len(output.group(0)) > 0:
                                             skip_domain_name = True
+                                            if domain_name != '':
+                                                product_brand.pop(0)
                                     brand_values = product['attributes']['brand']
                                     if brand_values:
                                         existing_brands = re.split(',\s*', brand_values)
@@ -983,7 +985,7 @@ while jsonprods:
                                                 if domain_name != '':
                                                     if brand.upper().find(domain_name.upper()) != -1:
                                                         continue
-                                            brand = term = doesprodattrexist(jsonprodattr['pa_brand'], brand, 'pa_brand')
+                                            brand = doesprodattrexist(jsonprodattr['pa_brand'], brand, 'pa_brand')
                                             existing_brands[count] = (brand, False)
                                             count+=1
                                         product_brand = product_brand + existing_brands
@@ -996,6 +998,7 @@ while jsonprods:
                                         existing_colors = re.split(',\s*', color_values)
                                         count = 0
                                         for color in existing_colors:
+                                            color = doesprodattrexist(jsonprodattr['pa_color'], color, 'pa_color')
                                             existing_colors[count] = (color, False)
                                             count+=1
                                         product_colors = product_colors + existing_colors
@@ -1007,6 +1010,7 @@ while jsonprods:
                                         existing_sex = re.split(',\s*', sex_values)
                                         count = 0
                                         for sex in existing_sex:
+                                            sex = doesprodattrexist(jsonprodattr['pa_sex'], sex, 'pa_sex')
                                             existing_sex[count] = (sex, False)
                                             count+=1
                                         product_sex = product_sex + existing_sex
@@ -1018,6 +1022,7 @@ while jsonprods:
                                         existing_sizes = re.split(',\s*', size_values)
                                         count = 0
                                         for size in existing_sizes:
+                                            size = doesprodattrexist(jsonprodattr['pa_size'], size, 'pa_size')
                                             existing_sizes[count] = (size, False)
                                             count+=1
                                         product_sizes = product_sizes + existing_sizes
@@ -1029,6 +1034,7 @@ while jsonprods:
                                         existing_sizetypes = re.split(',\s*', sizetype_values)
                                         count = 0
                                         for sizetype in existing_sizetypes:
+                                            sizetype = doesprodattrexist(jsonprodattr['pa_sizetype'], sizetype, 'pa_sizetype')
                                             existing_sizetypes[count] = (sizetype, False)
                                             count+=1
                                         product_sizetypes = product_sizetypes + existing_sizetypes
@@ -1040,6 +1046,7 @@ while jsonprods:
                                         existing_sizetypemiscs = re.split(',\s*', sizetypemisc_values)
                                         count = 0
                                         for sizetypemisc in existing_sizetypemiscs:
+                                            sizetypemisc = doesprodattrexist(jsonprodattr['pa_sizetypemisc'], sizetypemisc, 'pa_sizetypemisc')
                                             existing_sizetypemiscs[count] = (sizetypemisc, False)
                                             count+=1
                                         product_sizetypemiscs = product_sizetypemiscs + existing_sizetypemiscs
