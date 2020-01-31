@@ -340,7 +340,7 @@ while jsonprods:
                                 else:
                                     price = re.sub(r'\\' + website['pricedelimitertoignore'].strip() + '', '', price)    
                             if website['currencysymbol']:
-                                print('PRICEBEFORECONVERSION:' + price)
+                                #print('PRICEBEFORECONVERSION:' + price)
                                 #print('PRICE ELEMENTS:')
                                 #for p in price_elements: print p
                                 price = converttocorrectprice(price, website['currencysymbol'])
