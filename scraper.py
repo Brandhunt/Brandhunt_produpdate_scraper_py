@@ -903,7 +903,7 @@ while jsonprods:
                                         product_category_names = []
                                         matching_cats = []
                                         for cat in product_categories:
-                                            print('CAT BEFIRE SIZETYPEMISC: ' + json.dumps(cat))
+                                            #print('CAT BEFIRE SIZETYPEMISC: ' + json.dumps(cat))
                                             category_to_cast_id = cat[0]['term_id']
                                             term = doesprodattrexist(jsonprodattr['product_cat'], category_to_cast_id, 'product_cat')
                                             if term:
@@ -1078,7 +1078,9 @@ while jsonprods:
                                             existing_sex[count] = sex['term_id']
                                             count+=1
                                         #product_sex = product_sex + existing_sex
+                                        print('FINAL SEX BEFORE: ' + json.dumps(product_sex))
                                         product_sex = add_together_attrs(product_sex, existing_sex, 'pa_sex')
+                                        print('FINAL SEX AFTER: ' + json.dumps(product_sex))
                                     attributes.append({'name':'Sex', 'options':product_sex, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                                 if product_sizes:
