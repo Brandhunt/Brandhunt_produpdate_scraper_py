@@ -60,8 +60,9 @@ def add_together_attrs(attrlist1, attrlist2, prodattr):
     filtattrs = oldattrs + attrlist2
     #print('filtattrs: ' + json.dumps(list(filtattrs)))
     for flt in filtattrs:
-        #flt = doesprodattrexist(jsonprodattr['pa_sex'], flt, 'pa_sex')
-        newattrs.append((doesprodattrexist(jsonprodattr[prodattr], flt, prodattr), False))
+        flt = doesprodattrexist(jsonprodattr['pa_sex'], flt, 'pa_sex')
+        if flt != 0:
+            newattrs.append((flt, False))
     #print('finalattr: ' + json.dumps(list(finalattr)))
     return newattrs
     
@@ -885,10 +886,10 @@ while jsonprods:
                                             term = doesprodattrexist(jsonprodattr['product_cat'], cat, 'product_cat')
                                             existing_categories[count] = ((term, False))
                                             count+=1
-                                        print('PRODCAT BEFORE: ' + json.dumps(product_categories))
-                                        print('EXISCAT BEFORE: ' + json.dumps(existing_categories))
+                                        #print('PRODCAT BEFORE: ' + json.dumps(product_categories))
+                                        #print('EXISCAT BEFORE: ' + json.dumps(existing_categories))
                                         product_categories = add_together_attrs(product_categories, existing_categories, 'product_cat')
-                                        print('PRODCAT AFTER: ' + json.dumps(product_categories))
+                                        #print('PRODCAT AFTER: ' + json.dumps(product_categories))
                                         #product_categories = product_categories + existing_categories   
                                     #SAVE CAT. IDS AND PRODUCT HERE IN REMOTE SITE
                                 # --> Apply sizetype attributes where needed! <-- #
