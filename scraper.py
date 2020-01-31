@@ -649,7 +649,7 @@ while jsonprods:
                                                         size_termus = re.sub(r'\s+-\s+.*Stock.*', '', size_termus, flags=re.IGNORECASE)
                                                     elif output4 is not None:
                                                         size_termus = re.sub(r'.*Size\s+', '', size_termus, flags=re.IGNORECASE)
-                                                    size_termus = size_termus.replace(' ', '')
+                                                    size_termus = size_termus.replace(' ', '').replace('\n', '')
                                                     clean_size = slugify(size_termus.strip())
                                                     term = doesprodattrexist(jsonprodattr['pa_size'], size_termus, 'pa_size')
                                                     if term:
