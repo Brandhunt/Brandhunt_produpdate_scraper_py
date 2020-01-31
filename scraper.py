@@ -55,6 +55,7 @@ def doesprodattrexist(prodattrlist, term, taxonomy):
 def add_together_attrs(attrlist1, attrlist2, prodattr):
     newattrs=list((a for a in attrlist1 if a[0]['term_id'] == -1))
     oldattrs=list((a[0]['term_id'] for a in attrlist1 if a[0]['term_id'] > -1))
+    attrlist2=list((a[0]['term_id'] for a in attrlist2))
     #print('newattrs: ' + json.dumps(list(newattrs)))
     #print('oldattrs: ' + json.dumps(list(oldattrs)))
     filtattrs = oldattrs + attrlist2
@@ -1074,8 +1075,8 @@ while jsonprods:
                                         count = 0
                                         for sex in existing_sex:
                                             sex = doesprodattrexist(jsonprodattr['pa_sex'], sex, 'pa_sex')
-                                            #existing_sex[count] = (sex, False)
-                                            existing_sex[count] = sex['term_id']
+                                            existing_sex[count] = (sex, False)
+                                            #existing_sex[count] = sex['term_id']
                                             count+=1
                                         #product_sex = product_sex + existing_sex
                                         print('FINAL SEX BEFORE: ' + json.dumps(product_sex))
