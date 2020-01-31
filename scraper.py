@@ -643,18 +643,19 @@ while jsonprods:
                                         # --- Get brand attribute(s) from current scrape --- #
                                         if productmisc_array[(i-1)] == 'pa_brand':
                                             brand_array = []
-                                            if len(productmisc_array[i]) > 0 && productmisc_array[i][0] is not None:
+                                            if len(productmisc_array[i]) > 0 and productmisc_array[i][0] is not None:
                                                 brand_termus = productmisc_array[i][0].text
-                                                clean_brand = slugify(brand_termus.strip())
-                                                term = doesprodattrexist(jsonprodattr['pa_brand'], brand_termus, 'pa_brand')
-                                                # TUPPLE STRUCTURE: (Term(ID/NAME/SLUG), newtermTrue_existingtermFalse)
-                                                if term:
-                                                    brand_array.append((term, False))
-                                                else:
-                                                    term = {'term_id':-1, 'name':brand_termus, 'slug':clean_brand, 'taxonomy':'pa_brand'}
-                                                    brand_array.append((term, True))
-                                                product_brand = brand_array
-                                                #print('PA_BRAND_PRODMISC: ' + json.dumps(product_brand))
+                                                if brand_termus is not None:
+                                                    clean_brand = slugify(brand_termus.strip())
+                                                    term = doesprodattrexist(jsonprodattr['pa_brand'], brand_termus, 'pa_brand')
+                                                    # TUPPLE STRUCTURE: (Term(ID/NAME/SLUG), newtermTrue_existingtermFalse)
+                                                    if term:
+                                                        brand_array.append((term, False))
+                                                    else:
+                                                        term = {'term_id':-1, 'name':brand_termus, 'slug':clean_brand, 'taxonomy':'pa_brand'}
+                                                        brand_array.append((term, True))
+                                                    product_brand = brand_array
+                                                    #print('PA_BRAND_PRODMISC: ' + json.dumps(product_brand))
                                         # --- Get size attributes from current scrape --- #
                                         if productmisc_array[(i-1)] == 'pa_size':
                                             if len(productmisc_array[i]) > 0:
