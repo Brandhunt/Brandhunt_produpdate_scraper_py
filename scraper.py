@@ -458,6 +458,8 @@ while jsonprods:
                         remove_sizetosizetype = ''
                         insert_sizetosizetypemisc = ''
                         remove_sizetosizetypemisc = ''
+                        # --> Define misc. storage variables
+                        domain_name = ''
                         # --> Get 'em!
                         if website['productmisc']:
                             try:
@@ -511,6 +513,7 @@ while jsonprods:
                                         brand_array = []
                                         if productmisc_array[i] != '':
                                             brand_termus = productmisc_array[i].strip()
+                                            domain_name = brand_termus
                                             clean_brand = slugify(brand_termus.strip())
                                             term = doesprodattrexist(jsonprodattr['pa_brand'], brand_termus, 'pa_brand')
                                              #TUPPLE STRUCTURE: (Term(ID/NAME/SLUG), newtermTrue_existingtermFalse)
@@ -966,11 +969,19 @@ while jsonprods:
                                 attributes = []
                                 attribute_pos = 1 
                                 if product_brand:
+                                    skip_domain_name = False
+                                    if website['productmisc']:
+                                        output = re.search(r'(prodtitle_replace_brand)', website['productmisc'])
+                                        if output is not None and len(output.group(0)) > 0:
+                                            skip_domain_name = True
                                     brand_values = product['attributes']['brand']
                                     if brand_values:
                                         existing_brands = re.split(',\s*', brand_values)
                                         count = 0
                                         for brand in existing_brands:
+                                            if domain_name != '':
+                                                if brand.upper().find(domain_name.upper()) != -1:
+                                                    continue
                                             existing_brands[count] = (brand, False)
                                             count+=1
                                         product_brand = product_brand + existing_brands
