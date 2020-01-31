@@ -971,7 +971,7 @@ while jsonprods:
                                 if product_brand:
                                     skip_domain_name = False
                                     if website['productmisc']:
-                                        output = re.search(r'(prodtitle_replace_brand)', website['productmisc'])
+                                        output = re.search(r'(skip_domainbrand_if_found)', website['productmisc'])
                                         if output is not None and len(output.group(0)) > 0:
                                             skip_domain_name = True
                                     brand_values = product['attributes']['brand']
@@ -979,9 +979,11 @@ while jsonprods:
                                         existing_brands = re.split(',\s*', brand_values)
                                         count = 0
                                         for brand in existing_brands:
-                                            if domain_name != '':
-                                                if brand.upper().find(domain_name.upper()) != -1:
-                                                    continue
+                                            if skip_domain_name is True:
+                                                if domain_name != '':
+                                                    if brand.upper().find(domain_name.upper()) != -1:
+                                                        continue
+                                            brand = term = doesprodattrexist(jsonprodattr['pa_brand'], brand, 'pa_brand')
                                             existing_brands[count] = (brand, False)
                                             count+=1
                                         product_brand = product_brand + existing_brands
