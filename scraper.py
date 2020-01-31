@@ -987,8 +987,9 @@ while jsonprods:
                                             existing_brands[count] = (brand, False)
                                             count+=1
                                         if skip_domain_name is True and len(product_brand) > 0 and len(existing_brands) > 0:
-                                            product_brand.pop(0)
-                                        product_brand = product_brand + existing_brands
+                                            product_brand = existing_brands
+                                        else:
+                                            product_brand = product_brand + existing_brands
                                         print('FINAL BRANDS: ' + json.dumps(product_brand))
                                     attributes.append({'name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
