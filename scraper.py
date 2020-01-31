@@ -245,10 +245,10 @@ while jsonprods:
                                 print(s.recv(4096))'''
                             #print("HTML:")
                             #print(html)
-                        #except HTTPError, err:
-                        except GeneralProxyError as err:
-                            print(json.dumps(err))
-                            continue
+                            #except HTTPError, err:
+                            #except GeneralProxyError as err:
+                            #print(json.dumps(err))
+                            #continue
                         except HTTPError as err:
                             if err.code == 302:
                                 try:
