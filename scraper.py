@@ -190,7 +190,8 @@ for i in range(2, len(morph_prox_array), 2):
 if proxy_http != '' or proxy_https != '':
     proxies = {'http': proxy_http,\
                'https': proxy_https}
-
+print(json.dumps(proxies))
+    
 # --> Decode and handle these URLs!
 
 #arraus = []
