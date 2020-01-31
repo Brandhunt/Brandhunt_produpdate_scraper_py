@@ -12,8 +12,8 @@ os.environ['SCRAPERWIKI_DATABASE_NAME'] = 'sqlite:///data.sqlite'
 
 import cfscrape
 import scraperwiki
-import socks
-from socks import GeneralProxyError
+#import socks
+#from socks import GeneralProxyError
 from lxml import etree
 import lxml.html
 import requests
@@ -177,21 +177,20 @@ jsoncatmaps = json.loads(r.content)
 
 # --> Get the proxy information and related modules!
 
-proxy_http = ''
-proxy_https = ''
-proxies = []
-morph_proxies = str(os.environ['MORPH_PROXY_LIST'])
-morph_prox_array = re.split('{|}', morph_proxies)
-for i in range(2, len(morph_prox_array), 2):
-    if morph_prox_array[(i-1)] == 'http':
-        proxy_http = morph_prox_array[i].strip()
-    elif morph_prox_array[(i-1)] == 'https':
-        proxy_https = morph_prox_array[i].strip()
-        
-if proxy_http != '' or proxy_https != '':
-    proxies = {'http': proxy_http,\
-               'https': proxy_https}
-print(json.dumps(proxies))
+#proxy_http = ''
+#proxy_https = ''
+#proxies = []
+#morph_proxies = str(os.environ['MORPH_PROXY_LIST'])
+#morph_prox_array = re.split('{|}', morph_proxies)
+#for i in range(2, len(morph_prox_array), 2):
+#    if morph_prox_array[(i-1)] == 'http':
+#        proxy_http = morph_prox_array[i].strip()
+#    elif morph_prox_array[(i-1)] == 'https':
+#        proxy_https = morph_prox_array[i].strip()        
+#if proxy_http != '' or proxy_https != '':
+#    proxies = {'http': proxy_http,\
+#               'https': proxy_https}
+#print(json.dumps(proxies))
     
 # --> Decode and handle these URLs!
 
