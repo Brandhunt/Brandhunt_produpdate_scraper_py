@@ -916,8 +916,11 @@ while jsonprods:
                                     existing_categories = product['category_ids']
                                     if existing_categories:
                                         count = 0
-                                        for cat in existing_categories:
+                                        for cat in existing_categories.copy():
                                             term = doesprodattrexist(jsonprodattr['product_cat'], cat, 'product_cat')
+                                            if term['slug'] == 'uncategorized' and len(product_categories) > 0:
+                                                del existing_categories[count]
+                                                continue
                                             existing_categories[count] = ((term, False))
                                             count+=1
                                         #print('PRODCAT BEFORE: ' + json.dumps(product_categories))
@@ -1312,6 +1315,14 @@ while jsonprods:
                                     if category_result:
                                         existing_categories = product['category_ids']
                                         if existing_categories:
+                                            count = 0
+                                            for cat in existing_categories.copy():
+                                                term = doesprodattrexist(jsonprodattr['product_cat'], cat, 'product_cat')
+                                                if term['slug'] == 'uncategorized' and len(category_result) > 0:
+                                                    del existing_categories[count]
+                                                    continue
+                                                existing_categories[count] = ((term, False))
+                                                count+=1 
                                             category_result = array_merge(category_result, existing_categories)
                                         if product_categories != '':
                                             product_categories = array_merge(product_categories, category_result)
