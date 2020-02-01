@@ -827,7 +827,7 @@ while jsonprods:
                                         if productmisc_array[(i-1)] == 'pa_category_html':
                                             caties = jsonprodattr['product_cat']
                                             caties_result = []
-                                            print(str(productmisc_array[i]))
+                                            print('CATHTML: ' + str(productmisc_array[i]))
                                             for catterm in caties:
                                                 term_name = catterm['name']
                                                 cat_html = str(productmisc_array[i])
@@ -836,9 +836,10 @@ while jsonprods:
                                                 #print(type(term_name))
                                                 if array_categorymaps:
                                                     if hasattr(array_categorymaps, term_name):
+                                                        print('HERE!')
                                                         infliction_array = jsoncatmaps[term_name]['catinflections'].split(',')
                                                         for infliction in infliction_array:
-                                                            print(infliction)
+                                                            print('INFLICTION' + infliction)
                                                             if cat_html.upper().find(r'\s'+infliction.upper()+'\s') != -1:
                                                                 term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                                 if term:
@@ -848,7 +849,7 @@ while jsonprods:
                                                                         parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
                                                                         if not parent in category_result:
                                                                             caties_result.append((parent, False))
-                                                print(term_name)
+                                                print('CATTERM: ' + term_name)
                                                 if cat_html.upper().find(r'\s'+term_name.upper()+'\s') != -1:
                                                     term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                     if term:
