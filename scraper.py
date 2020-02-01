@@ -957,9 +957,10 @@ while jsonprods:
                                             print('CAT BEFORE SIZETYPEMISC: ' + json.dumps(cat))
                                             category_to_cast_id = cat[0]['term_id']
                                             term = doesprodattrexist(jsonprodattr['product_cat'], category_to_cast_id, 'product_cat')
-                                            if term and not term['name'] in product_category_names:
-                                                print('ADDING ' + term['name'] + ' TO ARRAY!')
-                                                product_category_names.append(term['name'])
+                                            if term:
+                                                if term['name'] not in product_category_names:
+                                                    print('ADDING ' + term['name'] + ' TO ARRAY!')
+                                                    product_category_names.append(term['name'])
                                         for catstosizetype in catstosizetypes:
                                             regex = u'(\b.*' + catstosizetype.strip() + '\b)'
                                             matching_cats = array_merge(matching_cats, filter(lambda x: re.findall(regex, x, flags=re.IGNORECASE), product_category_names))
