@@ -859,7 +859,8 @@ while jsonprods:
                                                 if product_categories == '':
                                                     product_categories = caties_result
                                                 else:
-                                                    product_categories = array_merge(product_categories, caties_result)           
+                                                    product_categories = array_merge(product_categories, caties_result)
+                                            print('PA_CAT_HTML_CATS: '+json.dumps(product_categories))
                                         # --- Get color attributes from current scrape --- #
                                         if productmisc_array[(i-1)] == 'pa_color_html':
                                             colories = jsonprodattr['pa_color']
