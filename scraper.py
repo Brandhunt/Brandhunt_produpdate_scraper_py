@@ -830,8 +830,22 @@ while jsonprods:
                                             for catterm in caties:
                                                 term_name = catterm['name']
                                                 cat_html = str(productmisc_array[i])
+                                                array_categorymaps = jsoncatmaps
                                                 #print(type(cat_html))
                                                 #print(type(term_name))
+                                                if array_categorymaps:
+                                                    if hasattr(array_categorymaps, term_name):
+                                                        infliction_array = jsoncatmaps[term_name]['catinflections'].split(',')
+                                                        for infliction in infliction_array:
+                                                            if cat_html.upper().find(infliction.upper()) != -1:
+                                                                term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
+                                                                if term:
+                                                                    category_result.append((term, False))
+                                                                    cat_parents = term['ancestors']
+                                                                    for parent_id in cat_parents:
+                                                                        parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
+                                                                        if not parent in category_result:
+                                                                            caties_result.append((parent, False))
                                                 if cat_html.upper().find(term_name.upper()) != -1:
                                                     term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                     if term:
@@ -845,7 +859,7 @@ while jsonprods:
                                                 if product_categories == '':
                                                     product_categories = caties_result
                                                 else:
-                                                    product_categories = array_merge(product_categories, caties_result)
+                                                    product_categories = array_merge(product_categories, caties_result)           
                                         # --- Get color attributes from current scrape --- #
                                         if productmisc_array[(i-1)] == 'pa_color_html':
                                             colories = jsonprodattr['pa_color']
