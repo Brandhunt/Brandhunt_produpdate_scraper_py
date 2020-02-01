@@ -842,7 +842,8 @@ while jsonprods:
                                                         for infliction in infliction_array:
                                                             print('INFLICTION: ' + infliction)
                                                             #if cat_html.upper().find(r'\s'+infliction.upper()+r'\s') != -1:
-                                                            regex = r'\s'+infliction+r'\s'
+                                                            regex = '\s'+infliction+'\s'
+                                                            print('INF_REGEX: ' + regex)
                                                             if re.search(regex, cat_html, flags=re.IGNORECASE):
                                                                 print('FOUND INFLICTION!')
                                                                 term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
@@ -855,7 +856,8 @@ while jsonprods:
                                                                             caties_result.append((parent, False))
                                                 print('CATTERM: ' + term_name)
                                                 #if cat_html.upper().find(r'\s'+term_name.upper()+r'\s') != -1:
-                                                regex = r'\s'+term_name+r'\s'
+                                                regex = '\s'+term_name+'\s'
+                                                print('CATTERM_REGEX: ' + regex)
                                                 if re.search(regex, cat_html, flags=re.IGNORECASE):
                                                     print('FOUND CATTERM!')
                                                     term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
