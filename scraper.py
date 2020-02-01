@@ -1281,10 +1281,11 @@ while jsonprods:
                                     product_name = product['name']
                                     array_categorymaps = jsoncatmaps
                                     if array_categorymaps:
-                                        if hasattr(array_categorymaps, term_name):
+                                        if term_name in array_categorymaps:
                                             infliction_array = jsoncatmaps[term_name]['catinflections'].split(',')
                                             for infliction in infliction_array:
-                                                if product_name.upper().find(infliction.upper()) != -1:
+                                                regex = '\s'+infliction.strip()+'\s'
+                                                if re.search(regex, product_name, flags=re.IGNORECASE):
                                                     term = doesprodattrexist(jsonprodattr['product_cat'], term['term_id'], 'product_cat')
                                                     if term:
                                                         category_result.append((term, False))
@@ -1293,7 +1294,8 @@ while jsonprods:
                                                         parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
                                                         if not parent in category_result:
                                                             category_result.append((parent, False))
-                                    if product_name.upper().find(term_name.upper()) != -1:
+                                    regex = '\s'+term_name.strip()+'\s'
+                                    if re.search(regex, product_name, flags=re.IGNORECASE):
                                         term = doesprodattrexist(jsonprodattr['product_cat'], term['term_id'], 'product_cat')
                                         if term:
                                             category_result.append((term, False))
