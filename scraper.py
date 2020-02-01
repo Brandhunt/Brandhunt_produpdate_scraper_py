@@ -852,7 +852,7 @@ while jsonprods:
                                                                     cat_parents = term['ancestors']
                                                                     for parent_id in cat_parents:
                                                                         parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
-                                                                        if not parent in category_result:
+                                                                        if not parent in caties_result:
                                                                             caties_result.append((parent, False))
                                                 print('CATTERM: ' + term_name)
                                                 #if cat_html.upper().find(r'\s'+term_name.upper()+r'\s') != -1:
