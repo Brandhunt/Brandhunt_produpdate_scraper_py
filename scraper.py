@@ -837,7 +837,7 @@ while jsonprods:
                                                     if hasattr(array_categorymaps, term_name):
                                                         infliction_array = jsoncatmaps[term_name]['catinflections'].split(',')
                                                         for infliction in infliction_array:
-                                                            if cat_html.upper().find(infliction.upper()) != -1:
+                                                            if cat_html.upper().find(r'\s'+infliction.upper()+'\s') != -1:
                                                                 term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                                 if term:
                                                                     category_result.append((term, False))
@@ -848,7 +848,7 @@ while jsonprods:
                                                                             caties_result.append((parent, False))
                                                 print(cat_html)
                                                 print(term_name)
-                                                if cat_html.upper().find(term_name.upper()) != -1:
+                                                if cat_html.upper().find(r'\s'+term_name.upper()+'\s') != -1:
                                                     term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                     if term:
                                                         caties_result.append((term, False))
