@@ -962,7 +962,9 @@ while jsonprods:
                                                     #print('ADDING ' + term['name'] + ' TO ARRAY!')
                                                     product_category_names.append(term['name'])
                                         for catstosizetype in catstosizetypes:
-                                            regex = u'(\b.*' + catstosizetype.strip() + '\b)'
+                                            #regex = u'(\b.*' + catstosizetype.strip() + '\b)'
+                                            regex = '' + catstosizetype.strip() + ''
+                                            filter_match = []
                                             filter_match = filter(lambda x: re.findall(regex, x, flags=re.IGNORECASE), product_category_names)
                                             for match in filter_match: print('FILTER MATCH: ' + json.dumps(match))
                                             matching_cats = array_merge(matching_cats, filter_match)
