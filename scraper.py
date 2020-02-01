@@ -598,7 +598,7 @@ while jsonprods:
                                           else:
                                               term = {'term_id':-1, 'name':cat, 'slug':clean_cat, 'taxonomy':'product_cat'}
                                               cat_result.append((term, True))
-                                       catstoaddresult = cat_result
+                                       product_categories = cat_result
                                     # --- Should the product apply the male/female attribute automatically? --- #
                                     # --- !!! IMPORTANT --> IF THIS SHOULD OVERRIDE OTHER SEX ATTR. IMPORTS, !!! --- #
                                     # --- !!! THEN PUT THIS LAST IN ORDER IN PRODUCTMISC. TEXT FIELD BEFORE SCRAPING !!! --- #
@@ -747,7 +747,11 @@ while jsonprods:
                                                     else:
                                                         term = {'term_id':-1, 'name':cat_termus, 'slug':clean_cat, 'taxonomy':'product_cat'}
                                                         category_array.append((term, True))
-                                                product_categories = category_array
+                                                if category_array:
+                                                    if product_categories != '':
+                                                        product_categories = array_merge(product_categories, category_array)
+                                                    else:
+                                                        product_categories = category_array
                                         # --- Is the product no longer existing - Does the page for it not exist anymore? --- #
                                         if productmisc_array[(i-1)] == 'notfound':
                                             if len(productmisc_array[i]) > 0:
@@ -1274,6 +1278,7 @@ while jsonprods:
                                     attributes.append({'name':'Sizetypemisc', 'options':product_sizetypemiscs, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                                 attributes_to_store = attributes
+                                # --> Look after categories in the product title!
                                 category_terms = jsonprodattr['product_cat']
                                 category_result = []
                                 for term in category_terms:
@@ -1308,7 +1313,11 @@ while jsonprods:
                                         existing_categories = product['category_ids']
                                         if existing_categories:
                                             category_result = array_merge(category_result, existing_categories)
-                                    catstoaddresult = category_result
+                                        if product_categories != '':
+                                            product_categories = array_merge(product_categories, category_result)
+                                        else:
+                                            product_categories = category_result
+                                    catstoaddresult = product_categories
                             except:
                                 #print("Error when looking after prod. properties in title for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
                                 print(traceback.format_exc())
