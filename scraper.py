@@ -848,7 +848,7 @@ while jsonprods:
                                                                 print('FOUND INFLICTION!')
                                                                 term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                                 if term:
-                                                                    category_result.append((term, False))
+                                                                    caties_result.append((term, False))
                                                                     cat_parents = term['ancestors']
                                                                     for parent_id in cat_parents:
                                                                         parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
