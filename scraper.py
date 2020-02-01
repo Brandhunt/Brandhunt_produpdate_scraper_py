@@ -1318,6 +1318,7 @@ while jsonprods:
                                             count = 0
                                             for cat in existing_categories.copy():
                                                 term = doesprodattrexist(jsonprodattr['product_cat'], cat, 'product_cat')
+                                                print(json.dumps(term))
                                                 if term['slug'] == 'uncategorized' and len(category_result) > 0:
                                                     del existing_categories[count]
                                                     continue
