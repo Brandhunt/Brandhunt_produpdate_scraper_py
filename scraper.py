@@ -1314,6 +1314,7 @@ while jsonprods:
                                                 category_result.append((parent, False))
                                     if category_result:
                                         existing_categories = product['category_ids']
+                                        print(json.dumps(existing_categories))
                                         if existing_categories:
                                             count = 0
                                             for cat in existing_categories.copy():
