@@ -827,7 +827,7 @@ while jsonprods:
                                         if productmisc_array[(i-1)] == 'pa_category_html':
                                             caties = jsonprodattr['product_cat']
                                             caties_result = []
-                                            print('CATHTML: ' + str(productmisc_array[i]))
+                                            #print('CATHTML: ' + str(productmisc_array[i]))
                                             for catterm in caties:
                                                 term_name = catterm['name']
                                                 cat_html = str(productmisc_array[i])
@@ -840,12 +840,12 @@ while jsonprods:
                                                         #print('HERE!')
                                                         infliction_array = jsoncatmaps[term_name]['catinflections'].split(',')
                                                         for infliction in infliction_array:
-                                                            print('INFLICTION: ' + infliction)
+                                                            #print('INFLICTION: ' + infliction)
                                                             #if cat_html.upper().find(r'\s'+infliction.upper()+r'\s') != -1:
                                                             regex = '\s'+infliction.strip()+'\s'
                                                             #print('INF_REGEX: ' + regex)
                                                             if re.search(regex, cat_html, flags=re.IGNORECASE):
-                                                                print('FOUND INFLICTION!')
+                                                                #print('FOUND INFLICTION!')
                                                                 term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                                 if term:
                                                                     caties_result.append((term, False))
@@ -854,12 +854,12 @@ while jsonprods:
                                                                         parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
                                                                         if not parent in caties_result:
                                                                             caties_result.append((parent, False))
-                                                print('CATTERM: ' + term_name)
+                                                #print('CATTERM: ' + term_name)
                                                 #if cat_html.upper().find(r'\s'+term_name.upper()+r'\s') != -1:
                                                 regex = '\s'+term_name.strip()+'\s'
                                                 #print('CATTERM_REGEX: ' + regex)
                                                 if re.search(regex, cat_html, flags=re.IGNORECASE):
-                                                    print('FOUND CATTERM!')
+                                                    #print('FOUND CATTERM!')
                                                     term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                     if term:
                                                         caties_result.append((term, False))
@@ -873,7 +873,7 @@ while jsonprods:
                                                     product_categories = caties_result
                                                 else:
                                                     product_categories = array_merge(product_categories, caties_result)
-                                            print('PA_CAT_HTML_CATS: '+json.dumps(product_categories))
+                                            #print('PA_CAT_HTML_CATS: '+json.dumps(product_categories))
                                         # --- Get color attributes from current scrape --- #
                                         if productmisc_array[(i-1)] == 'pa_color_html':
                                             colories = jsonprodattr['pa_color']
