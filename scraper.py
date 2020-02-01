@@ -513,6 +513,7 @@ while jsonprods:
                         remove_sizetosizetype = ''
                         insert_sizetosizetypemisc = ''
                         remove_sizetosizetypemisc = ''
+                        skip_exist_attr = [0, 0, 0, 0, 0, 0, 0] # <==> [brand, color, sex, size, s-type, s-t-misc, categories]
                         # --> Define misc. storage variables
                         domain_name = ''
                         # --> Get 'em!
@@ -524,6 +525,9 @@ while jsonprods:
                                     # --- Are the sizes belonging to the current product of a a specific misc. size type? --- #
                                     if productmisc_array[(i-1)] == 'sizetypemisc':
                                         sizetypemisc = productmisc_array[i]
+                                    # --- Should we skip any already existing product attributes when scraping the product? --- #
+                                    if productmisc_array[(i-1)] == 'skip_exist_attr':
+                                        skip_exist_attr = [ int(skipval) for skipval in productmisc_array[i].strip().split(',') ]
                                     # --- Are there any pre-existing currencies to apply to the price(s)? --- #
                                     if productmisc_array[(i-1)] == 'pre_existing_currency':
                                         preexistingcurrency = productmisc_array[i]
@@ -920,7 +924,7 @@ while jsonprods:
                                 if product_categories:
                                     existing_categories = product['category_ids'].copy()
                                     exist_cats = []
-                                    if existing_categories:
+                                    if existing_categories and skip_exist_attr[6] != 1:
                                         #count = 0
                                         for cat in existing_categories.copy():
                                             term = doesprodattrexist(jsonprodattr['product_cat'], cat, 'product_cat')
@@ -1079,7 +1083,7 @@ while jsonprods:
                                         if output is not None and len(output.group(0)) > 0:
                                             skip_domain_name = True
                                     brand_values = product['attributes']['brand']
-                                    if brand_values:
+                                    if brand_values and skip_exist_attr[0] != 1:
                                         existing_brands = re.split(',\s*', brand_values)
                                         count = 0
                                         for brand in existing_brands.copy():
@@ -1101,7 +1105,7 @@ while jsonprods:
                                     attribute_pos+=1
                                 if product_colors:
                                     color_values = product['attributes']['color']
-                                    if color_values:
+                                    if color_values and and skip_exist_attr[1] != 1:
                                         existing_colors = re.split(',\s*', color_values)
                                         count = 0
                                         for color in existing_colors:
@@ -1114,7 +1118,7 @@ while jsonprods:
                                     attribute_pos+=1
                                 if product_sex:
                                     sex_values = product['attributes']['sex']
-                                    if sex_values:
+                                    if sex_values and skip_exist_attr[2] != 1:
                                         existing_sex = re.split(',\s*', sex_values)
                                         count = 0
                                         for sex in existing_sex:
@@ -1130,7 +1134,7 @@ while jsonprods:
                                     attribute_pos+=1
                                 if product_sizes:
                                     size_values = product['attributes']['size']
-                                    if size_values:
+                                    if size_values and skip_exist_attr[3] != 1:
                                         existing_sizes = re.split(',\s*', size_values)
                                         count = 0
                                         for size in existing_sizes:
@@ -1145,7 +1149,7 @@ while jsonprods:
                                     attribute_pos+=1
                                 if product_sizetypes:
                                     sizetype_values = product['attributes']['sizetype']
-                                    if sizetype_values:
+                                    if sizetype_values and skip_exist_attr[4] != 1:
                                         existing_sizetypes = re.split(',\s*', sizetype_values)
                                         count = 0
                                         for sizetype in existing_sizetypes:
@@ -1158,7 +1162,7 @@ while jsonprods:
                                     attribute_pos+=1
                                 if product_sizetypemiscs:
                                     sizetypemisc_values = product['attributes']['sizetypemisc']
-                                    if sizetypemisc_values:
+                                    if sizetypemisc_values and skip_exist_attr[5] != 1:
                                         existing_sizetypemiscs = re.split(',\s*', sizetypemisc_values)
                                         count = 0
                                         for sizetypemisc in existing_sizetypemiscs:
