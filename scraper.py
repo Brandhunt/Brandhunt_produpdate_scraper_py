@@ -835,7 +835,8 @@ while jsonprods:
                                                 #print(type(cat_html))
                                                 #print(type(term_name))
                                                 if array_categorymaps:
-                                                    if hasattr(array_categorymaps, term_name):
+                                                    #if hasattr(array_categorymaps, term_name):
+                                                    if term_name in array_categorymaps:
                                                         print('HERE!')
                                                         infliction_array = jsoncatmaps[term_name]['catinflections'].split(',')
                                                         for infliction in infliction_array:
