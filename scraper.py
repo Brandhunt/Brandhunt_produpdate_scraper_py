@@ -964,7 +964,7 @@ while jsonprods:
                                         for catstosizetype in catstosizetypes:
                                             regex = u'(\b.*' + catstosizetype.strip() + '\b)'
                                             filter_match = filter(lambda x: re.findall(regex, x, flags=re.IGNORECASE), product_category_names)
-                                            print('FILTER MATCH: ' + json.dumps(filter_match))
+                                            for match in filter_match: print('FILTER MATCH: ' + json.dumps(match))
                                             matching_cats = array_merge(matching_cats, filter_match)
                                         if matching_cats:
                                             print('MATCHING CATS HERE!')
