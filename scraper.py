@@ -648,6 +648,11 @@ while jsonprods:
                                                 sex_array = []
                                                 for sex_termus in productmisc_array[i]:
                                                     sex_termus = sex_termus.text
+                                                    check_sex = sex_termus.lower()
+                                                    if check_sex == 'men' or check_sex == 'man':
+                                                        sex_termus = 'male'
+                                                    elif check_sex == 'women' or check_sex == 'woman':
+                                                        sex_termus = 'female'
                                                     clean_sex = sex_termus.strip()
                                                     term = doesprodattrexist(jsonprodattr['pa_sex'], sex_termus, 'pa_sex')
                                                     #TUPPLE STRUCTURE: (Term(ID/NAME/SLUG), newtermTrue_existingtermFalse)
