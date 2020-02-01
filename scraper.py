@@ -846,6 +846,8 @@ while jsonprods:
                                                                         parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
                                                                         if not parent in category_result:
                                                                             caties_result.append((parent, False))
+                                                print(cat_html)
+                                                print(term_name)
                                                 if cat_html.upper().find(term_name.upper()) != -1:
                                                     term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                     if term:
