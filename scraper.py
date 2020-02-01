@@ -528,6 +528,7 @@ while jsonprods:
                                     # --- Should we skip any already existing product attributes when scraping the product? --- #
                                     if productmisc_array[(i-1)] == 'skip_exist_attr':
                                         skip_exist_attr = [ int(skipval) for skipval in productmisc_array[i].strip().split(',') ]
+                                        productmisc_array[i] = 'true'
                                     # --- Are there any pre-existing currencies to apply to the price(s)? --- #
                                     if productmisc_array[(i-1)] == 'pre_existing_currency':
                                         preexistingcurrency = productmisc_array[i]
