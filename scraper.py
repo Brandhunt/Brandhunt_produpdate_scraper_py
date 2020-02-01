@@ -977,9 +977,13 @@ while jsonprods:
                                                 count+=1
                                             filtered_terms = []
                                             for finalcatsizetype in finalcatsizetypes:
-                                                filtered_terms = array_merge(filtered_terms, filter(lambda x: re.findall('' + finalcatsizetype.strip() + '', x, flags=re.IGNORECASE), size_type_terms))
+                                                regex = '' + finalcatsizetype.strip() + ''
+                                                filter_match = []
+                                                filter_match = filter(lambda x: re.findall(regex, x, flags=re.IGNORECASE), size_type_terms)
+                                                filtered_terms = array_merge(filtered_terms, list(filter_match))
                                             for filt_term in filtered_terms:
                                                 term = doesprodattrexist(jsonprodattr['pa_sizetype'], filt_term, 'pa_sizetype')
+                                                print('SIZETYPE TO ADD: ' + json.dumps(term))
                                                 if term:
                                                     array_sizetypes.append((term, False))     
                                     product_sizetypes = array_sizetypes
