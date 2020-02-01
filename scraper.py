@@ -969,7 +969,7 @@ while jsonprods:
                                             #for match in filter_match: print('FILTER MATCH: ' + json.dumps(match))
                                             matching_cats = array_merge(matching_cats, list(filter_match))
                                         if matching_cats:
-                                            print('MATCHING CATS HERE!')
+                                            #print('MATCHING CATS HERE!')
                                             size_type_terms = jsonprodattr['pa_sizetype'].copy()
                                             count = 0
                                             for size_type_term in size_type_terms:
@@ -982,9 +982,9 @@ while jsonprods:
                                                 filter_match = filter(lambda x: re.findall(regex, x, flags=re.IGNORECASE), size_type_terms)
                                                 filtered_terms = array_merge(filtered_terms, list(filter_match))
                                             for filt_term in filtered_terms:
-                                                print('FILT TERM: ' + filt_term)
+                                                #print('FILT TERM: ' + filt_term)
                                                 term = doesprodattrexist(jsonprodattr['pa_sizetype'], filt_term, 'pa_sizetype')
-                                                print('SIZETYPE TO ADD: ' + json.dumps(term))
+                                                #print('SIZETYPE TO ADD: ' + json.dumps(term))
                                                 if term:
                                                     array_sizetypes.append((term, False))     
                                     product_sizetypes = array_sizetypes
