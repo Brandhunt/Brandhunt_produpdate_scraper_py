@@ -842,6 +842,7 @@ while jsonprods:
                                                         for infliction in infliction_array:
                                                             print('INFLICTION: ' + infliction)
                                                             if cat_html.upper().find(r'\s'+infliction.upper()+r'\s') != -1:
+                                                                print('FOUND INFLICTION!')
                                                                 term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                                 if term:
                                                                     category_result.append((term, False))
@@ -852,6 +853,7 @@ while jsonprods:
                                                                             caties_result.append((parent, False))
                                                 print('CATTERM: ' + term_name)
                                                 if cat_html.upper().find(r'\s'+term_name.upper()+r'\s') != -1:
+                                                    print('FOUND CATTERM!')
                                                     term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                     if term:
                                                         caties_result.append((term, False))
