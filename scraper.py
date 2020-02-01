@@ -1105,7 +1105,7 @@ while jsonprods:
                                     attribute_pos+=1
                                 if product_colors:
                                     color_values = product['attributes']['color']
-                                    if color_values and and skip_exist_attr[1] != 1:
+                                    if color_values and skip_exist_attr[1] != 1:
                                         existing_colors = re.split(',\s*', color_values)
                                         count = 0
                                         for color in existing_colors:
