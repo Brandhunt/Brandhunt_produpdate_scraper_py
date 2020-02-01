@@ -954,10 +954,11 @@ while jsonprods:
                                         product_category_names = []
                                         matching_cats = []
                                         for cat in product_categories:
-                                            print('CAT BEFIRE SIZETYPEMISC: ' + json.dumps(cat))
+                                            print('CAT BEFORE SIZETYPEMISC: ' + json.dumps(cat))
                                             category_to_cast_id = cat[0]['term_id']
                                             term = doesprodattrexist(jsonprodattr['product_cat'], category_to_cast_id, 'product_cat')
-                                            if term:
+                                            if term and not term['term_id'] in product_category_names.values()[0]['term_id']:
+                                                print('ADDING ' + term['name'] + ' TO ARRAY!)
                                                 product_category_names.append(term['name'])
                                         for catstosizetype in catstosizetypes:
                                             regex = u'(\b.*' + catstosizetype.strip() + '\b)'
