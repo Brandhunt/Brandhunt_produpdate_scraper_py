@@ -954,17 +954,20 @@ while jsonprods:
                                         product_category_names = []
                                         matching_cats = []
                                         for cat in product_categories:
-                                            print('CAT BEFORE SIZETYPEMISC: ' + json.dumps(cat))
+                                            #print('CAT BEFORE SIZETYPEMISC: ' + json.dumps(cat))
                                             category_to_cast_id = cat[0]['term_id']
                                             term = doesprodattrexist(jsonprodattr['product_cat'], category_to_cast_id, 'product_cat')
                                             if term:
                                                 if term['name'] not in product_category_names:
-                                                    print('ADDING ' + term['name'] + ' TO ARRAY!')
+                                                    #print('ADDING ' + term['name'] + ' TO ARRAY!')
                                                     product_category_names.append(term['name'])
                                         for catstosizetype in catstosizetypes:
                                             regex = u'(\b.*' + catstosizetype.strip() + '\b)'
-                                            matching_cats = array_merge(matching_cats, filter(lambda x: re.findall(regex, x, flags=re.IGNORECASE), product_category_names))
+                                            filter_match = filter(lambda x: re.findall(regex, x, flags=re.IGNORECASE), product_category_names)
+                                            print('FILTER MATCH: ' + json.dumps(filter_match))
+                                            matching_cats = array_merge(matching_cats, filter_match)
                                         if matching_cats:
+                                            print('MATCHING CATS HERE!')
                                             size_type_terms = jsonprodattr['pa_sizetype']
                                             count = 0
                                             for size_type_term in size_type_terms:
