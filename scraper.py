@@ -970,7 +970,7 @@ while jsonprods:
                                             matching_cats = array_merge(matching_cats, list(filter_match))
                                         if matching_cats:
                                             print('MATCHING CATS HERE!')
-                                            size_type_terms = jsonprodattr['pa_sizetype']
+                                            size_type_terms = jsonprodattr['pa_sizetype'].copy()
                                             count = 0
                                             for size_type_term in size_type_terms:
                                                 size_type_terms[count] = size_type_term['name']
