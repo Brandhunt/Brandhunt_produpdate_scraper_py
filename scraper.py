@@ -913,19 +913,22 @@ while jsonprods:
                                                 removed_size = product_sizes.pop(0)
                                 # --> Fix categories for the product! <-- #
                                 if product_categories:
-                                    existing_categories = product['category_ids']
+                                    existing_categories = product['category_ids'].copy()
+                                    exist_cats = []
                                     if existing_categories:
-                                        count = 0
+                                        #count = 0
                                         for cat in existing_categories.copy():
                                             term = doesprodattrexist(jsonprodattr['product_cat'], cat, 'product_cat')
                                             if term['slug'] == 'uncategorized' and len(product_categories) > 0:
-                                                del existing_categories[count]
+                                                #del existing_categories[count]
                                                 continue
-                                            existing_categories[count] = ((term, False))
-                                            count+=1
+                                            #existing_categories[count] = ((term, False))
+                                            exist_cats.append((term, False))
+                                            #count+=1
                                         #print('PRODCAT BEFORE: ' + json.dumps(product_categories))
                                         #print('EXISCAT BEFORE: ' + json.dumps(existing_categories))
-                                        product_categories = add_together_attrs(product_categories, existing_categories, 'product_cat')
+                                        #product_categories = add_together_attrs(product_categories, existing_categories, 'product_cat')
+                                        product_categories = add_together_attrs(product_categories, exist_cats, 'product_cat')
                                         #print('PRODCAT AFTER: ' + json.dumps(product_categories))
                                         #product_categories = product_categories + existing_categories   
                                     #SAVE CAT. IDS AND PRODUCT HERE IN REMOTE SITE
@@ -1313,20 +1316,22 @@ while jsonprods:
                                             if not parent in category_result:
                                                 category_result.append((parent, False))
                                     if category_result:
-                                        existing_categories = product['category_ids']
-                                        print(json.dumps(existing_categories))
+                                        existing_categories = product['category_ids'].copy()
+                                        exist_cats = []
+                                        #print(json.dumps(existing_categories))
                                         if existing_categories:
-                                            count = 0
+                                            #count = 0
                                             for cat in existing_categories.copy():
                                                 term = doesprodattrexist(jsonprodattr['product_cat'], cat, 'product_cat')
-                                                print(json.dumps(term))
-                                                print(cat)
+                                                #print(json.dumps(term))
+                                                #print(cat)
                                                 if term['slug'] == 'uncategorized' and len(category_result) > 0:
-                                                    del existing_categories[count]
+                                                    #del existing_categories[count]
                                                     continue
-                                                existing_categories[count] = ((term, False))
-                                                count+=1 
-                                            category_result = array_merge(category_result, existing_categories)
+                                                #existing_categories[count] = ((term, False))
+                                                exist_cats.append((term, False))
+                                                #count+=1 
+                                            category_result = array_merge(category_result, exist_cats)
                                         if product_categories != '':
                                             product_categories = array_merge(product_categories, category_result)
                                         else:
