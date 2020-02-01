@@ -959,7 +959,7 @@ while jsonprods:
                                             term = doesprodattrexist(jsonprodattr['product_cat'], category_to_cast_id, 'product_cat')
                                             if term:
                                                 if term['name'] not in product_category_names:
-                                                    #print('ADDING ' + term['name'] + ' TO ARRAY!')
+                                                    print('ADDING ' + term['name'] + ' TO ARRAY!')
                                                     product_category_names.append(term['name'])
                                         for catstosizetype in catstosizetypes:
                                             #regex = u'(\b.*' + catstosizetype.strip() + '\b)'
