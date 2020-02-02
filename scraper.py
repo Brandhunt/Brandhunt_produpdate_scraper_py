@@ -1187,7 +1187,7 @@ while jsonprods:
                                                 if domain_name != '':
                                                     if brand.upper().find(domain_name.upper()) != -1:
                                                         #del existing_brands[count]
-                                                        existing_brands = list(filter(lambda x: x.upper() != brand.upper(), existing_brands)):
+                                                        existing_brands = list(filter(lambda x: x.upper() != brand.upper(), existing_brands))
                                                         continue
                                             brand = doesprodattrexist(jsonprodattr['pa_brand'], brand, 'pa_brand')
                                             existing_brands[count] = (brand, False)
