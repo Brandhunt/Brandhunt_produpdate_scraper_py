@@ -1440,6 +1440,7 @@ while jsonprods:
                                             #count+=1 
                                         category_result = array_merge(category_result, exist_cats)
                                     print('PRODCATSFINAL_PRODTITLE: ' + json.dumps(product_categories))
+                                    print('CATRESULTS_PRODTITLE: ' + json.dumps(category_result))
                                     if product_categories != '':
                                         product_categories = array_merge(product_categories, category_result)
                                     else:
