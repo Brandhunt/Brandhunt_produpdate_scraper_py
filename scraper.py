@@ -471,7 +471,7 @@ while jsonprods:
                                     #print('PRE-IMAGE URLS: ')
                                     #for img in image_urls: print(img)
                                 if len(image_urls) > 0:
-                                    for imagekey, imageval in image_urls.items():
+                                    for imagekey, imageval in image_urls.copy().items():
                                         newimageval = urljoin(product['url'], imageval)
                                         if imageval != newimageval:
                                             image_urls[imagekey] = newimageval
