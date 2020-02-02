@@ -1112,19 +1112,29 @@ while jsonprods:
                                                                 sizetomap = re.sub('(F)', '', sizetomap)
                                                             count += 1
                                                         sizemap['sizestomap'] = ','.join(split_sizetomaps)
-                                                    found_sizenames = list(filter(lambda x: re.search(x[0]['name'], sizemap['sizestomap']), product_sizes))
-                                                    if found_sizenames:
-                                                        finalterm = doesprodattrexist(jsonprodattr['product_cat'], sizemap['finalsize'].strip(), 'product_cat')
-                                                        if finalterm != 0:
-                                                            product_sizes.append((finalterm, False))
-                                                        else:
-                                                            finalsizename = sizemap['finalsize'].strip()
-                                                            finalsizeslug = slugify(finalsizename.strip())
-                                                            new_finalterm = {'term_id':-1, 'name':finalsizename, 'slug':finalsizeslug, 'taxonomy':'pa_size'}
-                                                            product_sizes.append((new_finalterm, True))
-                                                        for size_to_remove in sizemap['sizestomap'].split(','):
-                                                            size_to_remove = size_to_remove.strip()
-                                                            product_sizes = list(filter(lambda x: x[0]['name'].strip() != size_to_remove, product_sizes))
+                                                    #found_sizenames = []
+                                                    #split_sizetomaps = sizemap['sizestomap'].split(',')
+                                                    #for sizetomap in split_sizetomaps.copy():
+                                                    #found_sizenames = list(filter(lambda x: re.search(x[0]['name'], sizemap['sizestomap']), product_sizes))
+                                                    #for prod_size in product_sizes:
+                                                    #    found_sizenames = list(filter(lambda x: prod_size[0]['name'] == x, sizemap['sizestomap']))
+                                                    split_sizetomaps = sizemap['sizestomap'].split(',')
+                                                    for sizetomap in split_sizetomaps.copy():
+                                                        found_sizenames = list(filter(lambda x: x[0]['name'].strip().lower() == sizetomap.strip().lower(), product_sizes))
+                                                        if found_sizenames:
+                                                            finalterm = doesprodattrexist(jsonprodattr['product_cat'], sizemap['finalsize'].strip(), 'product_cat')
+                                                            if finalterm != 0:
+                                                                product_sizes.append((finalterm, False))
+                                                            else:
+                                                                finalsizename = sizemap['finalsize'].strip()
+                                                                finalsizeslug = slugify(finalsizename.strip())
+                                                                new_finalterm = {'term_id':-1, 'name':finalsizename, 'slug':finalsizeslug, 'taxonomy':'pa_size'}
+                                                                product_sizes.append((new_finalterm, True))
+                                                            #for size_to_remove in sizemap['sizestomap'].split(','):
+                                                            for size_to_remove in split_sizetomaps:
+                                                                size_to_remove = size_to_remove.strip().lower()
+                                                                product_sizes = list(filter(lambda x: x[0]['name'].strip().lower() != size_to_remove, product_sizes))
+                                                            break
                                 # --> Apply color, size, sex and brand to the product! (Filter the attributes before save)
                                 # --> (Filter the attributes before database save)
                                 attributes = []
