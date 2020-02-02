@@ -845,6 +845,7 @@ while jsonprods:
                                                 #print('PA_BRAND_PRODMISC: ' + json.dumps(product_brand))
                                         # --- Get categories from current scrape --- #
                                         if productmisc_array[(i-1)] == 'pa_category_html':
+                                            print(cat_html = str(productmisc_array[i]))
                                             caties = jsonprodattr['product_cat']
                                             caties_result = []
                                             #print('CATHTML: ' + str(productmisc_array[i]))
