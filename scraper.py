@@ -437,7 +437,7 @@ while jsonprods:
                                             if imageval != newimageval:
                                                 prodlog_image_urls[imagekey] = newimageval
                                                 imageval = newimageval
-                                            if image.find('//') == -1:
+                                            if imageval.find('//') == -1:
                                                 del prodlog_image_urls[imagekey]
                                                 continue
                                             if imageval[0:2] == '//':
