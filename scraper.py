@@ -1197,7 +1197,7 @@ while jsonprods:
                                         else:
                                             #product_brand = product_brand + existing_brands
                                             product_brand = add_together_attrs(product_brand, existing_brands, 'pa_brand')
-                                        print('FINAL BRANDS: ' + json.dumps(product_brand))
+                                        #print('FINAL BRANDS: ' + json.dumps(product_brand))
                                     attributes.append({'name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                                 if product_colors:
