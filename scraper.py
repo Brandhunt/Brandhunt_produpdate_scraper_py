@@ -166,6 +166,7 @@ wp_connectwp_url_2 = os.environ['MORPH_WP_CONNECT_URL_2']
 wp_connectwp_url_3 = os.environ['MORPH_WP_CONNECT_URL_3']
 wp_connectwp_url_4 = os.environ['MORPH_WP_CONNECT_URL_4']
 wp_connectwp_url_5 = os.environ['MORPH_WP_CONNECT_URL_5']
+wp_connectwp_url_6 = os.environ['MORPH_WP_CONNECT_URL_6']
 
 encodestring = wp_username + ':' + wp_password;
 #token = base64.standard_b64encode(wp_username + ':' + wp_password)
@@ -191,6 +192,9 @@ jsoncatsizetypemaps = json.loads(r.content)
 
 r = requests.get(wp_connectwp_url_5, headers=headers)
 jsoncatmaps = json.loads(r.content)
+
+r = requests.get(wp_connectwp_url_6, headers=headers)
+jsonsizemaps = json.loads(r.content)
 
 # --> Get the proxy information and related modules!
 
@@ -1087,6 +1091,8 @@ while jsonprods:
                                                 remove_sizetosizetypemisc.append((sizeid_remove, sizetypemiscid_remove, product['productid']))
                                                 #remove_sizetosizetypemisc[count] = (sizeid_remove, sizetypemiscid_remove, product['productid'])
                                                 #count+=1
+                                # --> Map current sizes to pre-destined sizes depending on sizetype! <-- #
+                                #FIX HERE
                                 # --> Apply color, size, sex and brand to the product! (Filter the attributes before save)
                                 # --> (Filter the attributes before database save)
                                 attributes = []
