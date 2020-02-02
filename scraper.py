@@ -353,13 +353,15 @@ while jsonprods:
                                                 price = '-1'
                                 else:
                                     price = '-1'
+                            print('PRICE_BEFORE_DELIM: ' + price)
                             if website['pricedelimitertoignore']:
                                 if website['pricedelimitertoignore'].strip().find(' ') != -1:
                                     sepdelimiters = website['pricedelimitertoignore'].strip().split(' ')
                                     for delim in sepdelimiters:
                                         price = re.sub(r'\\' + delim.strip() + '', '', price)
                                 else:
-                                    price = re.sub(r'\\' + website['pricedelimitertoignore'].strip() + '', '', price)    
+                                    price = re.sub(r'\\' + website['pricedelimitertoignore'].strip() + '', '', price)
+                            print('PRICE_AFTER_DELIM: ' + price)
                             if website['currencysymbol']:
                                 #print('PRICEBEFORECONVERSION:' + price)
                                 #print('PRICE ELEMENTS:')
