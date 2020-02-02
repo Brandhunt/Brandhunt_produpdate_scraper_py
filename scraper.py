@@ -1100,10 +1100,19 @@ while jsonprods:
                                             sizemap_sizetype = re.sub(r'\-\d+', '', sizemap_sizetype.strip())
                                             for sizetype in product_sizetypes:
                                                 if sizetype[0]['name'] == sizemap_sizetype:
-                                                    #for prod_size in product_sizes:
-                                                    #sizenames = list(filter(lambda x: x = x[0]['name'], product_sizes))
-                                                    #found_sizenames = list(filter(lambda x: x = x[0]['name'], sizenames))
-                                                    found_sizenames = filter(lambda x: x = True if re.search(x[0]['name'], sizemap['sizestomap']) else False, product_sizes)
+                                                    # --> Check if there are any sex-specific sizes to map!
+                                                    if len(product_sex) == 1:
+                                                        sex_name = product_sex[0][0]['name']
+                                                        split_sizetomaps = sizemap['sizestomap'].split(',')
+                                                        count = 0
+                                                        for sizetomap in split_sizetomaps.copy():
+                                                            if sizetomap.find('(M)') and sex_name == 'Male':
+                                                                sizetomap = re.sub('(M)', '', sizetomap)
+                                                            elif sizetomap.find('(F)') and sex_name == 'Female':
+                                                                sizetomap = re.sub('(F)', '', sizetomap)
+                                                            count += 1
+                                                        sizemap['sizestomap'] = ','.join(split_sizetomaps)
+                                                    found_sizenames = list(filter(lambda x: x = True if re.search(x[0]['name'], sizemap['sizestomap']) else False, product_sizes))
                                                     if True in found_sizenames:
                                                         finalterm = doesprodattrexist(jsonprodattr['product_cat'], sizemap['finalsize'].strip(), 'product_cat')
                                                         if finalterm != 0:
@@ -1115,7 +1124,7 @@ while jsonprods:
                                                             product_sizes.append((new_finalterm, True))
                                                         for size_to_remove in sizemap['sizestomap'].split(','):
                                                             size_to_remove = size_to_remove.strip()
-                                                            product_sizes = filter(lambda x: x[0]['name'].strip() != size_to_remove, product_sizes)
+                                                            product_sizes = list(filter(lambda x: x[0]['name'].strip() != size_to_remove, product_sizes))
                                 # --> Apply color, size, sex and brand to the product! (Filter the attributes before save)
                                 # --> (Filter the attributes before database save)
                                 attributes = []
