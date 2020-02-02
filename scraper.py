@@ -852,7 +852,7 @@ while jsonprods:
                                             #print(str(productmisc_array[i]))
                                             caties = jsonprodattr['product_cat']
                                             caties_result = []
-                                            print('CATHTML: ' + str(productmisc_array[i]))
+                                            #print('CATHTML: ' + str(productmisc_array[i]))
                                             for catterm in caties:
                                                 term_name = catterm['name']
                                                 cat_html = str(productmisc_array[i])
@@ -872,9 +872,9 @@ while jsonprods:
                                                                 regex = ''+infliction.strip()+''
                                                             else:
                                                                 regex = '\s'+infliction.strip()+'\s'
-                                                            print('INF_REGEX: ' + regex)
+                                                            #print('INF_REGEX: ' + regex)
                                                             if re.search(regex, cat_html, flags=re.IGNORECASE):
-                                                                print('FOUND INFLICTION!')
+                                                                #print('FOUND INFLICTION!')
                                                                 term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                                 if term:
                                                                     caties_result.append((term, False))
@@ -890,9 +890,9 @@ while jsonprods:
                                                     regex = ''+term_name.strip()+''
                                                 else:
                                                     regex = '\s'+term_name.strip()+'\s'
-                                                print('CATTERM_REGEX: ' + regex)
+                                                #print('CATTERM_REGEX: ' + regex)
                                                 if re.search(regex, cat_html, flags=re.IGNORECASE):
-                                                    print('FOUND CATTERM!')
+                                                    #print('FOUND CATTERM!')
                                                     term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                     if term:
                                                         caties_result.append((term, False))
