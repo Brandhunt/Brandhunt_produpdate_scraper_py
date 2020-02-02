@@ -566,7 +566,7 @@ while jsonprods:
                                                     count-=1
                                                 images = ','.join(image_urls_valid)
                                         if prodlog_image_urls != '':
-                                            for imagekey, imageval in prodlog_image_urls.items():
+                                            for imagekey, imageval in prodlog_image_urls.copy().items():
                                                 if imageval.find(productmisc_array[i]) != -1:
                                                     del prodlog_image_urls[imagekey]
                                             productlogourl = prodlog_image_urls[0]       
