@@ -867,7 +867,7 @@ while jsonprods:
                                                 array_categorymaps = jsoncatmaps
                                                 #print(type(cat_html))
                                                 #print(type(term_name))
-                                                print('CAT_TERM_NAME: ' + term_name)
+                                                #print('CAT_TERM_NAME: ' + term_name)
                                                 if array_categorymaps:
                                                     #if hasattr(array_categorymaps, term_name):
                                                     if term_name in array_categorymaps:
@@ -883,7 +883,7 @@ while jsonprods:
                                                                 regex = '\s'+infliction.strip()+'\s'
                                                             #print('INF_REGEX: ' + regex)
                                                             if re.search(regex, cat_html, flags=re.IGNORECASE):
-                                                                print('FOUND INFLICTION!')
+                                                                #print('FOUND INFLICTION!')
                                                                 term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                                 if term:
                                                                     if not list(filter(lambda x: x[0]['term_id'] == term['term_id'], caties_result)):
@@ -903,7 +903,7 @@ while jsonprods:
                                                     regex = '\s'+term_name.strip()+'\s'
                                                 #print('CATTERM_REGEX: ' + regex)
                                                 if re.search(regex, cat_html, flags=re.IGNORECASE):
-                                                    print('FOUND CATTERM!')
+                                                    #print('FOUND CATTERM!')
                                                     term = doesprodattrexist(jsonprodattr['product_cat'], catterm['term_id'], 'product_cat')
                                                     if term:
                                                         if not list(filter(lambda x: x[0]['term_id'] == term['term_id'], caties_result)):
@@ -915,13 +915,13 @@ while jsonprods:
                                                                 if not list(filter(lambda x: x[0]['term_id'] == parent['term_id'], caties_result)):
                                                                     caties_result.append((parent, False))
                                             if caties_result:
-                                                print('PA_CAT_HTML_CATS_BEFORE: '+json.dumps(product_categories))
-                                                print('CATIES_RESULT: '+json.dumps(caties_result))
+                                                #print('PA_CAT_HTML_CATS_BEFORE: '+json.dumps(product_categories))
+                                                #print('CATIES_RESULT: '+json.dumps(caties_result))
                                                 if product_categories == '':
                                                     product_categories = caties_result
                                                 else:
                                                     product_categories = array_merge(product_categories, caties_result)
-                                            print('PA_CAT_HTML_CATS: '+json.dumps(product_categories))
+                                            #print('PA_CAT_HTML_CATS: '+json.dumps(product_categories))
                                         # --- Get color attributes from current scrape --- #
                                         if productmisc_array[(i-1)] == 'pa_color_html':
                                             colories = jsonprodattr['pa_color']
@@ -1437,6 +1437,7 @@ while jsonprods:
                                                 exist_cats.append((term, False))
                                                 #count+=1 
                                             category_result = array_merge(category_result, exist_cats)
+                                        print('PRODCATSFINAL_PRODTITLE: ' + json.dumps(product_categories))
                                         if product_categories != '':
                                             product_categories = array_merge(product_categories, category_result)
                                         else:
