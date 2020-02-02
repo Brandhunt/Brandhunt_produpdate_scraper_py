@@ -1112,8 +1112,8 @@ while jsonprods:
                                                                 sizetomap = re.sub('(F)', '', sizetomap)
                                                             count += 1
                                                         sizemap['sizestomap'] = ','.join(split_sizetomaps)
-                                                    found_sizenames = list(filter(lambda x: x = True if re.search(x[0]['name'], sizemap['sizestomap']) else False, product_sizes))
-                                                    if True in found_sizenames:
+                                                    found_sizenames = list(filter(lambda x: re.search(x[0]['name'], sizemap['sizestomap']), product_sizes))
+                                                    if found_sizenames:
                                                         finalterm = doesprodattrexist(jsonprodattr['product_cat'], sizemap['finalsize'].strip(), 'product_cat')
                                                         if finalterm != 0:
                                                             product_sizes.append((finalterm, False))
