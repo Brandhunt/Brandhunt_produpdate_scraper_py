@@ -908,6 +908,8 @@ while jsonprods:
                                                             if not parent in caties_result:
                                                                 caties_result.append((parent, False))
                                             if caties_result:
+                                                print('PA_CAT_HTML_CATS_BEFORE: '+json.dumps(product_categories))
+                                                print('CATIES_RESULT: '+json.dumps(caties_result))
                                                 if product_categories == '':
                                                     product_categories = caties_result
                                                 else:
