@@ -1092,7 +1092,30 @@ while jsonprods:
                                                 #remove_sizetosizetypemisc[count] = (sizeid_remove, sizetypemiscid_remove, product['productid'])
                                                 #count+=1
                                 # --> Map current sizes to pre-destined sizes depending on sizetype! <-- #
-                                #FIX HERE
+                                if product_sizetypes and product_sizes:
+                                    #remove_remaining_sizes = False
+                                    for sizemap in jsonsizemaps:
+                                        sizemap_sizetypes = sizemap['sizetypestofilter'].split(',')
+                                        for sizemap_sizetype in sizemap_sizetypes:
+                                            sizemap_sizetype = re.sub(r'\-\d+', '', sizemap_sizetype.strip())
+                                            for sizetype in product_sizetypes:
+                                                if sizetype[0]['name'] == sizemap_sizetype:
+                                                    #for prod_size in product_sizes:
+                                                    #sizenames = list(filter(lambda x: x = x[0]['name'], product_sizes))
+                                                    #found_sizenames = list(filter(lambda x: x = x[0]['name'], sizenames))
+                                                    found_sizenames = filter(lambda x: x = True if re.search(x[0]['name'], sizemap['sizestomap']) else False, product_sizes)
+                                                    if True in found_sizenames:
+                                                        finalterm = doesprodattrexist(jsonprodattr['product_cat'], sizemap['finalsize'].strip(), 'product_cat')
+                                                        if finalterm != 0:
+                                                            product_sizes.append((finalterm, False))
+                                                        else:
+                                                            finalsizename = sizemap['finalsize'].strip()
+                                                            finalsizeslug = slugify(finalsizename.strip())
+                                                            new_finalterm = {'term_id':-1, 'name':finalsizename, 'slug':finalsizeslug, 'taxonomy':'pa_size'}
+                                                            product_sizes.append((new_finalterm, True))
+                                                        for size_to_remove in sizemap['sizestomap'].split(','):
+                                                            size_to_remove = size_to_remove.strip()
+                                                            product_sizes = filter(lambda x: x[0]['name'].strip() != size_to_remove, product_sizes)
                                 # --> Apply color, size, sex and brand to the product! (Filter the attributes before save)
                                 # --> (Filter the attributes before database save)
                                 attributes = []
