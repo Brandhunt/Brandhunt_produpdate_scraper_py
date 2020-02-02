@@ -1112,7 +1112,7 @@ while jsonprods:
                                                                 split_sizetomaps[count] = re.sub(r'\(F\)', '', sizetomap)
                                                             count += 1
                                                         sizemap['sizestomap'] = ','.join(split_sizetomaps)
-                                                        print(sizemap['sizestomap'])
+                                                        #print(sizemap['sizestomap'])
                                                     #found_sizenames = []
                                                     #split_sizetomaps = sizemap['sizestomap'].split(',')
                                                     #for sizetomap in split_sizetomaps.copy():
@@ -1136,6 +1136,7 @@ while jsonprods:
                                                                 size_to_remove = size_to_remove.strip().lower()
                                                                 product_sizes = list(filter(lambda x: x[0]['name'].strip().lower() != size_to_remove, product_sizes))
                                                             break
+                                                            print(json.dumps(product_sizes))
                                 # --> Apply color, size, sex and brand to the product! (Filter the attributes before save)
                                 # --> (Filter the attributes before database save)
                                 attributes = []
