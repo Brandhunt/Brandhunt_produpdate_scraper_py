@@ -1431,7 +1431,6 @@ while jsonprods:
                                             #print(json.dumps(term))
                                             #print(cat)
                                             if (term['slug'] == 'uncategorized' and len(category_result) > 0)\
-                                            or list(filter(lambda x: x[0]['term_id'] == term['term_id'], product_categories))\
                                             or list(filter(lambda x: x[0]['term_id'] == term['term_id'], category_result)):
                                                 #del existing_categories[count]
                                                 continue
@@ -1439,10 +1438,13 @@ while jsonprods:
                                             exist_cats.append((term, False))
                                             #count+=1 
                                         category_result = array_merge(category_result, exist_cats)
-                                    print('PRODCATSFINAL_PRODTITLE: ' + json.dumps(product_categories))
-                                    print('CATRESULTS_PRODTITLE: ' + json.dumps(category_result))
+                                    #print('PRODCATSFINAL_PRODTITLE: ' + json.dumps(product_categories))
+                                    #print('CATRESULTS_PRODTITLE: ' + json.dumps(category_result))
                                     if product_categories != '':
-                                        product_categories = array_merge(product_categories, category_result)
+                                        #product_categories = array_merge(product_categories, category_result)
+                                        for result in category_result:
+                                            if not list(filter(lambda x: x[0]['term_id'] == result[0]['term_id'], product_categories)):
+                                                product_categories.append(result)
                                     else:
                                         product_categories = category_result
                                 catstoaddresult = product_categories
