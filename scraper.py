@@ -1430,14 +1430,15 @@ while jsonprods:
                                                 term = doesprodattrexist(jsonprodattr['product_cat'], cat, 'product_cat')
                                                 #print(json.dumps(term))
                                                 #print(cat)
-                                                if term['slug'] == 'uncategorized' and len(category_result) > 0:
+                                                if (term['slug'] == 'uncategorized' and len(category_result) > 0)\
+                                                or list(filter(lambda x: x[0]['term_id'] == parent['term_id'], category_result)):
                                                     #del existing_categories[count]
                                                     continue
                                                 #existing_categories[count] = ((term, False))
                                                 exist_cats.append((term, False))
                                                 #count+=1 
                                             category_result = array_merge(category_result, exist_cats)
-                                        print('PRODCATSFINAL_PRODTITLE: ' + json.dumps(product_categories))
+                                        #print('PRODCATSFINAL_PRODTITLE: ' + json.dumps(product_categories))
                                         if product_categories != '':
                                             product_categories = array_merge(product_categories, category_result)
                                         else:
