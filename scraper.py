@@ -1107,11 +1107,12 @@ while jsonprods:
                                                         count = 0
                                                         for sizetomap in split_sizetomaps.copy():
                                                             if sizetomap.find('(M)') and sex_name == 'Male':
-                                                                sizetomap = re.sub('(M)', '', sizetomap)
+                                                                split_sizetomaps[count] = re.sub('(M)', '', sizetomap)
                                                             elif sizetomap.find('(F)') and sex_name == 'Female':
-                                                                sizetomap = re.sub('(F)', '', sizetomap)
+                                                                split_sizetomaps[count] = re.sub('(F)', '', sizetomap)
                                                             count += 1
                                                         sizemap['sizestomap'] = ','.join(split_sizetomaps)
+                                                        print(sizemap['sizestomap'])
                                                     #found_sizenames = []
                                                     #split_sizetomaps = sizemap['sizestomap'].split(',')
                                                     #for sizetomap in split_sizetomaps.copy():
