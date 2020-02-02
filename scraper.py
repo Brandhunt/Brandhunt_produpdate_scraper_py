@@ -1135,7 +1135,7 @@ while jsonprods:
                                                             for size_to_remove in split_sizetomaps:
                                                                 size_to_remove = size_to_remove.strip().lower()
                                                                 product_sizes = list(filter(lambda x: x[0]['name'].strip().lower() != size_to_remove, product_sizes))
-                                                            print(json.dumps(product_sizes))
+                                                            #print(json.dumps(product_sizes))
                                                             break
                                 # --> Apply color, size, sex and brand to the product! (Filter the attributes before save)
                                 # --> (Filter the attributes before database save)
