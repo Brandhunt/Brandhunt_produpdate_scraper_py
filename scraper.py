@@ -528,8 +528,8 @@ while jsonprods:
                         if website['productmisc']:
                             try:
                                 for i in range(2, len(productmisc_array), 2):
-                                    #print(productmisc_array[(i-1)])
-                                    #print(productmisc_array[i])
+                                    print(productmisc_array[(i-1)])
+                                    print(productmisc_array[i])
                                     # --- No leading/trailing whitespaces when using regex while searching pure HTML for attributes? --- #
                                     if productmisc_array[(i-1)] == 'no_whitespace_htmlregex':
                                         no_whitespace_htmlregex = True
