@@ -1204,11 +1204,11 @@ while jsonprods:
                                                 #del existing_brands[count]
                                                 continue
                                             #count+=1
-                                        if skip_domain_name is True and len(product_brand) > 0 and len(existing_brands) > 0:
-                                            product_brand = existing_brands
+                                        if skip_domain_name is True and len(product_brand) > 0 and len(exist_brands) > 0:
+                                            product_brand = exist_brands
                                         else:
                                             #product_brand = product_brand + existing_brands
-                                            product_brand = add_together_attrs(product_brand, existing_brands, 'pa_brand')
+                                            product_brand = add_together_attrs(product_brand, exist_brands, 'pa_brand')
                                         #print('FINAL BRANDS: ' + json.dumps(product_brand))
                                     attributes.append({'name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
