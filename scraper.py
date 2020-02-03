@@ -520,6 +520,7 @@ while jsonprods:
                         insert_sizetosizetypemisc = ''
                         remove_sizetosizetypemisc = ''
                         skip_exist_attr = [0, 0, 0, 0, 0, 0, 0] # <==> [brand, color, sex, size, s-type, s-t-misc, categories]
+                        skip_exist_attr_prodtitle = [0, 0, 0, 0] # <==> [brand, color, sex, categories]
                         no_whitespace_htmlregex = False
                         # --> Define misc. storage variables
                         domain_name = ''
@@ -539,6 +540,11 @@ while jsonprods:
                                     if productmisc_array[(i-1)] == 'skip_exist_attr':
                                         if productmisc_array[i] != 'true':
                                             skip_exist_attr = [ int(skipval) for skipval in productmisc_array[i].strip().split(',') ]
+                                            productmisc_array[i] = 'true'
+                                    # --- Should we skip any already existing product attributes when scraping the product? --- #
+                                    if productmisc_array[(i-1)] == 'skip_exist_attr_prodtitle':
+                                        if productmisc_array[i] != 'true':
+                                            skip_exist_attr_prodtitle = [ int(skipval) for skipval in productmisc_array[i].strip().split(',') ]
                                             productmisc_array[i] = 'true'
                                     # --- Are there any pre-existing currencies to apply to the price(s)? --- #
                                     if productmisc_array[(i-1)] == 'pre_existing_currency':
@@ -1212,7 +1218,7 @@ while jsonprods:
                                         else:
                                             #product_brand = product_brand + existing_brands
                                             product_brand = add_together_attrs(product_brand, exist_brands, 'pa_brand')
-                                        print('FINAL BRANDS: ' + json.dumps(product_brand))
+                                        #print('FINAL BRANDS: ' + json.dumps(product_brand))
                                     attributes.append({'name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1})
                                     attribute_pos+=1
                                 if product_colors:
@@ -1309,7 +1315,7 @@ while jsonprods:
                                             termies_result[i].append((doesprodattrexist(jsonprodattr[term['taxonomy']], term['term_id'], term['taxonomy']), False))
                                 attributes = []
                                 attribute_pos = 1
-                                if termies_result[0]:
+                                if termies_result[0] and skip_exist_attr_prodtitle[0] != 1:
                                     brand_values = product_brand
                                     if brand_values:
                                         #existing_brands = re.split(',\s*', brand_values)
@@ -1333,7 +1339,7 @@ while jsonprods:
                                         product_brand = existing_brands
                                         attributes.append({'name':'Brand', 'options':product_brand, 'position':attribute_pos, 'visible':1, 'variation':1})
                                         attribute_pos+=1
-                                if termies_result[1]:
+                                if termies_result[1] and skip_exist_attr_prodtitle[1] != 1:
                                     color_values = product_colors
                                     if color_values:
                                         #existing_colors = re.split(',\s*', color_values)
@@ -1357,7 +1363,7 @@ while jsonprods:
                                         product_colors = existing_colors
                                         attributes.append({'name':'Color', 'options':product_colors, 'position':attribute_pos, 'visible':1, 'variation':1})
                                         attribute_pos+=1
-                                if termies_result[2]:
+                                if termies_result[2] and skip_exist_attr_prodtitle[2] != 1:
                                     sex_values = product_sex
                                     if sex_values:
                                         #existing_sex = re.split(',\s*', sex_values)
@@ -1442,7 +1448,7 @@ while jsonprods:
                                     existing_categories = product['category_ids'].copy()
                                     exist_cats = []
                                     #print(json.dumps(existing_categories))
-                                    if existing_categories:
+                                    if existing_categories and skip_exist_attr_prodtitle[3] != 1:
                                         #count = 0
                                         for cat in existing_categories.copy():
                                             term = doesprodattrexist(jsonprodattr['product_cat'], cat, 'product_cat')
