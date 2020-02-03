@@ -1204,7 +1204,7 @@ while jsonprods:
                                             else:
                                                 #del existing_brands[count]
                                                 exist_brands = list(filter(lambda x: x[0]['name'].lower() != brand['name'].lower(), exist_brands))
-                                                exist_brands.append(notlist[0])
+                                                #exist_brands.append(notlist[0])
                                                 continue
                                             #count+=1
                                         if skip_domain_name is True and len(product_brand) > 0 and len(exist_brands) > 0:
