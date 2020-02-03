@@ -1181,7 +1181,8 @@ while jsonprods:
                                     brand_values = product['attributes']['brand']
                                     if brand_values and skip_exist_attr[0] != 1:
                                         existing_brands = re.split(',\s*', brand_values)
-                                        count = 0
+                                        exist_brands = []
+                                        #count = 0
                                         for brand in existing_brands.copy():
                                             '''if skip_domain_name is True:
                                                 if domain_name != '':
@@ -1194,15 +1195,15 @@ while jsonprods:
                                             if skip_domain_name is True:
                                                 if domain_name != '':
                                                     if brand.upper().find(domain_name.upper()) != -1:
-                                                        del existing_brands[count]
+                                                        #del existing_brands[count]
                                                         continue
                                             brand = doesprodattrexist(jsonprodattr['pa_brand'], brand, 'pa_brand')
-                                            if not list(filter(lambda x: x[0]['term_id'] == brand['term_id'], existing_brands)):
-                                                existing_brands[count] = (brand, False)
+                                            if not list(filter(lambda x: x[0]['term_id'] == brand['term_id'], exist_brands)):
+                                                exist_brands.append((brand, False))
                                             else:
-                                                del existing_brands[count]
+                                                #del existing_brands[count]
                                                 continue
-                                            count+=1
+                                            #count+=1
                                         if skip_domain_name is True and len(product_brand) > 0 and len(existing_brands) > 0:
                                             product_brand = existing_brands
                                         else:
