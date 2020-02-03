@@ -1198,10 +1198,13 @@ while jsonprods:
                                                         #del existing_brands[count]
                                                         continue
                                             brand = doesprodattrexist(jsonprodattr['pa_brand'], brand, 'pa_brand')
-                                            if not list(filter(lambda x: x[0]['term_id'] == brand['term_id'], exist_brands)):
+                                            notlist = list(filter(lambda x: x[0]['name'].lower() == brand['name'].lower(), exist_brands))
+                                            if not notlist:
                                                 exist_brands.append((brand, False))
                                             else:
                                                 #del existing_brands[count]
+                                                exist_brands = list(filter(lambda x: x[0]['name'].lower() != brand['name'].lower(), exist_brands))
+                                                exist_brands.append(notlist[0])
                                                 continue
                                             #count+=1
                                         if skip_domain_name is True and len(product_brand) > 0 and len(exist_brands) > 0:
