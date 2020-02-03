@@ -960,13 +960,13 @@ while jsonprods:
                                                 else:
                                                     soldouthtmlupdatemeta = False
                                     # --- Should we skip the first size alternative on information import? --- #
-                                    #print('S'+productmisc_array[(i-1)]+'S')
+                                    print('S'+productmisc_array[(i-1)]+'S')
                                     if productmisc_array[(i-1)] == 'skip_first_size':
-                                        #print(json.dumps(product_sizes))
+                                        print(json.dumps(product_sizes))
                                         if product_sizes != '':
-                                            #print('BEFORE_SIZE_FIRST_SKIP: ' + json.dumps(product_sizes))
+                                            print('BEFORE_SIZE_FIRST_SKIP: ' + json.dumps(product_sizes))
                                             removed_size = product_sizes.pop(0)
-                                            #print('AFTER_SIZE_FIRST_SKIP: ' + json.dumps(product_sizes))
+                                            print('AFTER_SIZE_FIRST_SKIP: ' + json.dumps(product_sizes))
                                 # --> Fix categories for the product! <-- #
                                 if product_categories:
                                     existing_categories = product['category_ids'].copy()
