@@ -961,6 +961,7 @@ while jsonprods:
                                                     soldouthtmlupdatemeta = False
                                         # --- Should we skip the first size alternative on information import? --- #
                                         if productmisc_array[(i-1)] == 'skip_first_size':
+                                            print(json.dumps(product_sizes))
                                             if product_sizes != '':
                                                 print('BEFORE_SIZE_FIRST_SKIP: ' + json.dumps(product_sizes))
                                                 removed_size = product_sizes.pop(0)
