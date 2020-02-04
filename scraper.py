@@ -219,8 +219,21 @@ jsonsizemaps = json.loads(r.content)
 
 while jsonprods:
     for website in jsonwebsites:
+        # Should we ignore the current website? #
         if website['ignorethisone'] == '1':
-            continue   
+            continue
+        # Check if there are any initial values to take care of! #
+        altimggrab = ''
+        if website['productmisc'] != '':
+            intro_output = re.search(r'({alt_img_grab}(.*?))\{', website['productmisc'])
+            if intro_output is not None and len(intro_output.group(1)) > 0:
+                altimggrab = '1'
+                website['productmisc'] = re.sub(r'({alt_img_grab}.*?(?=\{))', '', website['productmisc'])
+            intro_output = re.search(r'({alt_img_grab_2}(.*?))\{', website['productmisc'])
+            if intro_output is not None and len(intro_output.group(1)) > 0:
+                altimggrab = '2'
+                website['productmisc'] = re.sub(r'({alt_img_grab_2}.*?(?=\{))', '', website['productmisc'])
+        # Check each product - See if any of them belong to the current website! #
         for product in jsonprods:
             if website['domain'] == product['domain']:
                 # --- First, get the HTML for each domain part --- #
@@ -432,7 +445,16 @@ while jsonprods:
                                     for i in range(len(prodlog_image_elements)):
                                         prodlog_image_elements[i] = etree.tostring(prodlog_image_elements[i])
                                     image_dom = ','.join(prodlog_image_elements)
-                                    prodlog_image_urls = graburls(image_dom, True)
+                                    if altimggrab == '1':
+                                        output = re.search(r'image\=\"(.*?)\"', image_dom)
+                                        if len(output.group(1)) > 0:
+                                            prodlog_image_urls = { 0 : output.group(1) }
+                                    elif altimggrab == '2':
+                                        output = re.search(r'src\=\"(.*?)\"', image_dom)
+                                        if len(output.group(1)) > 0:
+                                            prodlog_image_urls = { 0 : output.group(1) }
+                                    else:
+                                        prodlog_image_urls = graburls(str(image_dom), True)
                                     if len(prodlog_image_urls) > 0:
                                         for imagekey, imageval in prodlog_image_urls.items():
                                             newimageval = urljoin(product['url'], imageval)
@@ -469,7 +491,19 @@ while jsonprods:
                                         image_elements[i] = str(etree.tostring(image_elements[i]))
                                     image_dom = ','.join(image_elements)
                                     #print('IMAGE DOM: ' + image_dom)
-                                    image_urls = graburls(image_dom, True)
+                                    if altimggrab == '1':
+                                        output = re.finditer(r'image\=\"(.*?)\"', image_dom)
+                                        array_output = []
+                                        for output_el in output:
+                                            array_output.append(output_el.group(1))
+                                        if len(array_output) > 0:
+                                            image_urls = { i : array_output[i] for i in range(0, len(array_output)) }
+                                    elif altimggrab == '2':
+                                        output = re.search(r'src\=\"(.*?)\"', image_dom)
+                                        if len(output.group(1)) > 0:
+                                            image_urls = { 0 : output.group(1) }
+                                    else:
+                                        image_urls = graburls(str(image_dom), True)
                                     #print('PRE-IMAGE URLS: ')
                                     #for img in image_urls: print(img)
                                 if len(image_urls) > 0:
