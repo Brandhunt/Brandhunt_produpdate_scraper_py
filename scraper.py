@@ -305,7 +305,7 @@ while jsonprods:
                                 session = requests.Session()
                                 if proxies:
                                     session.proxies = proxies
-                                s.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36'})
+                                session.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36'})
                                 html = session.get(product['url']).content
                                 ###session.auth = proxauth
                                 ###
