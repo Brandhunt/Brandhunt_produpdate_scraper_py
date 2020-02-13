@@ -223,6 +223,8 @@ for proxy in jsonproxies:
 
 proxies = []
 proxies = {'https': random.choice(finalproxies)}
+
+print(json.dumps(proxies))
                 
 #proxy_http = ''
 #proxy_https = ''
