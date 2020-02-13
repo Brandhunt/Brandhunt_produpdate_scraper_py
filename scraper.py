@@ -218,12 +218,13 @@ for proxy in jsonproxies:
     if proxy['server'] == 'stockholm' or proxy['server'] == 'gothenburg':
         for ip in proxy['ips']:
             if ip['status'] == 'ok':
-                finalproxies.append('https://' + ip['ip'] + ':10000')
+                finalproxies.append('https://' + ip['ip'] + ':11000')
 
-#proxy_http = ''
-#proxy_https = ''
 proxies = []
 proxies = {'https': random.choice(finalproxies)}
+                
+#proxy_http = ''
+#proxy_https = ''
 #morph_proxies = str(os.environ['MORPH_PROXY_LIST'])
 #morph_prox_array = re.split('{|}', morph_proxies)
 #for i in range(2, len(morph_prox_array), 2):
