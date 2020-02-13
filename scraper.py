@@ -10,7 +10,7 @@
 import os
 os.environ['SCRAPERWIKI_DATABASE_NAME'] = 'sqlite:///data.sqlite'
 
-#import cfscrape
+import cfscrape
 #from cryptography.fernet import Fernet
 import scraperwiki
 #import socks
@@ -218,6 +218,7 @@ for proxy in jsonproxies:
 #proxy_http = ''
 #proxy_https = ''
 proxies = []
+proxies = {'https': random.choice(finalproxies)}
 #morph_proxies = str(os.environ['MORPH_PROXY_LIST'])
 #morph_prox_array = re.split('{|}', morph_proxies)
 #for i in range(2, len(morph_prox_array), 2):
@@ -257,39 +258,40 @@ while jsonprods:
                 if website['scrapetype'] == 'standard_morph_io':
                     try:
                         # --> Check if any product import values should be pre-fetched from the domain misc.
-                        #use_alt_scrape = False
-                        #if website['productmisc']:
-                        #    output = re.search(r'({use_alt_scrape}(.*?))\{', website['productmisc'])
-                        #    if output is not None and len(output.group(1)) > 0:
-                        #        use_alt_scrape = True
+                        use_alt_scrape = False
+                        if website['productmisc']:
+                            output = re.search(r'({use_alt_scrape}(.*?))\{', website['productmisc'])
+                            if output is not None and len(output.group(1)) > 0:
+                                use_alt_scrape = True
                         # >>> GET THE HTML <<< #
                         html = ''
                         try:
                             #html = scraperwiki.scrape(product['url'])
                             #print(str(use_alt_scrape))
-                            #if use_alt_scrape is False:
-                            html = scraperwiki.scrape(product['url'],\
-                                   user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
-                            #else:
-                                #headers = {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',\
-                                #    'Accept-Encoding':'gzip, deflate, br',\
-                                #    'Accept-Language':'sv-SE,sv;q=0.8,en-US;q=0.5,en;q=0.3',\
-                                #    'DNT':'1',\
-                                #    'User-Agent':'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36',\
-                                #    'Referer' : product['url']}
+                            if use_alt_scrape is False:
+                                html = scraperwiki.scrape(product['url'],\
+                                       user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
+                            else:
+                                headers = {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',\
+                                    'Accept-Encoding':'gzip, deflate, br',\
+                                    'Accept-Language':'sv-SE,sv;q=0.8,en-US;q=0.5,en;q=0.3',\
+                                    'DNT':'1',\
+                                    'User-Agent':'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36',\
+                                    'Referer' : product['url']}
                                 #headers = {'Accept-Language':'sv-SE,sv;q=0.8,en-US;q=0.5,en;q=0.3',\
                                 #    'User-Agent':'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36',\
                                 #    'Referer' : product['url']}
-                                #session = requests.session()
-                                #scraper = cfscrape.create_scraper(sess=session)
+                                session = requests.session()
+                                scraper = cfscrape.create_scraper(sess=session)
                                 #scraper = cfscrape.create_scraper(sess=session, delay=10)
                                 #html = scraper.get(product['url'], headers=headers).content
                                 #scraper = cfscrape.create_scraper(delay=10)
                                 #scraper = cfscrape.create_scraper()
-                                ###if proxies:
-                                ###    html = scraper.get(product['url'], headers=headers, proxies=proxies).content
-                                ###else:
-                                ###    html = scraper.get(product['url'], headers=headers).content
+                                if proxies:
+                                    html = scraper.get(product['url'], headers=headers, proxies=proxies).content
+                                else:
+                                    print('COULD NOT FIND PROXIES!')
+                                    html = scraper.get(product['url'], headers=headers).content
                                 #s = socks.socksocket()
                                 #proxy_https = re.split(':', proxy_https)
                                 #s.set_proxy(socks.SOCKS4, proxy_https[0], proxy_https[1])
