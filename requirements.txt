@@ -14,6 +14,7 @@ scraperwiki==0.5.1
 python-slugify>=4.0.0
 #pysocks==1.7.1 
 ###selenium==3.11.0
+cryptography~=2.8
 
 #alembic==0.9.9
 #certifi==2018.1.18
