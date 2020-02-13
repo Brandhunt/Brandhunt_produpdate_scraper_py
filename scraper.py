@@ -11,6 +11,7 @@ import os
 os.environ['SCRAPERWIKI_DATABASE_NAME'] = 'sqlite:///data.sqlite'
 
 #import cfscrape
+#from cryptography.fernet import Fernet
 import scraperwiki
 #import socks
 #from socks import GeneralProxyError
@@ -20,6 +21,7 @@ import requests
 import json
 import base64
 import mysql.connector
+import random
 import re
 from slugify import slugify
 import sys
@@ -198,9 +200,24 @@ jsonsizemaps = json.loads(r.content)
 
 # --> Get the proxy information and related modules!
 
+wonpr_token = os.environ['MORPH_WONPR_API_TOKEN']
+wonpr_url = os.environ['MORPH_WONPR_CONNECT_URL']
+wonpr_secret_key = os.environ['MORPH_WONPR_SECRET_KEY']
+wonpr_headers = {'Authorization': 'Basic ' + wonpr_token + ':'}
+
+r = requests.get(wonpr_url, headers=wonpr_headers)
+jsonproxies = json.loads(r.content)
+finalproxies = []
+
+for proxy in jsonproxies:
+    if proxy['server'] == 'stockholm' or proxy['server'] == 'gothenburg':
+        for ip in proxy['ips']:
+            if ip['status'] == 'ok':
+                finalproxies.append('https://' + ip['ip'] + ':10000')
+
 #proxy_http = ''
 #proxy_https = ''
-#proxies = []
+proxies = []
 #morph_proxies = str(os.environ['MORPH_PROXY_LIST'])
 #morph_prox_array = re.split('{|}', morph_proxies)
 #for i in range(2, len(morph_prox_array), 2):
