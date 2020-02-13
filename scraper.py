@@ -218,7 +218,8 @@ for proxy in jsonproxies:
     if proxy['server'] == 'stockholm' or proxy['server'] == 'gothenburg':
         for ip in proxy['ips']:
             if ip['status'] == 'ok':
-                finalproxies.append('https://' + ip['ip'] + ':11000')
+                finalproxies.append('https://' + encodestring2 + '@' + ip['ip'] + ':11000')
+                #finalproxies.append('https://' + ip['ip'] + ':11000')
 
 proxies = []
 proxies = {'https': random.choice(finalproxies)}
