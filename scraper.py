@@ -18,6 +18,7 @@ import scraperwiki
 from lxml import etree
 import lxml.html
 import requests
+from requests.auth import HTTPProxyAuth
 import json
 import base64
 import mysql.connector
@@ -218,13 +219,16 @@ for proxy in jsonproxies:
     if proxy['server'] == 'stockholm' or proxy['server'] == 'gothenburg':
         for ip in proxy['ips']:
             if ip['status'] == 'ok':
-                finalproxies.append('https://' + encodestring2 + '@' + ip['ip'] + ':11000')
+                finalproxies.append(ip['ip'] + ':11000')
+                #finalproxies.append('https://' + encodestring2 + '@' + ip['ip'] + ':11000')
                 #finalproxies.append('https://' + ip['ip'] + ':11000')
 
-proxies = []
-proxies = {'https': random.choice(finalproxies)}
+randomproxy = random.choice(finalproxies)
+proxies = {'http': 'http://' + randomproxy,
+    'https': 'https://' + randomproxy}
+proxauth = HTTPProxyAuth(wonpr_token, "")
 
-print(json.dumps(proxies))
+#print(json.dumps(proxies))
                 
 #proxy_http = ''
 #proxy_https = ''
@@ -277,8 +281,9 @@ while jsonprods:
                         try:
                             #html = scraperwiki.scrape(product['url'])
                             #print(str(use_alt_scrape))
-                            if use_alt_scrape is True:
+                            if use_alt_scrape is False:
                                 html = scraperwiki.scrape(product['url'],\
+                                       auth=proxauth,\
                                        user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
                             else:
                                 headers = {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',\
