@@ -221,7 +221,7 @@ for proxy in jsonproxies:
     if proxy['server'] == 'stockholm' or proxy['server'] == 'gothenburg':
         for ip in proxy['ips']:
             if ip['status'] == 'ok':
-                finalproxies.append(proxy['hostname'] + ':1100' + ip['port_base'])
+                finalproxies.append(proxy['hostname'] + ':1100' + str(ip['port_base']))
                 break
                 
 randomproxy = random.choice(finalproxies)
