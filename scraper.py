@@ -18,7 +18,7 @@ import scraperwiki
 from lxml import etree
 import lxml.html
 import requests
-from requests.auth import HTTPProxyAuth
+#from requests.auth import HTTPProxyAuth
 import json
 import base64
 import mysql.connector
@@ -224,10 +224,12 @@ for proxy in jsonproxies:
                 finalproxies.append(proxy['hostname'] + ':1100' + str(ip['port_base']))
                 break
                 
-randomproxy = random.choice(finalproxies)
-proxies = {'http': 'http://' + wonpr_user + ':' + wonpr_pass + '@' + randomproxy,
-    'https': 'https://' + wonpr_user + ':' + wonpr_pass + '@' + randomproxy}
-print(json.dumps(proxies))
+proxies = []
+if finalproxies:
+    randomproxy = random.choice(finalproxies)
+    proxies = {'http': 'http://' + wonpr_user + ':' + wonpr_pass + '@' + randomproxy,
+        'https': 'https://' + wonpr_user + ':' + wonpr_pass + '@' + randomproxy}
+#print(json.dumps(proxies))
 
 ###for proxy in jsonproxies:
 ###    if proxy['server'] == 'stockholm' or proxy['server'] == 'gothenburg':
@@ -301,9 +303,11 @@ while jsonprods:
                                        user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
                             else:
                                 session = requests.Session()
-                                session.proxies = proxies
-                                #session.auth = proxauth
+                                if proxies:
+                                    session.proxies = proxies
+                                s.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36'})
                                 html = session.get(product['url']).content
+                                ###session.auth = proxauth
                                 ###
                                 ###headers = {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',\
                                 ###    'Accept-Encoding':'gzip, deflate, br',\
