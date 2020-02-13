@@ -204,6 +204,8 @@ jsonsizemaps = json.loads(r.content)
 wonpr_token = os.environ['MORPH_WONPR_API_TOKEN']
 wonpr_url = os.environ['MORPH_WONPR_CONNECT_URL']
 wonpr_secret_key = os.environ['MORPH_WONPR_SECRET_KEY']
+wonpr_user = os.environ['MORPH_WONPR_USERNAME']
+wonpr_pass = os.environ['MORPH_WONPR_PASSWORD']
 
 encodestring2 = wonpr_token + ':'
 token2 = base64.b64encode(encodestring2.encode())
@@ -226,7 +228,8 @@ for proxy in jsonproxies:
 randomproxy = random.choice(finalproxies)
 proxies = {'http': 'http://' + randomproxy,
     'https': 'https://' + randomproxy}
-proxauth = HTTPProxyAuth(wonpr_token, "")
+#proxauth = HTTPProxyAuth(wonpr_token, "")
+proxauth = HTTPProxyAuth(wonpr_user, wonpr_pass)
 
 #print(json.dumps(proxies))
                 
