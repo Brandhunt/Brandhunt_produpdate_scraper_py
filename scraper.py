@@ -209,6 +209,8 @@ r = requests.get(wonpr_url, headers=wonpr_headers)
 jsonproxies = json.loads(r.content)
 finalproxies = []
 
+print(jsonproxies)
+
 for proxy in jsonproxies:
     if proxy['server'] == 'stockholm' or proxy['server'] == 'gothenburg':
         for ip in proxy['ips']:
