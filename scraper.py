@@ -203,7 +203,10 @@ jsonsizemaps = json.loads(r.content)
 wonpr_token = os.environ['MORPH_WONPR_API_TOKEN']
 wonpr_url = os.environ['MORPH_WONPR_CONNECT_URL']
 wonpr_secret_key = os.environ['MORPH_WONPR_SECRET_KEY']
-wonpr_headers = {'Authorization': 'Basic ' + wonpr_token + ':'}
+
+encodestring2 = wonpr_token + ':'
+token2 = base64.b64encode(encodestring2.encode())
+wonpr_headers = {'Authorization': 'Basic ' + token2.decode('ascii')}
 
 r = requests.get(wonpr_url, headers=wonpr_headers)
 jsonproxies = json.loads(r.content)
