@@ -221,15 +221,26 @@ for proxy in jsonproxies:
     if proxy['server'] == 'stockholm' or proxy['server'] == 'gothenburg':
         for ip in proxy['ips']:
             if ip['status'] == 'ok':
-                finalproxies.append(ip['ip'] + ':10000')
-                #finalproxies.append('https://' + encodestring2 + '@' + ip['ip'] + ':11000')
-                #finalproxies.append('https://' + ip['ip'] + ':11000')
-
+                finalproxies.append(proxy['hostname'] + ':1100' + ip['port_base'])
+                break
+                
 randomproxy = random.choice(finalproxies)
-proxies = {'http': 'http://' + randomproxy,
-    'https': 'https://' + randomproxy}
-#proxauth = HTTPProxyAuth(wonpr_token, "")
-proxauth = HTTPProxyAuth(wonpr_user, wonpr_pass)
+proxies = {'http': 'http://' + wonpr_user + ':' + wonpr_pass + '@' + randomproxy,
+    'https': 'https://' + wonpr_user + ':' + wonpr_pass + '@' randomproxy}
+
+###for proxy in jsonproxies:
+###    if proxy['server'] == 'stockholm' or proxy['server'] == 'gothenburg':
+###        for ip in proxy['ips']:
+###            if ip['status'] == 'ok':
+###                finalproxies.append(ip['ip'] + ':10000')
+###                #finalproxies.append('https://' + encodestring2 + '@' + ip['ip'] + ':11000')
+###                #finalproxies.append('https://' + ip['ip'] + ':11000')
+###
+###randomproxy = random.choice(finalproxies)
+###proxies = {'http': 'http://' + randomproxy,
+###    'https': 'https://' + randomproxy}
+####proxauth = HTTPProxyAuth(wonpr_token, "")
+###proxauth = HTTPProxyAuth(wonpr_user, wonpr_pass)
 
 #print(json.dumps(proxies))
                 
@@ -290,7 +301,7 @@ while jsonprods:
                             else:
                                 session = requests.Session()
                                 session.proxies = proxies
-                                session.auth = proxauth
+                                #session.auth = proxauth
                                 html = session.get(product['url']).content
                                 ###
                                 ###headers = {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',\
