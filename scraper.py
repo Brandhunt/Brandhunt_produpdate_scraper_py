@@ -212,7 +212,7 @@ r = requests.get(wonpr_url, headers=wonpr_headers)
 jsonproxies = json.loads(r.content)
 finalproxies = []
 
-print(jsonproxies)
+#print(jsonproxies)
 
 for proxy in jsonproxies:
     if proxy['server'] == 'stockholm' or proxy['server'] == 'gothenburg':
@@ -273,7 +273,7 @@ while jsonprods:
                         try:
                             #html = scraperwiki.scrape(product['url'])
                             #print(str(use_alt_scrape))
-                            if use_alt_scrape is False:
+                            if use_alt_scrape is True:
                                 html = scraperwiki.scrape(product['url'],\
                                        user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
                             else:
