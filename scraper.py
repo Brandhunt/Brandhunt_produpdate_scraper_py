@@ -292,6 +292,7 @@ while jsonprods:
                                 session.proxies = proxies
                                 session.auth = proxauth
                                 html = session.get(product['url']).content
+                                ###
                                 ###headers = {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',\
                                 ###    'Accept-Encoding':'gzip, deflate, br',\
                                 ###    'Accept-Language':'sv-SE,sv;q=0.8,en-US;q=0.5,en;q=0.3',\
