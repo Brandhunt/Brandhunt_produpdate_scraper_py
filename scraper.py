@@ -285,6 +285,10 @@ while jsonprods:
                                 html = scraperwiki.scrape(product['url'],\
                                        user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
                             else:
+                                session = requests.Session()
+                                session.proxies = proxies
+                                session.auth = proxauth
+                                html = session.get(product['url']).content
                                 ###headers = {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',\
                                 ###    'Accept-Encoding':'gzip, deflate, br',\
                                 ###    'Accept-Language':'sv-SE,sv;q=0.8,en-US;q=0.5,en;q=0.3',\
