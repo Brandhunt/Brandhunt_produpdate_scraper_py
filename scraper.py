@@ -226,7 +226,8 @@ for proxy in jsonproxies:
                 
 randomproxy = random.choice(finalproxies)
 proxies = {'http': 'http://' + wonpr_user + ':' + wonpr_pass + '@' + randomproxy,
-    'https': 'https://' + wonpr_user + ':' + wonpr_pass + '@' randomproxy}
+    'https': 'https://' + wonpr_user + ':' + wonpr_pass + '@' + randomproxy}
+print(json.dumps(proxies))
 
 ###for proxy in jsonproxies:
 ###    if proxy['server'] == 'stockholm' or proxy['server'] == 'gothenburg':
