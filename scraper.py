@@ -393,7 +393,7 @@ while jsonprods:
                         root = lxml.html.fromstring(html)
                         #print("ROOT:")
                         #for r in root: print r
-                        print("Currently scraping product with ID " + str(product['productid']))
+                        # # # # # print("Currently scraping product with ID " + str(product['productid'])) # # # # #
                         # >>> GET THE PRICE <<< #
                         price_elements = ''
                         price = ''
@@ -1647,4 +1647,6 @@ while jsonprods:
     offset = offset + limit
     r = requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', headers=headers)
     jsonprods = r.json()
+    if offset % 100 == 0:
+        print(str(offset) + ' products has been scraped so far!'
     
