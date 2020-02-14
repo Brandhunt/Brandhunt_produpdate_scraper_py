@@ -1648,5 +1648,5 @@ while jsonprods:
     r = requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', headers=headers)
     jsonprods = r.json()
     if offset % 100 == 0:
-        print(str(offset) + ' products has been scraped so far!'
+        print(str(offset) + ' products has been scraped so far!')
     
