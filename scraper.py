@@ -264,6 +264,7 @@ if finalproxies:
 # --> Decode and handle these URLs!
 
 #arraus = []
+totalscrapedcount = 0
 
 while jsonprods:
     for website in jsonwebsites:
@@ -380,6 +381,7 @@ while jsonprods:
                                                       'catstoaddresult': '',\
                                                       'attributes': '',\
                                                       'sizetypemapsqls': ''})
+                                    totalscrapedcount = totalscrapedcount + 1
                                     continue
                                 except:
                                     print(traceback.format_exc())
@@ -1637,6 +1639,7 @@ while jsonprods:
                                                                  remove_sizetosizetype,\
                                                                  insert_sizetosizetypemisc,\
                                                                  remove_sizetosizetypemisc])})
+                        totalscrapedcount = totalscrapedcount + 1
                     except:
                         #print("Error: " + str(sys.exc_info()[0]) + " occured!")
                         print(traceback.format_exc())
@@ -1649,4 +1652,4 @@ while jsonprods:
     jsonprods = r.json()
     #if offset % 100 == 0:
     #    print(str(offset) + ' products has been scraped so far!')
-    print(str(offset) + ' products has been scraped so far!')
+    print(str(totalscrapedcount) + ' products has been scraped so far!')
