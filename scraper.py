@@ -10,7 +10,7 @@
 import os
 os.environ['SCRAPERWIKI_DATABASE_NAME'] = 'sqlite:///data.sqlite'
 
-import cfscrape
+#import cfscrape
 #from cryptography.fernet import Fernet
 import scraperwiki
 #import socks
@@ -21,11 +21,11 @@ import requests
 #from requests.auth import HTTPProxyAuth
 import json
 import base64
-import mysql.connector
+#import mysql.connector
 import random
 import re
 from slugify import slugify
-import sys
+#import sys
 #import time
 import traceback
 #from urllib2 import HTTPError
@@ -298,12 +298,9 @@ while jsonprods:
                         try:
                             #html = scraperwiki.scrape(product['url'])
                             #print(str(use_alt_scrape))
-                            if use_alt_scrape is False:
+                            if use_alt_scrape is True:
                                 html = scraperwiki.scrape(product['url'],\
-                                       proxies=proxies,\
                                        user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
-                                #html = scraperwiki.scrape(product['url'],\
-                                #       user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
                             else:
                                 session = requests.Session()
                                 if proxies:
@@ -327,11 +324,11 @@ while jsonprods:
                                 #html = scraper.get(product['url'], headers=headers).content
                                 #scraper = cfscrape.create_scraper(delay=10)
                                 #scraper = cfscrape.create_scraper()
-                                if proxies:
-                                    html = scraper.get(product['url'], headers=headers, proxies=proxies).content#, auth=proxauth).content
-                                else:
-                                    print('COULD NOT FIND PROXIES!')
-                                    html = scraper.get(product['url'], headers=headers).content
+                                ###if proxies:
+                                ###    html = scraper.get(product['url'], headers=headers, proxies=proxies).content#, auth=proxauth).content
+                                ###else:
+                                ###    print('COULD NOT FIND PROXIES!')
+                                ###    html = scraper.get(product['url'], headers=headers).content
                                 #s = socks.socksocket()
                                 #proxy_https = re.split(':', proxy_https)
                                 #s.set_proxy(socks.SOCKS4, proxy_https[0], proxy_https[1])
