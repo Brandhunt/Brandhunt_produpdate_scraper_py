@@ -22,7 +22,7 @@ import requests
 import json
 import base64
 #import mysql.connector
-import random
+#import random
 import re
 from slugify import slugify
 #import sys
@@ -201,34 +201,34 @@ jsonsizemaps = json.loads(r.content)
 
 # --> Get the proxy information and related modules!
 
-wonpr_token = os.environ['MORPH_WONPR_API_TOKEN']
-wonpr_url = os.environ['MORPH_WONPR_CONNECT_URL']
-wonpr_secret_key = os.environ['MORPH_WONPR_SECRET_KEY']
-wonpr_user = os.environ['MORPH_WONPR_USERNAME']
-wonpr_pass = os.environ['MORPH_WONPR_PASSWORD']
+###wonpr_token = os.environ['MORPH_WONPR_API_TOKEN']
+###wonpr_url = os.environ['MORPH_WONPR_CONNECT_URL']
+###wonpr_secret_key = os.environ['MORPH_WONPR_SECRET_KEY']
+###wonpr_user = os.environ['MORPH_WONPR_USERNAME']
+###wonpr_pass = os.environ['MORPH_WONPR_PASSWORD']
 
-encodestring2 = wonpr_token + ':'
-token2 = base64.b64encode(encodestring2.encode())
-wonpr_headers = {'Authorization': 'Basic ' + token2.decode('ascii')}
+###encodestring2 = wonpr_token + ':'
+###token2 = base64.b64encode(encodestring2.encode())
+###wonpr_headers = {'Authorization': 'Basic ' + token2.decode('ascii')}
 
-r = requests.get(wonpr_url, headers=wonpr_headers)
-jsonproxies = json.loads(r.content)
-finalproxies = []
+###r = requests.get(wonpr_url, headers=wonpr_headers)
+###jsonproxies = json.loads(r.content)
+###finalproxies = []
 
 #print(jsonproxies)
 
-for proxy in jsonproxies:
-    if proxy['server'] == 'stockholm' or proxy['server'] == 'gothenburg':
-        for ip in proxy['ips']:
-            if ip['status'] == 'ok':
-                finalproxies.append(proxy['hostname'] + ':1100' + str(ip['port_base']))
-                break
+# #for proxy in jsonproxies:
+# #    if proxy['server'] == 'stockholm' or proxy['server'] == 'gothenburg':
+# #        for ip in proxy['ips']:
+# #            if ip['status'] == 'ok':
+# #                finalproxies.append(proxy['hostname'] + ':1100' + str(ip['port_base']))
+# #                break
                 
-proxies = []
-if finalproxies:
-    randomproxy = random.choice(finalproxies)
-    proxies = {'http': 'http://' + wonpr_user + ':' + wonpr_pass + '@' + randomproxy,
-        'https': 'https://' + wonpr_user + ':' + wonpr_pass + '@' + randomproxy}
+# #proxies = []
+# #if finalproxies:
+# #    randomproxy = random.choice(finalproxies)
+# #    proxies = {'http': 'http://' + wonpr_user + ':' + wonpr_pass + '@' + randomproxy,
+# #        'https': 'https://' + wonpr_user + ':' + wonpr_pass + '@' + randomproxy}
 #print(json.dumps(proxies))
 
 ###for proxy in jsonproxies:
@@ -299,13 +299,13 @@ while jsonprods:
                         try:
                             #html = scraperwiki.scrape(product['url'])
                             #print(str(use_alt_scrape))
-                            if use_alt_scrape is True:
+                            if use_alt_scrape is False:
                                 html = scraperwiki.scrape(product['url'],\
                                        user_agent='Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36')
                             else:
                                 session = requests.Session()
-                                if proxies:
-                                    session.proxies = proxies
+                                # #if proxies:
+                                # #    session.proxies = proxies
                                 session.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36'})
                                 html = session.get(product['url']).content
                                 ###session.auth = proxauth
