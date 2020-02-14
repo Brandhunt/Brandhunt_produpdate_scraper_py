@@ -319,7 +319,7 @@ while jsonprods:
                                 #    'User-Agent':'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.101 Safari/537.36',\
                                 #    'Referer' : product['url']}
                                 session = requests.session()
-                                craper = cfscrape.create_scraper(sess=session)
+                                scraper = cfscrape.create_scraper(sess=session)
                                 #scraper = cfscrape.create_scraper(sess=session, delay=10)
                                 #html = scraper.get(product['url'], headers=headers).content
                                 #scraper = cfscrape.create_scraper(delay=10)
