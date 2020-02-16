@@ -273,6 +273,7 @@ while jsonprods:
             continue
         # Check if there are any initial values to take care of! #
         altimggrab = ''
+        skip_from_img_url = ''
         if website['productmisc'] != '':
             intro_output = re.search(r'({alt_img_grab}(.*?))\{', website['productmisc'])
             if intro_output is not None and len(intro_output.group(1)) > 0:
@@ -282,6 +283,10 @@ while jsonprods:
             if intro_output is not None and len(intro_output.group(1)) > 0:
                 altimggrab = '2'
                 website['productmisc'] = re.sub(r'({alt_img_grab_2}.*?(?=\{))', '', website['productmisc'])
+            intro_output = re.search(r'({skip_from_img_url}(.*?))\{', website['productmisc'])
+            if intro_output is not None and len(intro_output.group(1)) > 0:
+                skip_from_img_url = intro_output.group(2)
+                website['productmisc'] = re.sub(r'({skip_from_img_url}.*?(?=\{))', '', website['productmisc'])
         # Check each product - See if any of them belong to the current website! #
         for product in jsonprods:
             if website['domain'] == product['domain']:
@@ -577,6 +582,8 @@ while jsonprods:
                                         if imageval[0:2] == '//':
                                             imageval = 'https:' + imageval
                                             image_urls[imagekey] = imageval
+                                        if skip_from_img_url != '':
+                                            image_urls[imagekey] = image_urls[imagekey].replace(skip_from_img_url, '')
                                     image_urls_valid = list(image_urls.values())
                                 #print('IMAGE ELEMENTS:')
                                 #for img in image_elements: print img
