@@ -274,7 +274,9 @@ while jsonprods:
         # Check if there are any initial values to take care of! #
         altimggrab = ''
         skip_from_img_url = ''
+        orig_prodmisc = ''
         if website['productmisc'] != '':
+            orig_prodmisc = website['productmisc']
             intro_output = re.search(r'({alt_img_grab}(.*?))\{', website['productmisc'])
             if intro_output is not None and len(intro_output.group(1)) > 0:
                 altimggrab = '1'
@@ -1654,6 +1656,8 @@ while jsonprods:
                         continue
                 else:
                     continue
+        if website['productmisc'] != '':
+            website['productmisc'] = orig_prodmisc
     offset = offset + limit
     r = requests.get(wp_connectwp_url + str(offset) + '/' + str(limit) + '/', headers=headers)
     jsonprods = r.json()
