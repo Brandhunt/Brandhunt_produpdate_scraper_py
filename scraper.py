@@ -1272,7 +1272,7 @@ while jsonprods:
                                                     # --> Check if there are any sex-specific sizes to map!
                                                     if len(product_sex) == 1:
                                                         sex_name = product_sex[0][0]['name']
-                                                        split_sizetomaps = sizemap['sizestomap'].split(',')
+                                                        split_sizetomaps = sizemap['sizestomap'].split(';')
                                                         count = 0
                                                         for sizetomap in split_sizetomaps.copy():
                                                             if re.search(r'\(M\)', sizetomap) and sex_name == 'Male':
@@ -1280,7 +1280,7 @@ while jsonprods:
                                                             elif re.search(r'\(F\)', sizetomap) and sex_name == 'Female':
                                                                 split_sizetomaps[count] = re.sub(r'\(F\)', '', sizetomap)
                                                             count += 1
-                                                        sizemap['sizestomap'] = ','.join(split_sizetomaps)
+                                                        sizemap['sizestomap'] = ';'.join(split_sizetomaps)
                                                         #print(sizemap['sizestomap'])
                                                     #found_sizenames = []
                                                     #split_sizetomaps = sizemap['sizestomap'].split(',')
@@ -1288,7 +1288,7 @@ while jsonprods:
                                                     #found_sizenames = list(filter(lambda x: re.search(x[0]['name'], sizemap['sizestomap']), product_sizes))
                                                     #for prod_size in product_sizes:
                                                     #    found_sizenames = list(filter(lambda x: prod_size[0]['name'] == x, sizemap['sizestomap']))
-                                                    split_sizetomaps = sizemap['sizestomap'].split(',')
+                                                    split_sizetomaps = sizemap['sizestomap'].split(';')
                                                     for sizetomap in split_sizetomaps.copy():
                                                         found_sizenames = list(filter(lambda x: x[0]['name'].strip().lower() == sizetomap.strip().lower(), product_sizes))
                                                         if found_sizenames:
