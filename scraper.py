@@ -624,6 +624,7 @@ while jsonprods:
                         remove_sizetosizetypemisc = ''
                         skip_exist_attr = [0, 0, 0, 0, 0, 0, 0] # <==> [brand, color, sex, size, s-type, s-t-misc, categories]
                         skip_exist_attr_prodtitle = [0, 0, 0, 0] # <==> [brand, color, sex, categories]
+                        size_handling_options = [0, 0, 0, 0] # <==> [round upwards, round downwards, ??? ???]
                         no_whitespace_htmlregex = False
                         no_whitespace_prodtitleregex = False
                         # --> Define misc. storage variables
