@@ -624,7 +624,10 @@ while jsonprods:
                         remove_sizetosizetypemisc = ''
                         skip_exist_attr = [0, 0, 0, 0, 0, 0, 0] # <==> [brand, color, sex, size, s-type, s-t-misc, categories]
                         skip_exist_attr_prodtitle = [0, 0, 0, 0] # <==> [brand, color, sex, categories]
-                        size_handling_options = [0, 0, 0, 0] # <==> [round upwards, round downwards, ??? ???]
+                        size_handling_options = [[0, '']] # <==> 0 = round up; 1 = round down; 2 = round as division up;
+                        # <==> 3 = round as division down; 4 = round uneven up; 5 = round uneven down;
+                        # <==> CONT. ::: After the ';' character, type the name of the sizetype you wish to handle the sizes for:
+                        # <==> IMPORTANT ::: Type 'ALL' as sizetype if you wish for the first setting to be applied to all sizetypes!
                         no_whitespace_htmlregex = False
                         no_whitespace_prodtitleregex = False
                         # --> Define misc. storage variables
@@ -1283,6 +1286,33 @@ while jsonprods:
                                                             count += 1
                                                         sizemap['sizestomap'] = ';'.join(split_sizetomaps)
                                                         #print(sizemap['sizestomap'])
+                                                    # --> Check if there are any specific size handling to do!
+                                                    if len(size_handling_options) > 1:
+                                                        for size_hand_opt in size_handling_options:
+                                                            if size_hand_opt[1] == sizetype[0]['name']:
+                                                                split_sizetomaps = sizemap['sizestomap'].split(';')
+                                                                count = 0
+                                                                for sizetomap in split_sizetomaps.copy():
+                                                                    if re.search(r'(\d+\,\d|\d+\.\d)', sizetomap):
+                                                                        if size_hand_opt[0] == 0 or size_hand_opt[0] == 1:
+                                                                            split_sizetomaps[count] = re.sub(r'(\,\d|\.\d)', '', sizetomap)
+                                                                            if size_hand_opt[0] == 0:
+                                                                                split_sizetomaps[count] = str(int(sizetomap) + 1)
+                                                                    elif re.search(r'\d\/\d', sizetomap):
+                                                                        if size_hand_opt[0] == 2 or size_hand_opt[0] == 3:
+                                                                            split_sizetomaps[count] = re.sub(r'\d\/\d', '', sizetomap)
+                                                                            if size_hand_opt[0] == 2:
+                                                                                split_sizetomaps[count] = str(int(sizetomap) + 1)
+                                                                    elif re.search(r'd+', sizetomap):
+                                                                        sizetomapint = ''.join([i for i in sizetomap if not i.isalpha()])
+                                                                        if int(sizetomapint) > 0 and int(sizetomapint) % 2 == 1:
+                                                                            if size_hand_opt[0] == 4:
+                                                                                split_sizetomaps[count] = str(int(sizetomapint) + 1)
+                                                                            if size_hand_opt[0] == 5:
+                                                                                split_sizetomaps[count] = str(int(sizetomapint) - 1)
+                                                                    count += 1
+                                                                sizemap['sizestomap'] = ';'.join(split_sizetomaps)
+                                                                #print(sizemap['sizestomap'])
                                                     #found_sizenames = []
                                                     #split_sizetomaps = sizemap['sizestomap'].split(',')
                                                     #for sizetomap in split_sizetomaps.copy():
