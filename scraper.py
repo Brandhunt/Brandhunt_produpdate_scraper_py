@@ -1295,6 +1295,7 @@ while jsonprods:
                                                         sizemap['sizestomap'] = ';'.join(split_sizetomaps)
                                                         #print(sizemap['sizestomap'])
                                                     # --> Check if there are any specific size handling to do!
+                                                    # --> !!! IMPORTANT ::: IF NUMBERS NEED TO BE SPLIT BY CHARACTER, MAKE SURE TO SPLIT THEM FIRST BEFORE THIS SECTION !!!
                                                     if len(size_handling_options) > 1:
                                                         for size_hand_opt in size_handling_options:
                                                             if size_hand_opt[1] == sizetype[0]['name']:
@@ -1305,19 +1306,21 @@ while jsonprods:
                                                                         if size_hand_opt[0] == 0 or size_hand_opt[0] == 1:
                                                                             split_sizetomaps[count] = re.sub(r'(\,\d|\.\d)', '', sizetomap)
                                                                             if size_hand_opt[0] == 0:
-                                                                                split_sizetomaps[count] = str(int(sizetomap) + 1)
+                                                                                sizetomapint = ''.join([i for i in sizetomap if i.isdigit()])
+                                                                                split_sizetomaps[count] = re.sub(r'd+', str(int(sizetomapint) + 1), split_sizetomaps[count])
                                                                     elif re.search(r'\d\/\d', sizetomap):
                                                                         if size_hand_opt[0] == 2 or size_hand_opt[0] == 3:
                                                                             split_sizetomaps[count] = re.sub(r'\d\/\d', '', sizetomap)
                                                                             if size_hand_opt[0] == 2:
-                                                                                split_sizetomaps[count] = str(int(sizetomap) + 1)
+                                                                                sizetomapint = ''.join([i for i in sizetomap if i.isdigit()])
+                                                                                split_sizetomaps[count] = re.sub(r'd+', str(int(sizetomapint) + 1), split_sizetomaps[count])
                                                                     elif re.search(r'd+', sizetomap):
-                                                                        sizetomapint = ''.join([i for i in sizetomap if not i.isalpha()])
+                                                                        sizetomapint = ''.join([i for i in sizetomap if i.isdigit()])
                                                                         if int(sizetomapint) > 0 and int(sizetomapint) % 2 == 1:
                                                                             if size_hand_opt[0] == 4:
-                                                                                split_sizetomaps[count] = str(int(sizetomapint) + 1)
+                                                                                split_sizetomaps[count] = re.sub(r'd+', str(int(sizetomapint) + 1), sizetomap)
                                                                             if size_hand_opt[0] == 5:
-                                                                                split_sizetomaps[count] = str(int(sizetomapint) - 1)
+                                                                                split_sizetomaps[count] = re.sub(r'd+', str(int(sizetomapint) - 1), sizetomap)
                                                                     count += 1
                                                                 sizemap['sizestomap'] = ';'.join(split_sizetomaps)
                                                                 #print(sizemap['sizestomap'])
