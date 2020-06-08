@@ -646,7 +646,7 @@ while jsonprods:
                                         if productmisc_array[i] != 'true':
                                             size_handle_arrs = productmisc_array[i].strip().split('|')
                                             for size_handle_arr in size_handle_arrs:
-                                                size_handle_arr = size_handle_arr.strip().split(',')
+                                                size_handle_arr = size_handle_arr.strip().split(':')
                                                 if len(size_handle_arr) > 2:
                                                     size_handling_options.append([ int(size_handle_arr[0]), size_handle_arr[1], '' ])
                                                 else:
