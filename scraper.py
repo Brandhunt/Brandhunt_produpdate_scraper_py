@@ -638,6 +638,14 @@ while jsonprods:
                                 for i in range(2, len(productmisc_array), 2):
                                     #print(productmisc_array[(i-1)])
                                     #print(productmisc_array[i])
+                                    # --- Any specific way the sizes should be handled? --- #
+                                    if productmisc_array[(i-1)] == 'size_handle':
+                                        if productmisc_array[i] != 'true':
+                                            size_handle_arrs = productmisc_array[i].strip().split('|')
+                                            for size_handle_arr in size_handle_arrs:
+                                                size_handle_arr = size_handle_arr.strip().split(',')
+                                                size_handling_options.append([ int(size_handle_arr[0]), size_handle_arr[1] ])
+                                            productmisc_array[i] = 'true'
                                     # --- Set product as 'Not Available' if the product has been found but the price is not available? --- #
                                     if productmisc_array[(i-1)] == 'allow_not_available':
                                         if price == '1':
