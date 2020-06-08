@@ -630,6 +630,7 @@ while jsonprods:
                         # <==> CONT. ::: After the ';' character, type the name of the sizetype you wish to handle the sizes for.
                         # <==> CONT. The last field is only used if you wish to seperate the sizes by a specific character!
                         # <==> IMPORTANT ::: Type 'ALL' as sizetype if you wish for the first setting to be applied to all sizetypes!
+                        mandatory_sizes = [['ONE SIZE', 'Accessories']]
                         no_whitespace_htmlregex = False
                         no_whitespace_prodtitleregex = False
                         # --> Define misc. storage variables
@@ -1319,7 +1320,7 @@ while jsonprods:
                                                                                 product_sizes.append((new_size_term, False))
                                                                             else:
                                                                                 newsizename = new_size_name.strip()
-                                                                                newsizeslug = slugify(finalsizename.strip())
+                                                                                newsizeslug = slugify(newsizename.strip())
                                                                                 new_size_term = {'term_id':-1, 'name':newsizename, 'slug':newsizeslug, 'taxonomy':'pa_size'}
                                                                                 product_sizes.append((new_size_term, True))
                                                                             continue_count = False
@@ -1335,7 +1336,7 @@ while jsonprods:
                                                                                 product_sizes.append((new_size_term, False))
                                                                             else:
                                                                                 newsizename = new_size_name.strip()
-                                                                                newsizeslug = slugify(finalsizename.strip())
+                                                                                newsizeslug = slugify(newsizename.strip())
                                                                                 new_size_term = {'term_id':-1, 'name':newsizename, 'slug':newsizeslug, 'taxonomy':'pa_size'}
                                                                                 product_sizes.append((new_size_term, True))
                                                                             continue_count = False
@@ -1353,7 +1354,7 @@ while jsonprods:
                                                                                     product_sizes.append((new_size_term, False))
                                                                                 else:
                                                                                     newsizename = new_size_name.strip()
-                                                                                    newsizeslug = slugify(finalsizename.strip())
+                                                                                    newsizeslug = slugify(newsizename.strip())
                                                                                     new_size_term = {'term_id':-1, 'name':newsizename, 'slug':newsizeslug, 'taxonomy':'pa_size'}
                                                                                     product_sizes.append((new_size_term, True))
                                                                                 continue_count = False
@@ -1371,7 +1372,7 @@ while jsonprods:
                                                                                     product_sizes.append((new_size_term, False))
                                                                                 else:
                                                                                     newsizename = newsize.strip()
-                                                                                    newsizeslug = slugify(finalsizename.strip())
+                                                                                    newsizeslug = slugify(newsizename.strip())
                                                                                     new_size_term = {'term_id':-1, 'name':newsizename, 'slug':newsizeslug, 'taxonomy':'pa_size'}
                                                                                     product_sizes.append((new_size_term, True))
                                                                                 continue_count = False
@@ -1403,6 +1404,20 @@ while jsonprods:
                                                                 product_sizes = list(filter(lambda x: x[0]['name'].strip().lower() != size_to_remove, product_sizes))
                                                             #print(json.dumps(product_sizes))
                                                             break
+                                                    # --> Do we need to add any mandatory sizes depending on sizetype?(Only added if no sizes exists for product!)
+                                                    if len(mandatory_sizes) > 0 and len(product_sizes) == 0:
+                                                        for mandsize in mandatory_sizes:
+                                                            if mandsize[0] != '' and mandsize[1] != '':
+                                                                if sizetype[0]['name'] == mandsize[1].strip():
+                                                                    for size in mandsize[0]:
+                                                                        new_size_term = doesprodattrexist(jsonprodattr['pa_size'], size.strip(), 'pa_size')
+                                                                        if new_size_term != 0:
+                                                                            product_sizes.append((new_size_term, False))
+                                                                        else:
+                                                                            newsizename = size.strip()
+                                                                            newsizeslug = slugify(newsizename.strip())
+                                                                            new_size_term = {'term_id':-1, 'name':newsizename, 'slug':newsizeslug, 'taxonomy':'pa_size'}
+                                                                            product_sizes.append((new_size_term, True))
                                 # --> Apply color, size, sex and brand to the product! (Filter the attributes before save)
                                 # --> (Filter the attributes before database save)
                                 attributes = []
