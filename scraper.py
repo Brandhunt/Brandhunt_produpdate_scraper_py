@@ -624,9 +624,11 @@ while jsonprods:
                         remove_sizetosizetypemisc = ''
                         skip_exist_attr = [0, 0, 0, 0, 0, 0, 0] # <==> [brand, color, sex, size, s-type, s-t-misc, categories]
                         skip_exist_attr_prodtitle = [0, 0, 0, 0] # <==> [brand, color, sex, categories]
-                        size_handling_options = [[0, '']] # <==> 0 = round up; 1 = round down; 2 = round as division up;
-                        # <==> 3 = round as division down; 4 = round uneven up; 5 = round uneven down;
-                        # <==> CONT. ::: After the ';' character, type the name of the sizetype you wish to handle the sizes for:
+                        size_handling_options = [[0, '', '']] # <==> 0 = round up; 1 = round down; 2 = round as division up;
+                        # <==> CONT. 3 = round as division down; 4 = round uneven up; 5 = round uneven down;
+                        # <==> CONT. When seperating sizes by char: 6 = keep all sizes after split; 7 = keep first size; 8 = keep second size;
+                        # <==> CONT. ::: After the ';' character, type the name of the sizetype you wish to handle the sizes for.
+                        # <==> CONT. The last field is only used if you wish to seperate the sizes by a specific character!
                         # <==> IMPORTANT ::: Type 'ALL' as sizetype if you wish for the first setting to be applied to all sizetypes!
                         no_whitespace_htmlregex = False
                         no_whitespace_prodtitleregex = False
@@ -644,7 +646,10 @@ while jsonprods:
                                             size_handle_arrs = productmisc_array[i].strip().split('|')
                                             for size_handle_arr in size_handle_arrs:
                                                 size_handle_arr = size_handle_arr.strip().split(',')
-                                                size_handling_options.append([ int(size_handle_arr[0]), size_handle_arr[1] ])
+                                                if len(size_handle_arr) > 2:
+                                                    size_handling_options.append([ int(size_handle_arr[0]), size_handle_arr[1], '' ])
+                                                else:
+                                                    size_handling_options.append([ int(size_handle_arr[0]), size_handle_arr[1], size_handle_arr[2] ])
                                             productmisc_array[i] = 'true'
                                     # --- Set product as 'Not Available' if the product has been found but the price is not available? --- #
                                     if productmisc_array[(i-1)] == 'allow_not_available':
@@ -1301,26 +1306,68 @@ while jsonprods:
                                                             if size_hand_opt[1] == sizetype[0]['name']:
                                                                 split_sizetomaps = sizemap['sizestomap'].split(';')
                                                                 count = 0
-                                                                for sizetomap in split_sizetomaps.copy():
-                                                                    if re.search(r'(\d+\,\d|\d+\.\d)', sizetomap):
+                                                                for size in product_sizes.copy():
+                                                                    if re.search(r'(\d+\,\d|\d+\.\d)', size[0]['name']):
                                                                         if size_hand_opt[0] == 0 or size_hand_opt[0] == 1:
-                                                                            split_sizetomaps[count] = re.sub(r'(\,\d|\.\d)', '', sizetomap)
+                                                                            new_size_name = re.sub(r'(\,\d|\.\d)', '', size[0]['name'])
                                                                             if size_hand_opt[0] == 0:
-                                                                                sizetomapint = ''.join([i for i in sizetomap if i.isdigit()])
-                                                                                split_sizetomaps[count] = re.sub(r'd+', str(int(sizetomapint) + 1), split_sizetomaps[count])
-                                                                    elif re.search(r'\d\/\d', sizetomap):
+                                                                                new_size_int = ''.join([i for i in size[0]['name'] if i.isdigit()])
+                                                                                new_size_name = re.sub(r'd+', str(int(new_size_int) + 1), new_size_name)
+                                                                            new_size_term = doesprodattrexist(jsonprodattr['pa_size'], new_size_name.strip(), 'pa_size')
+                                                                            if new_size_term != 0:
+                                                                                product_sizes.append((new_size_term, False))
+                                                                            else:
+                                                                                newsizename = new_size_name.strip()
+                                                                                newsizeslug = slugify(finalsizename.strip())
+                                                                                new_size_term = {'term_id':-1, 'name':newsizename, 'slug':newsizeslug, 'taxonomy':'pa_size'}
+                                                                                product_sizes.append((new_size_term, True)) 
+                                                                    if re.search(r'\d\/\d', size[0]['name']):
                                                                         if size_hand_opt[0] == 2 or size_hand_opt[0] == 3:
-                                                                            split_sizetomaps[count] = re.sub(r'\d\/\d', '', sizetomap)
+                                                                            new_size_name = re.sub(r'\d\/\d', '', size[0]['name'])
                                                                             if size_hand_opt[0] == 2:
-                                                                                sizetomapint = ''.join([i for i in sizetomap if i.isdigit()])
-                                                                                split_sizetomaps[count] = re.sub(r'd+', str(int(sizetomapint) + 1), split_sizetomaps[count])
-                                                                    elif re.search(r'd+', sizetomap):
-                                                                        sizetomapint = ''.join([i for i in sizetomap if i.isdigit()])
-                                                                        if int(sizetomapint) > 0 and int(sizetomapint) % 2 == 1:
-                                                                            if size_hand_opt[0] == 4:
-                                                                                split_sizetomaps[count] = re.sub(r'd+', str(int(sizetomapint) + 1), sizetomap)
-                                                                            if size_hand_opt[0] == 5:
-                                                                                split_sizetomaps[count] = re.sub(r'd+', str(int(sizetomapint) - 1), sizetomap)
+                                                                                new_size_int = ''.join([i for i in size[0]['name'] if i.isdigit()])
+                                                                                new_size_name = re.sub(r'd+', str(int(new_size_int) + 1), new_size_name)
+                                                                            new_size_term = doesprodattrexist(jsonprodattr['pa_size'], new_size_name.strip(), 'pa_size')
+                                                                            if new_size_term != 0:
+                                                                                product_sizes.append((new_size_term, False))
+                                                                            else:
+                                                                                newsizename = new_size_name.strip()
+                                                                                newsizeslug = slugify(finalsizename.strip())
+                                                                                new_size_term = {'term_id':-1, 'name':newsizename, 'slug':newsizeslug, 'taxonomy':'pa_size'}
+                                                                                product_sizes.append((new_size_term, True))
+                                                                    if re.search(r'd+', size[0]['name']):
+                                                                        if size_hand_opt[0] == 4 or size_hand_opt[0] == 5:
+                                                                            new_size_int = ''.join([i for i in size[0]['name'] if i.isdigit()])
+                                                                            if int(new_size_int) > 0 and int(new_size_int) % 2 == 1:
+                                                                                new_size_name = size[0]['name']
+                                                                                if size_hand_opt[0] == 4:
+                                                                                    new_size_name = re.sub(r'd+', str(int(new_size_int) + 1), sizetomap)
+                                                                                elif size_hand_opt[0] == 5:
+                                                                                    new_size_name = re.sub(r'd+', str(int(new_size_int) - 1), sizetomap)
+                                                                                new_size_term = doesprodattrexist(jsonprodattr['pa_size'], new_size_name.strip(), 'pa_size')
+                                                                                if new_size_term != 0:
+                                                                                    product_sizes.append((new_size_term, False))
+                                                                                else:
+                                                                                    newsizename = new_size_name.strip()
+                                                                                    newsizeslug = slugify(finalsizename.strip())
+                                                                                    new_size_term = {'term_id':-1, 'name':newsizename, 'slug':newsizeslug, 'taxonomy':'pa_size'}
+                                                                                    product_sizes.append((new_size_term, True))
+                                                                    if size_hand_opt[0] in range(6, 9):
+                                                                        split_char = size_hand_opt[2].strip() if size_hand_opt[2] else '/'
+                                                                        newsizes = size[0]['name'].split(split_char)
+                                                                        if size_hand_opt[0] == 7:
+                                                                            removed_size = newsizes.pop()
+                                                                        elif size_hand_opt[0] == 8:
+                                                                            removed_size = newsizes.pop(0)
+                                                                        for newsize in newsizes:
+                                                                            new_size_term = doesprodattrexist(jsonprodattr['pa_size'], newsize.strip(), 'pa_size')
+                                                                            if new_size_term != 0:
+                                                                                product_sizes.append((new_size_term, False))
+                                                                            else:
+                                                                                newsizename = newsize.strip()
+                                                                                newsizeslug = slugify(finalsizename.strip())
+                                                                                new_size_term = {'term_id':-1, 'name':newsizename, 'slug':newsizeslug, 'taxonomy':'pa_size'}
+                                                                                product_sizes.append((new_size_term, True))
                                                                     count += 1
                                                                 sizemap['sizestomap'] = ';'.join(split_sizetomaps)
                                                                 #print(sizemap['sizestomap'])
