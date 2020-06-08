@@ -1307,6 +1307,7 @@ while jsonprods:
                                                                 split_sizetomaps = sizemap['sizestomap'].split(';')
                                                                 count = 0
                                                                 for size in product_sizes.copy():
+                                                                    continue_count = True
                                                                     if re.search(r'(\d+\,\d|\d+\.\d)', size[0]['name']):
                                                                         if size_hand_opt[0] == 0 or size_hand_opt[0] == 1:
                                                                             new_size_name = re.sub(r'(\,\d|\.\d)', '', size[0]['name'])
@@ -1320,7 +1321,9 @@ while jsonprods:
                                                                                 newsizename = new_size_name.strip()
                                                                                 newsizeslug = slugify(finalsizename.strip())
                                                                                 new_size_term = {'term_id':-1, 'name':newsizename, 'slug':newsizeslug, 'taxonomy':'pa_size'}
-                                                                                product_sizes.append((new_size_term, True)) 
+                                                                                product_sizes.append((new_size_term, True))
+                                                                            continue_count = False
+                                                                            product_sizes.pop(count)
                                                                     if re.search(r'\d\/\d', size[0]['name']):
                                                                         if size_hand_opt[0] == 2 or size_hand_opt[0] == 3:
                                                                             new_size_name = re.sub(r'\d\/\d', '', size[0]['name'])
@@ -1335,6 +1338,7 @@ while jsonprods:
                                                                                 newsizeslug = slugify(finalsizename.strip())
                                                                                 new_size_term = {'term_id':-1, 'name':newsizename, 'slug':newsizeslug, 'taxonomy':'pa_size'}
                                                                                 product_sizes.append((new_size_term, True))
+                                                                            continue_count = False
                                                                     if re.search(r'd+', size[0]['name']):
                                                                         if size_hand_opt[0] == 4 or size_hand_opt[0] == 5:
                                                                             new_size_int = ''.join([i for i in size[0]['name'] if i.isdigit()])
@@ -1352,6 +1356,7 @@ while jsonprods:
                                                                                     newsizeslug = slugify(finalsizename.strip())
                                                                                     new_size_term = {'term_id':-1, 'name':newsizename, 'slug':newsizeslug, 'taxonomy':'pa_size'}
                                                                                     product_sizes.append((new_size_term, True))
+                                                                                continue_count = False
                                                                     if size_hand_opt[0] in range(6, 9):
                                                                         split_char = size_hand_opt[2].strip() if size_hand_opt[2] else '/'
                                                                         newsizes = size[0]['name'].split(split_char)
@@ -1369,7 +1374,9 @@ while jsonprods:
                                                                                     newsizeslug = slugify(finalsizename.strip())
                                                                                     new_size_term = {'term_id':-1, 'name':newsizename, 'slug':newsizeslug, 'taxonomy':'pa_size'}
                                                                                     product_sizes.append((new_size_term, True))
-                                                                    count += 1
+                                                                                continue_count = False
+                                                                    if continue_count == True:
+                                                                        count += 1
                                                                 sizemap['sizestomap'] = ';'.join(split_sizetomaps)
                                                                 #print(sizemap['sizestomap'])
                                                     #found_sizenames = []
