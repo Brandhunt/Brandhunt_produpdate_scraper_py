@@ -617,6 +617,7 @@ while jsonprods:
                         preexistingcurrency = ''
                         notfound = False
                         notavailable = False
+                        skipfinalsave = False
                         shouldremoveonnotfound = False
                         soldoutupdatemeta = False
                         soldouthtmlupdatemeta = False
@@ -928,6 +929,42 @@ while jsonprods:
                                                         product_categories = array_merge(product_categories, category_array)
                                                     else:
                                                         product_categories = category_array
+                                                # --> Check if any product fixes should be applied for category HTML check!
+                                                if jsonprodfixes:
+                                                    cat_prodfix_regex_list = [[re.sub('\{pa_category\}', '', i['selectionfield']),\
+                                                                               i['actionfield']] for i in jsonprodfixes if 'pa_category' in i['selectionfield']]
+                                                    cat_html = str(productmisc_array[i])
+                                                    for fix in cat_prodfix_regex_list:
+                                                        if re.search(fix[0], cat_html, flags=re.IGNORECASE):
+                                                            if re.search('{remove_product}', fix[1], flags=re.IGNORECASE):
+                                                                notfound = True
+                                                                removeon404 = True
+                                                                try:
+                                                                    scraperwiki.sqlite.save(unique_keys=['productid'],\
+                                                                                data={'productid': product['productid'],\
+                                                                                      'url': product['url'],\
+                                                                                      'domain': product['domain'],\
+                                                                                      'price': '',\
+                                                                                      'salesprice': '',\
+                                                                                      'domainmisc':  '',\
+                                                                                      'prodlogurls': '',\
+                                                                                      'prodlogurl': '',\
+                                                                                      'finalimgurls': '',\
+                                                                                      'validimgurls': '',\
+                                                                                      'imgurls': '',\
+                                                                                      'notfound': notfound,\
+                                                                                      'notavailable': True,\
+                                                                                      'removeon404': removeon404,\
+                                                                                      'soldoutfix': 0,\
+                                                                                      'soldouthtmlfix': 0,\
+                                                                                      'catstoaddresult': '',\
+                                                                                      'attributes': '',\
+                                                                                      'sizetypemapsqls': ''})
+                                                                    totalscrapedcount = totalscrapedcount + 1
+                                                                    skipfinalsave = True
+                                                                except:
+                                                                    #print("Error: " + str(sys.exc_info()[0]) + " occured!")
+                                                                    print(traceback.format_exc())    
                                         # --- Is the product no longer existing - Does the page for it not exist anymore? --- #
                                         if productmisc_array[(i-1)] == 'notfound':
                                             if len(productmisc_array[i]) > 0:
@@ -1756,30 +1793,31 @@ while jsonprods:
                         price = getmoneyfromtext(price)
                         salesprice = getmoneyfromtext(salesprice)
                         # >>> STORE PRODUCT VALUES IN MORPH.IO DATABASE <<< #
-                        scraperwiki.sqlite.save(unique_keys=['productid'],\
-                                                data={'productid': product['productid'],\
-                                                      'url': product['url'],\
-                                                      'domain': product['domain'],\
-                                                      'price': price,\
-                                                      'salesprice': salesprice,\
-                                                      'domainmisc':  json.dumps(domainmisc_array),\
-                                                      'prodlogurls': json.dumps(prodlog_image_urls),\
-                                                      'prodlogurl': productlogourl,\
-                                                      'finalimgurls': json.dumps(images),\
-                                                      'validimgurls': json.dumps(image_urls_valid),\
-                                                      'imgurls': json.dumps(image_urls),\
-                                                      'notfound': notfound,\
-                                                      'notavailable': notavailable,\
-                                                      'removeon404': shouldremoveonnotfound,\
-                                                      'soldoutfix': soldoutupdatemeta,\
-                                                      'soldouthtmlfix': soldouthtmlupdatemeta,\
-                                                      'catstoaddresult': json.dumps(catstoaddresult),\
-                                                      'attributes': json.dumps(attributes_to_store),\
-                                                      'sizetypemapsqls': json.dumps([insert_sizetosizetype,\
-                                                                 remove_sizetosizetype,\
-                                                                 insert_sizetosizetypemisc,\
-                                                                 remove_sizetosizetypemisc])})
-                        totalscrapedcount = totalscrapedcount + 1
+                        if skipfinalsave == False:
+                            scraperwiki.sqlite.save(unique_keys=['productid'],\
+                                                    data={'productid': product['productid'],\
+                                                          'url': product['url'],\
+                                                          'domain': product['domain'],\
+                                                          'price': price,\
+                                                          'salesprice': salesprice,\
+                                                          'domainmisc':  json.dumps(domainmisc_array),\
+                                                          'prodlogurls': json.dumps(prodlog_image_urls),\
+                                                          'prodlogurl': productlogourl,\
+                                                          'finalimgurls': json.dumps(images),\
+                                                          'validimgurls': json.dumps(image_urls_valid),\
+                                                          'imgurls': json.dumps(image_urls),\
+                                                          'notfound': notfound,\
+                                                          'notavailable': notavailable,\
+                                                          'removeon404': shouldremoveonnotfound,\
+                                                          'soldoutfix': soldoutupdatemeta,\
+                                                          'soldouthtmlfix': soldouthtmlupdatemeta,\
+                                                          'catstoaddresult': json.dumps(catstoaddresult),\
+                                                          'attributes': json.dumps(attributes_to_store),\
+                                                          'sizetypemapsqls': json.dumps([insert_sizetosizetype,\
+                                                                     remove_sizetosizetype,\
+                                                                     insert_sizetosizetypemisc,\
+                                                                     remove_sizetosizetypemisc])})
+                            totalscrapedcount = totalscrapedcount + 1
                     except:
                         #print("Error: " + str(sys.exc_info()[0]) + " occured!")
                         print(traceback.format_exc())
