@@ -929,13 +929,15 @@ while jsonprods:
                                                         product_categories = array_merge(product_categories, category_array)
                                                     else:
                                                         product_categories = category_array
-                                                # --> Check if any product fixes should be applied for category HTML check!
+                                                # --> Check if any product fixes should be applied for category check!
                                                 if jsonprodfixes:
                                                     cat_prodfix_regex_list = [[re.sub('\{pa_category\}', '', i['selectionfield']),\
-                                                                               i['actionfield']] for i in jsonprodfixes if 'pa_category' in i['selectionfield']]
-                                                    cat_html = str(productmisc_array[i])
+                                                                               i['actionfield']] for i in jsonprodfixes if '{pa_category}' in i['selectionfield']]
+                                                    product_categories_names = [i[0]['name'] for i in product_categories]
                                                     for fix in cat_prodfix_regex_list:
-                                                        if re.search(fix[0], cat_html, flags=re.IGNORECASE):
+                                                        cat_prodfix_names = fix[0].split(',')
+                                                        found_names = [i for i in product_categories_names if i in cat_prodfix_names] 
+                                                        if len(found_names) > 0:
                                                             if re.search('{remove_product}', fix[1], flags=re.IGNORECASE):
                                                                 notfound = True
                                                                 removeon404 = True
@@ -1116,7 +1118,7 @@ while jsonprods:
                                             # --> Check if any product fixes should be applied for category HTML check!
                                             if jsonprodfixes:
                                                 cat_prodfix_regex_list = [[re.sub('\{regex_in_pa_category_html\}', '', i['selectionfield']),\
-                                                                           i['actionfield']] for i in jsonprodfixes if 'regex_in_pa_category_html' in i['selectionfield']]
+                                                                           i['actionfield']] for i in jsonprodfixes if '{regex_in_pa_category_html}' in i['selectionfield']]
                                                 cat_html = str(productmisc_array[i])
                                                 for fix in cat_prodfix_regex_list:
                                                     if re.search(fix[0], cat_html, flags=re.IGNORECASE):
