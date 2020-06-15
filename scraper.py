@@ -1402,6 +1402,28 @@ while jsonprods:
                                                                             newsizeslug = slugify(newsizename.strip())
                                                                             new_size_term = {'term_id':-1, 'name':newsizename, 'slug':newsizeslug, 'taxonomy':'pa_size'}
                                                                             product_sizes.append((new_size_term, True))
+                                                    # --> Should the current product sizes be mapped into any final sizes?
+                                                    if apply_finalsize_as_size == True:
+                                                        add_finalsize_now = False
+                                                        split_sizetomaps = sizemap['sizestomap'].split(';')
+                                                        #found_sizenames = []
+                                                        for sizetomap in split_sizetomaps.copy():
+                                                            current_found_sizenames = list(filter(lambda x: x[0]['name'].strip().lower() == sizetomap.strip().lower(), product_sizes))
+                                                            if current_found_sizenames:
+                                                                #found_sizenames = current_found_sizenames
+                                                                add_finalsize_now = True
+                                                                break
+                                                        if add_finalsize_now == True:     
+                                                            new_size_term = doesprodattrexist(jsonprodattr['pa_size'], sizemap['finalsize'].strip(), 'pa_size')
+                                                            if new_size_term != 0:
+                                                                product_sizes.append((new_size_term, False))
+                                                            else:
+                                                                newsizename = sizemap['finalsize'].strip()
+                                                                newsizeslug = slugify(newsizename.strip())
+                                                                new_size_term = {'term_id':-1, 'name':newsizename, 'slug':newsizeslug, 'taxonomy':'pa_size'}
+                                                                product_sizes.append((new_size_term, True))
+                                                            for sizetomap in split_sizetomaps.copy():
+                                                                product_sizes = list(filter(lambda x: x[0]['name'].strip().lower() != sizetomap.strip().lower() or sizetomap.strip().lower() == sizemap['finalsize'].strip().lower(), product_sizes))
                                     # --> Second: Correct binds between sizes and sizetypes/sizetypemiscs!
                                     sizeid_col = product['sizetosizetypemaps']['size']
                                     sizetypeid_col = product['sizetosizetypemaps']['sizetype']
