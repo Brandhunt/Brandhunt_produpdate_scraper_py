@@ -638,6 +638,7 @@ while jsonprods:
                         mandatory_sizes = [['ONE SIZE', 'Accessories']]
                         no_whitespace_htmlregex = False
                         no_whitespace_prodtitleregex = False
+                        apply_finalsize_as_size = False
                         # --> Define misc. storage variables
                         domain_name = ''
                         # --> Get 'em!
@@ -646,6 +647,9 @@ while jsonprods:
                                 for i in range(2, len(productmisc_array), 2):
                                     #print(productmisc_array[(i-1)])
                                     #print(productmisc_array[i])
+                                    # --- No leading/trailing whitespaces when using regex while searching prod. title for attributes? --- #
+                                    if productmisc_array[(i-1)] == 'apply_finalsize_as_size':
+                                        apply_finalsize_as_size = True
                                     # --- Any specific way the sizes should be handled? --- #
                                     if productmisc_array[(i-1)] == 'size_handle':
                                         if productmisc_array[i] != 'true':
