@@ -75,7 +75,7 @@ def add_together_attrs(attrlist1, attrlist2, prodattr):
 def getmoneyfromtext(price):
     val = re.sub(r'\.(?=.*\.)', '', price.replace(',', '.'))
     if not val: return val
-    if not re.match('[0-9]', val): return ''
+    #if not re.match('[0-9]', val): return ''
     else: return '{:.0f}'.format(float(re.sub(r'[^0-9,.]', '', val)))
     
 # *** --- For converting scraped price to correct value according to wanted currency --- *** #
@@ -1759,6 +1759,8 @@ while jsonprods:
                                 #print("Error when scraping misc. product information for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
                                 print(traceback.format_exc())
                         # >>> MAKE PRICES NUMERIC <<< #
+                        if not re.match('[0-9]', price): price = ''
+                        if not re.match('[0-9]', salesprice): salesprice = ''
                         price = getmoneyfromtext(price)
                         salesprice = getmoneyfromtext(salesprice)
                         # >>> STORE PRODUCT VALUES IN MORPH.IO DATABASE <<< #
