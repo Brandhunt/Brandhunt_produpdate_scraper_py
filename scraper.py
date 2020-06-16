@@ -1304,7 +1304,7 @@ while jsonprods:
                                         for cat in existing_categories.copy():
                                             term = doesprodattrexist(jsonprodattr['product_cat'], cat, 'product_cat')
                                             if term['slug'] == 'uncategorized' and len(product_categories) > 0\
-                                            or list(filter(lambda x: x[0]['term_id'] == term['term_id'], product_categories):
+                                            or list(filter(lambda x: x[0]['term_id'] == term['term_id'], product_categories)):
                                                 #del existing_categories[count]
                                                 continue
                                             #existing_categories[count] = ((term, False))
