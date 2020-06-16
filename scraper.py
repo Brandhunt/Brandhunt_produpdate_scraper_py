@@ -1758,6 +1758,7 @@ while jsonprods:
                                 #print("Error when scraping misc. product information for product ID " + product['productid'] + ": " + sys.exc_info()[0] + " occured!")
                                 print(traceback.format_exc())
                         # >>> MAKE PRICES NUMERIC <<< #
+                        print(price)
                         price = getmoneyfromtext(price)
                         salesprice = getmoneyfromtext(salesprice)
                         # >>> STORE PRODUCT VALUES IN MORPH.IO DATABASE <<< #
