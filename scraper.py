@@ -1502,6 +1502,7 @@ while jsonprods:
                                                     #found_sizenames = list(filter(lambda x: re.search(x[0]['name'], sizemap['sizestomap']), product_sizes))
                                                     #for prod_size in product_sizes:
                                                     #    found_sizenames = list(filter(lambda x: prod_size[0]['name'] == x, sizemap['sizestomap']))
+                                                    print('HERE:' + json.dumps(product_sizes))
                                                     enforce_mandatory_sizes = True
                                                     split_sizetomaps = sizemap['sizestomap'].split(';')
                                                     for sizetomap in split_sizetomaps.copy():
