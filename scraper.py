@@ -1545,6 +1545,7 @@ while jsonprods:
                                                                             newsizeslug = slugify(newsizename.strip())
                                                                             new_size_term = {'term_id':-1, 'name':newsizename, 'slug':newsizeslug, 'taxonomy':'pa_size'}
                                                                             product_sizes.append((new_size_term, True))
+                                                    print('MANDATORY: ' + json.dumps(product_sizes))
                                                     # --> Should the current product sizes be mapped into any final sizes?
                                                     if apply_finalsize_as_size == True:
                                                         add_finalsize_now = False
@@ -1567,6 +1568,7 @@ while jsonprods:
                                                                 product_sizes.append((new_size_term, True))
                                                             for sizetomap in split_sizetomaps.copy():
                                                                 product_sizes = list(filter(lambda x: x[0]['name'].strip().lower() != sizetomap.strip().lower() or sizetomap.strip().lower() == sizemap['finalsize'].strip().lower(), product_sizes))
+                                                    print('FINALSIZE: ' + json.dumps(product_sizes))            
                                     # --> Second: Correct binds between sizes and sizetypes/sizetypemiscs!
                                     sizeid_col = product['sizetosizetypemaps']['size']
                                     sizetypeid_col = product['sizetosizetypemaps']['sizetype']
