@@ -1384,15 +1384,15 @@ while jsonprods:
                                         term = {'term_id':-1, 'name':namus, 'slug':slugus, 'taxonomy':'pa_sizetypemisc'}
                                         product_sizetypemiscs.append((term, True))
                                 # --> Fix/correct binds between existing product sizes and sizetypes(Including misc. sizetypes)! <-- #
-                                print('BEFORE SIZE TO SIZETYPE CHECK')
-                                print(json.dumps(product_sizetypes))
-                                print(json.dumps(product_sizes))
                                 if product_sizetypes:
                                     if not product_sizes:
                                         product_sizes = []
                                     # --> First: Map current sizes to pre-destined sizes depending on sizetype! <-- #
                                     #remove_remaining_sizes = False
                                     for sizemap in jsonsizemaps:
+                                        print('BEFORE SIZE TO SIZETYPE CHECK')
+                                        print(json.dumps(product_sizetypes))
+                                        print(json.dumps(product_sizes))
                                         sizemap_sizetypes = sizemap['sizetypestofilter'].split(',')
                                         for sizemap_sizetype in sizemap_sizetypes:
                                             sizemap_sizetype = re.sub(r'\-\d+', '', sizemap_sizetype.strip())
