@@ -1384,9 +1384,11 @@ while jsonprods:
                                         term = {'term_id':-1, 'name':namus, 'slug':slugus, 'taxonomy':'pa_sizetypemisc'}
                                         product_sizetypemiscs.append((term, True))
                                 # --> Fix/correct binds between existing product sizes and sizetypes(Including misc. sizetypes)! <-- #
-                                print(json.dumps(product_sizetypes))
-                                print(json.dumps(product_sizes))
-                                if product_sizetypes and product_sizes:
+                                #print(json.dumps(product_sizetypes))
+                                #print(json.dumps(product_sizes))
+                                if product_sizetypes:
+                                    if not product_sizes:
+                                        product_sizes = []
                                     # --> First: Map current sizes to pre-destined sizes depending on sizetype! <-- #
                                     #remove_remaining_sizes = False
                                     for sizemap in jsonsizemaps:
@@ -1520,12 +1522,12 @@ while jsonprods:
                                                             #print(json.dumps(product_sizes))
                                                             break
                                                     # --> Do we need to add any mandatory sizes depending on sizetype?
-                                                    print(len(mandatory_sizes))
-                                                    print(len(product_sizes))
-                                                    print(enforce_mandatory_sizes)
-                                                    print(json.dumps(mandatory_sizes))
-                                                    print(json.dumps(product_sizes))
-                                                    print(product['productid'])
+                                                    #print(len(mandatory_sizes))
+                                                    #print(len(product_sizes))
+                                                    #print(enforce_mandatory_sizes)
+                                                    #print(json.dumps(mandatory_sizes))
+                                                    #print(json.dumps(product_sizes))
+                                                    #print(product['productid'])
                                                     if len(mandatory_sizes) > 0 and (len(product_sizes) == 0 or enforce_mandatory_sizes == True):
                                                         for mandsize in mandatory_sizes:
                                                             if mandsize[0] != '' and mandsize[1] != '':
