@@ -1518,6 +1518,9 @@ while jsonprods:
                                                             #print(json.dumps(product_sizes))
                                                             break
                                                     # --> Do we need to add any mandatory sizes depending on sizetype?
+                                                    print(len(mandatory_sizes))
+                                                    print(len(product_sizes))
+                                                    print(enforce_mandatory_sizes)
                                                     if len(mandatory_sizes) > 0 and (len(product_sizes) == 0 or enforce_mandatory_sizes == True):
                                                         for mandsize in mandatory_sizes:
                                                             if mandsize[0] != '' and mandsize[1] != '':
