@@ -638,7 +638,7 @@ while jsonprods:
                         # <==> CONT. ::: After the ';' character, type the name of the sizetype you wish to handle the sizes for.
                         # <==> CONT. The last field is only used if you wish to seperate the sizes by a specific character!
                         # <==> IMPORTANT ::: Type 'ALL' as sizetype if you wish for the first setting to be applied to all sizetypes!
-                        mandatory_sizes = [['ONE SIZE', 'Accessories']]
+                        mandatory_sizes = [[['ONE SIZE'], 'Accessories']]
                         no_whitespace_htmlregex = False
                         no_whitespace_prodtitleregex = False
                         apply_finalsize_as_size = False
