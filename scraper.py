@@ -1384,9 +1384,9 @@ while jsonprods:
                                         term = {'term_id':-1, 'name':namus, 'slug':slugus, 'taxonomy':'pa_sizetypemisc'}
                                         product_sizetypemiscs.append((term, True))
                                 # --> Fix/correct binds between existing product sizes and sizetypes(Including misc. sizetypes)! <-- #
-                                #print('BEFORE SIZE TO SIZETYPE CHECK')
-                                #print(json.dumps(product_sizetypes))
-                                #print(json.dumps(product_sizes))
+                                print('BEFORE SIZE TO SIZETYPE CHECK')
+                                print(json.dumps(product_sizetypes))
+                                print(json.dumps(product_sizes))
                                 if product_sizetypes:
                                     if not product_sizes:
                                         product_sizes = []
@@ -1502,7 +1502,7 @@ while jsonprods:
                                                     #found_sizenames = list(filter(lambda x: re.search(x[0]['name'], sizemap['sizestomap']), product_sizes))
                                                     #for prod_size in product_sizes:
                                                     #    found_sizenames = list(filter(lambda x: prod_size[0]['name'] == x, sizemap['sizestomap']))
-                                                    #print('HERE:' + json.dumps(product_sizes))
+                                                    print('HERE:' + json.dumps(product_sizes))
                                                     enforce_mandatory_sizes = True
                                                     split_sizetomaps = sizemap['sizestomap'].split(';')
                                                     for sizetomap in split_sizetomaps.copy():
@@ -1524,13 +1524,13 @@ while jsonprods:
                                                             #print(json.dumps(product_sizes))
                                                             break
                                                     # --> Do we need to add any mandatory sizes depending on sizetype?
-                                                    #print('AFTER SIZE TO SIZETYPE CHECK')
-                                                    #print(len(mandatory_sizes))
-                                                    #print(len(product_sizes))
-                                                    #print(enforce_mandatory_sizes)
-                                                    #print(json.dumps(mandatory_sizes))
-                                                    #print(json.dumps(product_sizes))
-                                                    #print(product['productid'])
+                                                    print('AFTER SIZE TO SIZETYPE CHECK')
+                                                    print(len(mandatory_sizes))
+                                                    print(len(product_sizes))
+                                                    print(enforce_mandatory_sizes)
+                                                    print(json.dumps(mandatory_sizes))
+                                                    print(json.dumps(product_sizes))
+                                                    print(product['productid'])
                                                     if len(mandatory_sizes) > 0 and (len(product_sizes) == 0 or enforce_mandatory_sizes == True):
                                                         for mandsize in mandatory_sizes:
                                                             if mandsize[0] != '' and mandsize[1] != '':
