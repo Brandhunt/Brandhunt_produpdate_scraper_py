@@ -1523,6 +1523,7 @@ while jsonprods:
                                                     print(enforce_mandatory_sizes)
                                                     print(json.dumps(mandatory_sizes))
                                                     print(json.dumps(product_sizes))
+                                                    print(product['productid'])
                                                     if len(mandatory_sizes) > 0 and (len(product_sizes) == 0 or enforce_mandatory_sizes == True):
                                                         for mandsize in mandatory_sizes:
                                                             if mandsize[0] != '' and mandsize[1] != '':
