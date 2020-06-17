@@ -675,7 +675,7 @@ while jsonprods:
                                     # --- No leading/trailing whitespaces when using regex while searching pure HTML for attributes? --- #
                                     if productmisc_array[(i-1)] == 'no_whitespace_htmlregex':
                                         no_whitespace_htmlregex = True
-                                    # --- No leading/trailing whitespaces when using regex while searching pure HTML for attributes? --- #
+                                    # --- Should whitespace in HTML regex attribute search be applied on a specific side? --- #
                                     if productmisc_array[(i-1)] == 'whitespace_htmlregex_sides':
                                         if productmisc_array[i] != 'true':
                                             whitespace_htmlregex_sides = int(productmisc_array[i])
