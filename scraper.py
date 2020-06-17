@@ -642,6 +642,7 @@ while jsonprods:
                         no_whitespace_htmlregex = False
                         no_whitespace_prodtitleregex = False
                         whitespace_htmlregex_sides = 0 # <==> 0 = Whitespaces on both sides, 1 = Whitespace on left side, 2 = Right side
+                        whitespace_prodtitleregex_sides = 0 # <==> 0 = Whitespaces on both sides, 1 = Whitespace on left side, 2 = Right side
                         apply_finalsize_as_size = False
                         # --> Define misc. storage variables
                         domain_name = ''
@@ -672,6 +673,11 @@ while jsonprods:
                                     # --- No leading/trailing whitespaces when using regex while searching prod. title for attributes? --- #
                                     if productmisc_array[(i-1)] == 'no_whitespace_prodtitleregex':
                                         no_whitespace_prodtitleregex = True
+                                    # --- Should whitespace in HTML regex attribute search be applied on a specific side? --- #
+                                    if productmisc_array[(i-1)] == 'whitespace_prodtitleregex_sides':
+                                        if productmisc_array[i] != 'true':
+                                            whitespace_prodtitleregex_sides = int(productmisc_array[i])
+                                            productmisc_array[i] = 'true'
                                     # --- No leading/trailing whitespaces when using regex while searching pure HTML for attributes? --- #
                                     if productmisc_array[(i-1)] == 'no_whitespace_htmlregex':
                                         no_whitespace_htmlregex = True
@@ -1243,8 +1249,8 @@ while jsonprods:
                                             term_name = term['name']
                                             product_name = product['name']
                                             array_categorymaps = jsoncatmaps
-                                            leftside = '\s' if whitespace_htmlregex_sides != 2 else ''
-                                            rightside = '\s' if whitespace_htmlregex_sides != 1 else ''
+                                            leftside = '\s' if whitespace_prodtitleregex_sides != 2 else ''
+                                            rightside = '\s' if whitespace_prodtitleregex_sides != 1 else ''
                                             if array_categorymaps:
                                                 if term_name in array_categorymaps:
                                                     infliction_array = jsoncatmaps[term_name]['catinflections'].split(',')
