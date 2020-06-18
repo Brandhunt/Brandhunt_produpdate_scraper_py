@@ -1121,9 +1121,9 @@ while jsonprods:
                                                     regex = ''+term_name.strip()+''
                                                 else:
                                                     if whitespace_htmlregex_sides == 3:
-                                                        regex = leftside+infliction.strip()+'|'+infliction.strip()+rightside
+                                                        regex = leftside+term_name.strip()+'|'+term_name.strip()+rightside
                                                     else:
-                                                        regex = leftside+infliction.strip()+rightside
+                                                        regex = leftside+term_name.strip()+rightside
                                                 #print('CATTERM_REGEX: ' + regex)
                                                 if re.search(regex, cat_html, flags=re.IGNORECASE):
                                                     #print('FOUND CATTERM!')
@@ -1282,9 +1282,9 @@ while jsonprods:
                                                 regex = ''+term_name.strip()+''
                                             else:
                                                 if whitespace_prodtitleregex_sides == 3:
-                                                    regex = leftside+infliction.strip()+'|'+infliction.strip()+rightside
+                                                    regex = leftside+term_name.strip()+'|'+term_name.strip()+rightside
                                                 else:
-                                                    regex = leftside+infliction.strip()+rightside
+                                                    regex = leftside+term_name.strip()+rightside
                                             if re.search(regex, product_name, flags=re.IGNORECASE):
                                                 term = doesprodattrexist(jsonprodattr['product_cat'], term['term_id'], 'product_cat')
                                                 if term:
