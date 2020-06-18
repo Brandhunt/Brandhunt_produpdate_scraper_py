@@ -641,8 +641,8 @@ while jsonprods:
                         mandatory_sizes = [[['ONE SIZE'], 'Accessories']]
                         no_whitespace_htmlregex = False
                         no_whitespace_prodtitleregex = False
-                        whitespace_htmlregex_sides = 0 # <==> 0 = Whitespaces on both sides, 1 = Whitespace on left side, 2 = Right side
-                        whitespace_prodtitleregex_sides = 0 # <==> 0 = Whitespaces on both sides, 1 = Whitespace on left side, 2 = Right side
+                        whitespace_htmlregex_sides = 0 # <==> 0 = Whitespaces on both sides, 1 = Whitespace on left side, 2 = Right side, 3 = Either/Or
+                        whitespace_prodtitleregex_sides = 0 # <==> 0 = Whitespaces on both sides, 1 = Whitespace on left side, 2 = Right side, 3 = Either/Or
                         apply_finalsize_as_size = False
                         # --> Define misc. storage variables
                         domain_name = ''
@@ -1097,7 +1097,10 @@ while jsonprods:
                                                             if no_whitespace_htmlregex is True:
                                                                 regex = ''+infliction.strip()+''
                                                             else:
-                                                                regex = leftside+infliction.strip()+rightside
+                                                                if whitespace_htmlregex_sides == 3:
+                                                                    regex = leftside+infliction.strip()+'|'+infliction.strip()+rightside
+                                                                else:
+                                                                    regex = leftside+infliction.strip()+rightside
                                                             #print('INF_REGEX: ' + regex)
                                                             if re.search(regex, cat_html, flags=re.IGNORECASE):
                                                                 #print('FOUND INFLICTION!')
@@ -1117,7 +1120,10 @@ while jsonprods:
                                                 if no_whitespace_htmlregex is True:
                                                     regex = ''+term_name.strip()+''
                                                 else:
-                                                    regex = leftside+term_name.strip()+rightside
+                                                    if whitespace_htmlregex_sides == 3:
+                                                        regex = leftside+infliction.strip()+'|'+infliction.strip()+rightside
+                                                    else:
+                                                        regex = leftside+infliction.strip()+rightside
                                                 #print('CATTERM_REGEX: ' + regex)
                                                 if re.search(regex, cat_html, flags=re.IGNORECASE):
                                                     #print('FOUND CATTERM!')
@@ -1258,7 +1264,10 @@ while jsonprods:
                                                         if no_whitespace_prodtitleregex is True:
                                                             regex = ''+infliction.strip()+''
                                                         else:
-                                                            regex = leftside+infliction.strip()+rightside
+                                                            if whitespace_prodtitleregex_sides == 3:
+                                                                regex = leftside+infliction.strip()+'|'+infliction.strip()+rightside
+                                                            else:
+                                                                regex = leftside+infliction.strip()+rightside
                                                         if re.search(regex, product_name, flags=re.IGNORECASE):
                                                             term = doesprodattrexist(jsonprodattr['product_cat'], term['term_id'], 'product_cat')
                                                             if term:
@@ -1272,7 +1281,10 @@ while jsonprods:
                                             if no_whitespace_prodtitleregex is True:
                                                 regex = ''+term_name.strip()+''
                                             else:
-                                                regex = leftside+term_name.strip()+rightside
+                                                if whitespace_prodtitleregex_sides == 3:
+                                                    regex = leftside+infliction.strip()+'|'+infliction.strip()+rightside
+                                                else:
+                                                    regex = leftside+infliction.strip()+rightside
                                             if re.search(regex, product_name, flags=re.IGNORECASE):
                                                 term = doesprodattrexist(jsonprodattr['product_cat'], term['term_id'], 'product_cat')
                                                 if term:
