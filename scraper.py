@@ -1166,8 +1166,9 @@ while jsonprods:
                                                                     cat_parents = term['ancestors']
                                                                     for parent_id in cat_parents:
                                                                         parent = doesprodattrexist(jsonprodattr['product_cat'], parent_id, 'product_cat')
-                                                                        product_categories = list(filter(lambda x: not re.search(parent[0]['name'], x[0]['name'],\
-                                                                                                                        flags=re.IGNORECASE), product_categories))
+                                                                        if parent:
+                                                                            product_categories = list(filter(lambda x: not re.search(parent[0]['name'], x[0]['name'],\
+                                                                                                                            flags=re.IGNORECASE), product_categories))
                                                             #print(json.dumps(product_categories))
                                                         if re.search('{add_category}', fix[1], flags=re.IGNORECASE):
                                                             cats_to_add = re.sub('\{add_category\}', '', fix[1]).split(',')
